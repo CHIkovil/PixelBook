@@ -1,0 +1,479 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		17820874290D398700EFA23C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17820873290D398700EFA23C /* AppDelegate.swift */; };
+		17820876290D398700EFA23C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17820875290D398700EFA23C /* SceneDelegate.swift */; };
+		1782087D290D398800EFA23C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1782087C290D398800EFA23C /* Assets.xcassets */; };
+		17820880290D398800EFA23C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1782087E290D398800EFA23C /* LaunchScreen.storyboard */; };
+		1782088F290D3ED300EFA23C /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1782088E290D3ED300EFA23C /* WelcomeViewController.swift */; };
+		17820892290D3F4500EFA23C /* WelcomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17820891290D3F4500EFA23C /* WelcomeViewModel.swift */; };
+		17820894290D3F5400EFA23C /* WelcomeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17820893290D3F5400EFA23C /* WelcomeRouter.swift */; };
+		17820899291022FD00EFA23C /* AppColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17820898291022FD00EFA23C /* AppColor.swift */; };
+		1782089F29102B6C00EFA23C /* bear.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1782089D29102B6C00EFA23C /* bear.ttf */; };
+		178208A029102B6C00EFA23C /* edo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1782089E29102B6C00EFA23C /* edo.ttf */; };
+		178208A329102EB900EFA23C /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178208A229102EB900EFA23C /* Router.swift */; };
+		8C2188609C7AA4960F960970 /* Pods_BlackBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A608E7487150B1ECB671798 /* Pods_BlackBook.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		069E81B9B4035A5D536FBD9A /* Pods-BlackBook.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlackBook.debug.xcconfig"; path = "Target Support Files/Pods-BlackBook/Pods-BlackBook.debug.xcconfig"; sourceTree = "<group>"; };
+		17820870290D398700EFA23C /* BlackBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlackBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		17820873290D398700EFA23C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		17820875290D398700EFA23C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		1782087C290D398800EFA23C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		1782087F290D398800EFA23C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		17820881290D398800EFA23C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1782088E290D3ED300EFA23C /* WelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
+		17820891290D3F4500EFA23C /* WelcomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewModel.swift; sourceTree = "<group>"; };
+		17820893290D3F5400EFA23C /* WelcomeRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeRouter.swift; sourceTree = "<group>"; };
+		17820898291022FD00EFA23C /* AppColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColor.swift; sourceTree = "<group>"; };
+		1782089D29102B6C00EFA23C /* bear.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = bear.ttf; sourceTree = "<group>"; };
+		1782089E29102B6C00EFA23C /* edo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = edo.ttf; sourceTree = "<group>"; };
+		178208A229102EB900EFA23C /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		2A608E7487150B1ECB671798 /* Pods_BlackBook.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlackBook.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C8A0299BF765F76C4AE41D40 /* Pods-BlackBook.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlackBook.release.xcconfig"; path = "Target Support Files/Pods-BlackBook/Pods-BlackBook.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1782086D290D398700EFA23C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8C2188609C7AA4960F960970 /* Pods_BlackBook.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		17820867290D398700EFA23C = {
+			isa = PBXGroup;
+			children = (
+				17820889290D3D7F00EFA23C /* Sources */,
+				17820872290D398700EFA23C /* BlackBook */,
+				17820871290D398700EFA23C /* Products */,
+				DCD77BF728E7CB4944EE1CC6 /* Pods */,
+				C7C6480D00BE8E47A36C02C0 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		17820871290D398700EFA23C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				17820870290D398700EFA23C /* BlackBook.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		17820872290D398700EFA23C /* BlackBook */ = {
+			isa = PBXGroup;
+			children = (
+				17820873290D398700EFA23C /* AppDelegate.swift */,
+				17820875290D398700EFA23C /* SceneDelegate.swift */,
+				1782087C290D398800EFA23C /* Assets.xcassets */,
+				1782087E290D398800EFA23C /* LaunchScreen.storyboard */,
+				17820881290D398800EFA23C /* Info.plist */,
+			);
+			path = BlackBook;
+			sourceTree = "<group>";
+		};
+		17820889290D3D7F00EFA23C /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				178208A129102EA000EFA23C /* Routing */,
+				1782089C29102A7400EFA23C /* Fonts */,
+				17820898291022FD00EFA23C /* AppColor.swift */,
+				17820890290D3F0800EFA23C /* Welcome */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		17820890290D3F0800EFA23C /* Welcome */ = {
+			isa = PBXGroup;
+			children = (
+				1782088E290D3ED300EFA23C /* WelcomeViewController.swift */,
+				17820891290D3F4500EFA23C /* WelcomeViewModel.swift */,
+				17820893290D3F5400EFA23C /* WelcomeRouter.swift */,
+			);
+			path = Welcome;
+			sourceTree = "<group>";
+		};
+		1782089C29102A7400EFA23C /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				1782089D29102B6C00EFA23C /* bear.ttf */,
+				1782089E29102B6C00EFA23C /* edo.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		178208A129102EA000EFA23C /* Routing */ = {
+			isa = PBXGroup;
+			children = (
+				178208A229102EB900EFA23C /* Router.swift */,
+			);
+			path = Routing;
+			sourceTree = "<group>";
+		};
+		C7C6480D00BE8E47A36C02C0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2A608E7487150B1ECB671798 /* Pods_BlackBook.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DCD77BF728E7CB4944EE1CC6 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				069E81B9B4035A5D536FBD9A /* Pods-BlackBook.debug.xcconfig */,
+				C8A0299BF765F76C4AE41D40 /* Pods-BlackBook.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1782086F290D398700EFA23C /* BlackBook */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 17820884290D398800EFA23C /* Build configuration list for PBXNativeTarget "BlackBook" */;
+			buildPhases = (
+				A4629E45B541FC3DF3521205 /* [CP] Check Pods Manifest.lock */,
+				1782086C290D398700EFA23C /* Sources */,
+				1782086D290D398700EFA23C /* Frameworks */,
+				1782086E290D398700EFA23C /* Resources */,
+				094027A935A376C7D7B64086 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BlackBook;
+			productName = BlackBook;
+			productReference = 17820870290D398700EFA23C /* BlackBook.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		17820868290D398700EFA23C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1400;
+				LastUpgradeCheck = 1400;
+				TargetAttributes = {
+					1782086F290D398700EFA23C = {
+						CreatedOnToolsVersion = 14.0;
+					};
+				};
+			};
+			buildConfigurationList = 1782086B290D398700EFA23C /* Build configuration list for PBXProject "BlackBook" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 17820867290D398700EFA23C;
+			productRefGroup = 17820871290D398700EFA23C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1782086F290D398700EFA23C /* BlackBook */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1782086E290D398700EFA23C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				17820880290D398800EFA23C /* LaunchScreen.storyboard in Resources */,
+				1782089F29102B6C00EFA23C /* bear.ttf in Resources */,
+				1782087D290D398800EFA23C /* Assets.xcassets in Resources */,
+				178208A029102B6C00EFA23C /* edo.ttf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		094027A935A376C7D7B64086 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-BlackBook/Pods-BlackBook-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-BlackBook/Pods-BlackBook-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BlackBook/Pods-BlackBook-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A4629E45B541FC3DF3521205 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-BlackBook-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1782086C290D398700EFA23C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1782088F290D3ED300EFA23C /* WelcomeViewController.swift in Sources */,
+				17820899291022FD00EFA23C /* AppColor.swift in Sources */,
+				17820892290D3F4500EFA23C /* WelcomeViewModel.swift in Sources */,
+				178208A329102EB900EFA23C /* Router.swift in Sources */,
+				17820874290D398700EFA23C /* AppDelegate.swift in Sources */,
+				17820876290D398700EFA23C /* SceneDelegate.swift in Sources */,
+				17820894290D3F5400EFA23C /* WelcomeRouter.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		1782087E290D398800EFA23C /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1782087F290D398800EFA23C /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		17820882290D398800EFA23C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		17820883290D398800EFA23C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		17820885290D398800EFA23C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 069E81B9B4035A5D536FBD9A /* Pods-BlackBook.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = AX7Z37UN4D;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BlackBook/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "";
+				INFOPLIST_KEY_UIMainStoryboardFile = "";
+				INFOPLIST_KEY_UIStatusBarStyle = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = CHIkovil.BlackBook;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		17820886290D398800EFA23C /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C8A0299BF765F76C4AE41D40 /* Pods-BlackBook.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = AX7Z37UN4D;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BlackBook/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "";
+				INFOPLIST_KEY_UIMainStoryboardFile = "";
+				INFOPLIST_KEY_UIStatusBarStyle = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = CHIkovil.BlackBook;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1782086B290D398700EFA23C /* Build configuration list for PBXProject "BlackBook" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				17820882290D398800EFA23C /* Debug */,
+				17820883290D398800EFA23C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		17820884290D398800EFA23C /* Build configuration list for PBXNativeTarget "BlackBook" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				17820885290D398800EFA23C /* Debug */,
+				17820886290D398800EFA23C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 17820868290D398700EFA23C /* Project object */;
+}
