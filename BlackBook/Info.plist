@@ -5,7 +5,6 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>edo.ttf</string>
-		<string>bear.ttf</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>

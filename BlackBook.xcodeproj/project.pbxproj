@@ -15,7 +15,6 @@
 		17820892290D3F4500EFA23C /* WelcomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17820891290D3F4500EFA23C /* WelcomeViewModel.swift */; };
 		17820894290D3F5400EFA23C /* WelcomeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17820893290D3F5400EFA23C /* WelcomeRouter.swift */; };
 		17820899291022FD00EFA23C /* AppColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17820898291022FD00EFA23C /* AppColor.swift */; };
-		1782089F29102B6C00EFA23C /* bear.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1782089D29102B6C00EFA23C /* bear.ttf */; };
 		178208A029102B6C00EFA23C /* edo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1782089E29102B6C00EFA23C /* edo.ttf */; };
 		178208A329102EB900EFA23C /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178208A229102EB900EFA23C /* Router.swift */; };
 		8C2188609C7AA4960F960970 /* Pods_BlackBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A608E7487150B1ECB671798 /* Pods_BlackBook.framework */; };
@@ -33,7 +32,6 @@
 		17820891290D3F4500EFA23C /* WelcomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewModel.swift; sourceTree = "<group>"; };
 		17820893290D3F5400EFA23C /* WelcomeRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeRouter.swift; sourceTree = "<group>"; };
 		17820898291022FD00EFA23C /* AppColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColor.swift; sourceTree = "<group>"; };
-		1782089D29102B6C00EFA23C /* bear.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = bear.ttf; sourceTree = "<group>"; };
 		1782089E29102B6C00EFA23C /* edo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = edo.ttf; sourceTree = "<group>"; };
 		178208A229102EB900EFA23C /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		2A608E7487150B1ECB671798 /* Pods_BlackBook.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlackBook.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -107,7 +105,6 @@
 		1782089C29102A7400EFA23C /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
-				1782089D29102B6C00EFA23C /* bear.ttf */,
 				1782089E29102B6C00EFA23C /* edo.ttf */,
 			);
 			path = Fonts;
@@ -199,7 +196,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				17820880290D398800EFA23C /* LaunchScreen.storyboard in Resources */,
-				1782089F29102B6C00EFA23C /* bear.ttf in Resources */,
 				1782087D290D398800EFA23C /* Assets.xcassets in Resources */,
 				178208A029102B6C00EFA23C /* edo.ttf in Resources */,
 			);
