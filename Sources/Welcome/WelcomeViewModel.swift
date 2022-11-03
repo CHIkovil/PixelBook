@@ -21,7 +21,7 @@ protocol WelcomeViewModelProtocol: AnyObject {
     var stateDriver: Driver<WelcomeViewState> { get }
 }
 
-class WelcomeViewModel: WelcomeViewModelProtocol {
+final class WelcomeViewModel: WelcomeViewModelProtocol {
     private lazy var stateRelay = PublishRelay<WelcomeViewState>()
     private(set) lazy var stateDriver = stateRelay.asDriver(
         onErrorJustReturn: WelcomeViewState(

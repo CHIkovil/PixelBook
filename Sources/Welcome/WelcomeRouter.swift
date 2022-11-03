@@ -9,7 +9,7 @@ protocol WelcomeRouterProtocol: AnyObject {
     func showLibrary()
 }
 
-class WelcomeRouter: Router<WelcomeViewController>, WelcomeRouterProtocol {
+final class WelcomeRouter: Router<WelcomeViewController>, WelcomeRouterProtocol {
     
     func showLibrary() {
         

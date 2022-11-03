@@ -11,7 +11,7 @@ import SnapKit
 
 
 
-class WelcomeViewController: UIViewController {
+final class WelcomeViewController: UIViewController {
     private enum Constants {
         static let appString = "BlackBook"
         static let labelWidth: CGFloat = 200
