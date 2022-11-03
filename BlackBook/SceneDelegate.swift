@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import EPUBKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -26,6 +27,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window.rootViewController = controller
         self.window = window
         window.makeKeyAndVisible()
+    }
+    
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        let urlContext = URLContexts.first
+        guard let url = urlContext?.url, let document = EPUBDocument(url: url) else{return}
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

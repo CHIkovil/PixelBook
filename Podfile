@@ -18,4 +18,5 @@ target 'BlackBook' do
   # Pods for BlackBook
   rx_pods
   pod 'SnapKit'
+  pod 'EPUBKit'
 end
