@@ -22,6 +22,7 @@
 		178208C929140B3D00EFA23C /* LibraryRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178208C829140B3D00EFA23C /* LibraryRouter.swift */; };
 		178208CB29140E1700EFA23C /* BookTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178208CA29140E1700EFA23C /* BookTableViewCell.swift */; };
 		178208CE291410B900EFA23C /* BookModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178208CD291410B900EFA23C /* BookModel.swift */; };
+		178208D82916A88800EFA23C /* BookParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178208D72916A88800EFA23C /* BookParser.swift */; };
 		8C2188609C7AA4960F960970 /* Pods_BlackBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A608E7487150B1ECB671798 /* Pods_BlackBook.framework */; };
 /* End PBXBuildFile section */
 
@@ -44,6 +45,7 @@
 		178208C829140B3D00EFA23C /* LibraryRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryRouter.swift; sourceTree = "<group>"; };
 		178208CA29140E1700EFA23C /* BookTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookTableViewCell.swift; sourceTree = "<group>"; };
 		178208CD291410B900EFA23C /* BookModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookModel.swift; sourceTree = "<group>"; };
+		178208D72916A88800EFA23C /* BookParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookParser.swift; sourceTree = "<group>"; };
 		2A608E7487150B1ECB671798 /* Pods_BlackBook.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlackBook.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8A0299BF765F76C4AE41D40 /* Pods-BlackBook.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlackBook.release.xcconfig"; path = "Target Support Files/Pods-BlackBook/Pods-BlackBook.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -96,6 +98,7 @@
 			children = (
 				17820898291022FD00EFA23C /* AppColor.swift */,
 				1782089C29102A7400EFA23C /* Fonts */,
+				178208D92916A9CB00EFA23C /* Parsing */,
 				178208A129102EA000EFA23C /* Routing */,
 				17820890290D3F0800EFA23C /* Welcome */,
 				178208C329140AE300EFA23C /* Library */,
@@ -147,6 +150,14 @@
 				178208CD291410B900EFA23C /* BookModel.swift */,
 			);
 			path = Book;
+			sourceTree = "<group>";
+		};
+		178208D92916A9CB00EFA23C /* Parsing */ = {
+			isa = PBXGroup;
+			children = (
+				178208D72916A88800EFA23C /* BookParser.swift */,
+			);
+			path = Parsing;
 			sourceTree = "<group>";
 		};
 		C7C6480D00BE8E47A36C02C0 /* Frameworks */ = {
@@ -290,6 +301,7 @@
 				178208CE291410B900EFA23C /* BookModel.swift in Sources */,
 				178208A329102EB900EFA23C /* Router.swift in Sources */,
 				17820874290D398700EFA23C /* AppDelegate.swift in Sources */,
+				178208D82916A88800EFA23C /* BookParser.swift in Sources */,
 				17820876290D398700EFA23C /* SceneDelegate.swift in Sources */,
 				178208C729140B2700EFA23C /* LibraryViewModel.swift in Sources */,
 				17820894290D3F5400EFA23C /* WelcomeRouter.swift in Sources */,

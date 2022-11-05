@@ -4,8 +4,8 @@
 //
 //  Created by Nikolas on 29.10.2022.
 //
-import Foundation
 import UIKit
+import Foundation
 import EPUBKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
@@ -32,11 +32,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         let urlContext = URLContexts.first
         guard let url = urlContext?.url, let document = EPUBDocument(url: url) else{return}
-        let path = document.manifest.items["id5"]?.path
-        guard let path = path else {return}
-        let pageUrl = document.contentDirectory.appendingPathComponent(path)
-        let xhtml = try? String(contentsOfFile: pageUrl.path, encoding: String.Encoding.utf8)
-        let text = xhtml?.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil).replacingOccurrences(of: "\n[\n]+", with: "", options: .regularExpression)
+        let model = BookParser.parseFile(url: url)
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

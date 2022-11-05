@@ -65,7 +65,6 @@ extension LibraryViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellIdentifier) as! BookTableViewCell
-        cell.setup(model: BookModel())
         return cell
     }
 
