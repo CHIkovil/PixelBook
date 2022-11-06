@@ -7,16 +7,26 @@
 
 import Foundation
 
-struct BookModel {
-    struct Chapter {
+public struct BookModel {
+    struct Chapter: Codable {
         let title: String
         let text: String
     }
     
-    let cover: NSData?
+    let cover: Data?
     let title: String
     let author: String
-    let chapter: [Chapter]  
+    let chapters: [Chapter]
+}
+
+extension BookModel: Hashable {
+    public static func == (lhs: BookModel, rhs: BookModel) -> Bool {
+        lhs.hashValue == rhs.hashValue
+    }
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine((title + author).replacingOccurrences(of: " ", with: "").lowercased())
+    }
 }
 
 typealias Chapter = BookModel.Chapter

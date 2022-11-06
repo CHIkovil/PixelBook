@@ -31,9 +31,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         let urlContext = URLContexts.first
-        guard let url = urlContext?.url, let document = EPUBDocument(url: url) else{return}
-        let model = BookParser.parseFile(url: url)
+        guard let url = urlContext?.url else{return}
+        
+        if let book = BookParser.parseFile(url: url) {
+            BookRequests.insert(book)
+        }
     }
+    
+    
 
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.
