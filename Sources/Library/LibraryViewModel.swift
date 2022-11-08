@@ -13,13 +13,14 @@ struct LibraryViewState {
 }
 
 protocol LibraryViewModelProtocol: AnyObject {
+    var books: [BookModel] { get }
     func viewDidLoad()
     var stateDriver: Driver<LibraryViewState> { get }
-    func selectedBook(model: BookModel?)
+    func selectedBook(index: Int)
 }
 
 final class LibraryViewModel: LibraryViewModelProtocol {
-    
+    private(set) lazy var books:[BookModel] = getBooks()
     private lazy var stateRelay = PublishRelay<LibraryViewState>()
     private(set) lazy var stateDriver = stateRelay.asDriver(
         onErrorJustReturn: LibraryViewState()
@@ -35,9 +36,8 @@ final class LibraryViewModel: LibraryViewModelProtocol {
         updateState()
     }
     
-    func selectedBook(model: BookModel?){
-        guard let book = model else{return}
-        self.router.showBook()
+    func selectedBook(index: Int){
+        self.router.showBook(model: books[index])
     }
 }
 
@@ -46,5 +46,10 @@ private extension LibraryViewModel {
         stateRelay.accept(
             LibraryViewState()
         )
+    }
+    
+    func getBooks() -> [BookModel] {
+        guard let books = BookRequests.fetch() else {return []}
+        return books.sorted {$0.title > $1.title}
     }
 }

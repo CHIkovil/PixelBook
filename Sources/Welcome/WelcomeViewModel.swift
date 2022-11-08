@@ -45,5 +45,9 @@ private extension WelcomeViewModel {
         stateRelay.accept(
             WelcomeViewState(quotes: [WelcomeViewState.Quote(text: "Classic – a book which people praise and don’t read.", author: "Mark Twain")])
         )
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {[weak self] in
+            self?.router.showLibrary()
+        }
     }
 }

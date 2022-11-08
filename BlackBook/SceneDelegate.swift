@@ -32,7 +32,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         let urlContext = URLContexts.first
         guard let url = urlContext?.url else{return}
-        
         if let book = BookParser.parseFile(url: url) {
             BookRequests.insert(book)
         }

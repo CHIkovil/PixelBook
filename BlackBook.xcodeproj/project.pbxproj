@@ -15,7 +15,6 @@
 		17820892290D3F4500EFA23C /* WelcomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17820891290D3F4500EFA23C /* WelcomeViewModel.swift */; };
 		17820894290D3F5400EFA23C /* WelcomeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17820893290D3F5400EFA23C /* WelcomeRouter.swift */; };
 		17820899291022FD00EFA23C /* AppColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17820898291022FD00EFA23C /* AppColor.swift */; };
-		178208A029102B6C00EFA23C /* edo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1782089E29102B6C00EFA23C /* edo.ttf */; };
 		178208A329102EB900EFA23C /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178208A229102EB900EFA23C /* Router.swift */; };
 		178208C529140B1300EFA23C /* LibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178208C429140B1300EFA23C /* LibraryViewController.swift */; };
 		178208C729140B2700EFA23C /* LibraryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178208C629140B2700EFA23C /* LibraryViewModel.swift */; };
@@ -25,6 +24,7 @@
 		178208D82916A88800EFA23C /* BookParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178208D72916A88800EFA23C /* BookParser.swift */; };
 		178208E9291828BC00EFA23C /* BlackBook.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 178208E7291828BC00EFA23C /* BlackBook.xcdatamodeld */; };
 		178208EB2918355400EFA23C /* BookRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178208EA2918355400EFA23C /* BookRequests.swift */; };
+		17820927291AEC8800EFA23C /* edo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 17820926291AEC8800EFA23C /* edo.ttf */; };
 		8C2188609C7AA4960F960970 /* Pods_BlackBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A608E7487150B1ECB671798 /* Pods_BlackBook.framework */; };
 /* End PBXBuildFile section */
 
@@ -40,7 +40,6 @@
 		17820891290D3F4500EFA23C /* WelcomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewModel.swift; sourceTree = "<group>"; };
 		17820893290D3F5400EFA23C /* WelcomeRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeRouter.swift; sourceTree = "<group>"; };
 		17820898291022FD00EFA23C /* AppColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColor.swift; sourceTree = "<group>"; };
-		1782089E29102B6C00EFA23C /* edo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = edo.ttf; sourceTree = "<group>"; };
 		178208A229102EB900EFA23C /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		178208C429140B1300EFA23C /* LibraryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewController.swift; sourceTree = "<group>"; };
 		178208C629140B2700EFA23C /* LibraryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewModel.swift; sourceTree = "<group>"; };
@@ -50,6 +49,7 @@
 		178208D72916A88800EFA23C /* BookParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookParser.swift; sourceTree = "<group>"; };
 		178208E8291828BC00EFA23C /* BlackBook.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BlackBook.xcdatamodel; sourceTree = "<group>"; };
 		178208EA2918355400EFA23C /* BookRequests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookRequests.swift; sourceTree = "<group>"; };
+		17820926291AEC8800EFA23C /* edo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = edo.ttf; sourceTree = "<group>"; };
 		2A608E7487150B1ECB671798 /* Pods_BlackBook.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlackBook.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8A0299BF765F76C4AE41D40 /* Pods-BlackBook.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlackBook.release.xcconfig"; path = "Target Support Files/Pods-BlackBook/Pods-BlackBook.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -126,7 +126,7 @@
 		1782089C29102A7400EFA23C /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
-				1782089E29102B6C00EFA23C /* edo.ttf */,
+				17820926291AEC8800EFA23C /* edo.ttf */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
@@ -251,9 +251,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				17820927291AEC8800EFA23C /* edo.ttf in Resources */,
 				17820880290D398800EFA23C /* LaunchScreen.storyboard in Resources */,
 				1782087D290D398800EFA23C /* Assets.xcassets in Resources */,
-				178208A029102B6C00EFA23C /* edo.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -467,8 +467,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = "";
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UIStatusBarStyle = "";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -477,9 +476,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = CHIkovil.BlackBook;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -498,8 +500,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = "";
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UIStatusBarStyle = "";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -508,9 +509,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = CHIkovil.BlackBook;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

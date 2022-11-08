@@ -14,9 +14,9 @@ import SnapKit
 final class WelcomeViewController: UIViewController {
     private enum Constants {
         static let appString = "BlackBook"
-        static let labelWidth: CGFloat = 200
+        static let labelWidth: CGFloat = 300
         static let labelHeight: CGFloat = 70
-        static let labelFontSize: CGFloat = 35
+        static let labelFontSize: CGFloat = 40
     }
 
     lazy var appLabel: UILabel = {
@@ -25,7 +25,7 @@ final class WelcomeViewController: UIViewController {
         label.textAlignment = .center
         label.backgroundColor = .clear
         label.text = Constants.appString
-        label.textColor = AppColor.text
+        label.textColor = AppColor.mainText
         label.layer.shadowColor = UIColor.black.cgColor
         label.layer.shadowRadius = 3.0
         label.layer.shadowOpacity = 1.0

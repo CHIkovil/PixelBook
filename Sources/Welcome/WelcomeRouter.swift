@@ -12,7 +12,12 @@ protocol WelcomeRouterProtocol: AnyObject {
 final class WelcomeRouter: Router<WelcomeViewController>, WelcomeRouterProtocol {
     
     func showLibrary() {
-        
+        let controller = LibraryViewController()
+        let router = LibraryRouter(viewController: controller)
+        let viewModel = LibraryViewModel(router: router)
+        controller.setup(viewModel: viewModel)
+        controller.modalPresentationStyle = .overFullScreen
+        viewController?.present(controller, animated: true)
     }
 }
 
