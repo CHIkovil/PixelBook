@@ -14,16 +14,19 @@ import SnapKit
 final class LibraryViewController: UIViewController {
     private enum Constants {
         static let cellIdentifier = "BookCell"
-        static let tableCornerRadius: CGFloat = 10
+        static let currentViewHeight: CGFloat = 300
+        static let contentOffset: CGFloat = 10
     }
+    
+    private lazy var currentBookView: CurrentBookView = {
+        let view = CurrentBookView()
+        return view
+    }()
     
     private lazy var booksTableView: UITableView = {
         let tableView = UITableView()
         tableView.register(BookTableViewCell.self, forCellReuseIdentifier: Constants.cellIdentifier)
         tableView.backgroundColor = AppColor.background
-        tableView.clipsToBounds = true
-        tableView.layer.cornerRadius = Constants.tableCornerRadius
-        tableView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         tableView.separatorStyle = .none
         tableView.allowsMultipleSelection = false
         tableView.keyboardDismissMode = .onDrag
@@ -64,11 +67,19 @@ final class LibraryViewController: UIViewController {
 private extension LibraryViewController {
     func addUI() {
         view.backgroundColor = AppColor.background
+        view.addSubview(currentBookView)
         view.addSubview(booksTableView)
+        
+        currentBookView.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(view.snp.top)
+            $0.height.equalTo(Constants.currentViewHeight)
+            $0.width.equalToSuperview()
+        }
         
         booksTableView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(view.snp.centerY)
+            $0.top.equalTo(currentBookView.snp.bottom).offset(Constants.contentOffset)
             $0.bottom.equalTo(view.snp.bottom)
             $0.width.equalToSuperview()
         }

@@ -16,9 +16,7 @@
 		</dict>
 	</array>
 	<key>UIAppFonts</key>
-	<array>
-		<string>edo.ttf</string>
-	</array>
+	<array/>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

@@ -10,12 +10,11 @@ import UIKit
 
 final class BookTableViewCell: UITableViewCell {
     private enum Constants {
-        static let imageWidth: CGFloat = 90
-        static let labelHeight: CGFloat = 40
-        static let labelWidth: CGFloat = 300
+        static let imageWidth: CGFloat = 87
+        static let labelHeight: CGFloat = 30
         static let labelFontSizeBase: CGFloat = 17
         static let labelFontSizeInterlineation: CGFloat = 12
-        static let cellCornerRadius: CGFloat = 10
+        static let viewCornerRadius: CGFloat = 10
         static let contentOffset = 20
     }
     
@@ -40,7 +39,7 @@ final class BookTableViewCell: UITableViewCell {
     lazy var authorLabel: UILabel = {
         let label = UILabel()
         label.backgroundColor = .clear
-        label.font = label.font.withSize(Constants.labelFontSizeInterlineation)
+        label.font = UIFont.italicSystemFont(ofSize: Constants.labelFontSizeInterlineation)
         label.textColor = AppColor.supportText
         return label
     }()
@@ -62,7 +61,7 @@ final class BookTableViewCell: UITableViewCell {
         layer.masksToBounds = false
         layer.borderColor = AppColor.contentBorder.cgColor
         layer.borderWidth = 0.5
-        layer.cornerRadius = Constants.cellCornerRadius
+        layer.cornerRadius = Constants.viewCornerRadius
         addSubview(coverImageView)
         addSubview(titleLabel)
         addSubview(authorLabel)
@@ -75,17 +74,17 @@ final class BookTableViewCell: UITableViewCell {
         }
         
         titleLabel.snp.makeConstraints {
-            $0.bottom.equalTo(self.snp.centerY)
+            $0.top.equalTo(self.snp.top).offset(Constants.contentOffset)
             $0.leading.equalTo(coverImageView.snp.trailing).offset(Constants.contentOffset)
             $0.height.equalTo(Constants.labelHeight)
-            $0.width.equalTo(Constants.labelWidth)
+            $0.trailing.equalTo(self.snp.trailing).offset(-Constants.contentOffset)
         }
         
         authorLabel.snp.makeConstraints {
-            $0.top.equalTo(self.snp.centerY)
+            $0.top.equalTo(titleLabel.snp.bottom)
             $0.leading.equalTo(coverImageView.snp.trailing).offset(Constants.contentOffset)
             $0.height.equalTo(Constants.labelHeight)
-            $0.width.equalTo(Constants.labelWidth)
+            $0.trailing.equalTo(self.snp.trailing).offset(-Constants.contentOffset)
         }
     }
 

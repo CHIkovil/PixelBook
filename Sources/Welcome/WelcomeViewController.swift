@@ -16,12 +16,12 @@ final class WelcomeViewController: UIViewController {
         static let appString = "BlackBook"
         static let labelWidth: CGFloat = 300
         static let labelHeight: CGFloat = 70
-        static let labelFontSize: CGFloat = 40
+        static let labelFontSize: CGFloat = 45
     }
 
     lazy var appLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "edo", size: Constants.labelFontSize)
+        label.font = label.font.withSize(Constants.labelFontSize)
         label.textAlignment = .center
         label.backgroundColor = .clear
         label.text = Constants.appString
