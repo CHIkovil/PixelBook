@@ -10,44 +10,41 @@ import UIKit
 
 final class BookViewController: UIViewController{
     
-    private var modelController: PageModelController?
-    
-    private lazy var pageViewController: UIPageViewController = {
-        let vc = UIPageViewController(transitionStyle: .pageCurl, navigationOrientation: .horizontal, options: nil)
-        vc.delegate = self
-        return vc
+    private lazy var contentViewController: UIPageViewController = {
+        let viewController = UIPageViewController(transitionStyle: .pageCurl, navigationOrientation: .horizontal, options: nil)
+        viewController.delegate = self
+        return viewController
     }()
-    
-    private var viewModel: BookViewModelProtocol!
     
     override func loadView() {
         super.loadView()
-        if let dataViewController = modelController?.viewControllerAtIndex(0) {
-            let startingViewController: PageDataViewController = dataViewController
+        if let viewController = pagesController?.viewControllerAtIndex(0) {
+            let startingViewController: BookPageViewController = viewController
             let viewControllers = [startingViewController]
-            pageViewController.setViewControllers(viewControllers, direction: .forward, animated: false, completion: {done in })
+            contentViewController.setViewControllers(viewControllers, direction: .forward, animated: false, completion: {done in })
         }
         
-        pageViewController.dataSource = modelController
-        self.view.addSubview(pageViewController.view)
-    
-        pageViewController.view.frame = self.view.bounds
-        pageViewController.didMove(toParent: self)
+        contentViewController.dataSource = pagesController
+        contentViewController.view.frame = self.view.bounds
+        self.view.addSubview(contentViewController.view)
+        contentViewController.didMove(toParent: self)
     }
     
+    private var pagesController: BookPagesController?
+    
     func setup(viewModel: BookViewModelProtocol) {
-        self.viewModel = viewModel
-        self.modelController = PageModelController(viewModel.getPages())
+        let pages = viewModel.getPages()
+        self.pagesController = BookPagesController(pages)
     }
 }
 
 extension BookViewController: UIPageViewControllerDelegate {
     func pageViewController(_ pageViewController: UIPageViewController, spineLocationFor orientation: UIInterfaceOrientation) -> UIPageViewController.SpineLocation {
         
-            let currentViewController = pageViewController.viewControllers?[0] ?? UIViewController()
-            let currentViewControllers = [currentViewController]
+            let viewController = pageViewController.viewControllers?[0] ?? UIViewController()
+            let viewControllers = [viewController]
             
-            pageViewController.setViewControllers(currentViewControllers,
+            pageViewController.setViewControllers(viewControllers,
                                                   direction  : .forward,
                                                   animated   : true,
                                                   completion : { done in })

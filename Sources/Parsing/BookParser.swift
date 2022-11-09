@@ -21,6 +21,16 @@ final class BookParser  {
         }
     }
     
+    static func parseModelToPages(model: BookModel) -> [String] {
+        var pages: [String] = []
+        let chapters = model.chapters
+        chapters.forEach {chapter in
+            let nextPages = chapter.text.split(separator: "\n").map {String($0)}
+            pages += Array(nextPages)
+        }
+        return pages
+    }
+    
     private static func parseEpub(url: URL) -> BookModel? {
         
         guard let document = EPUBDocument(url: url), let contents = document.tableOfContents.subTable else{return nil}

@@ -1,5 +1,5 @@
 //
-//  ModelViewController.swift
+//  BookPagesController.swift
 //  BlackBook
 //
 //  Created by Nikolas on 09.11.2022.
@@ -8,27 +8,26 @@
 import ObjectiveC
 import UIKit
 
-class PageModelController: NSObject {
+class BookPagesController: NSObject {
     let items: [String]
     
     init(_ items: [String]) {
         self.items = items
     }
     
-    func viewControllerAtIndex(_ index: Int) -> PageDataViewController? {
-        
+    func viewControllerAtIndex(_ index: Int) -> BookPageViewController? {
         if (items.count == 0) || (index >= items.count - 1) {
             return nil
         }
         
-        let dataViewController = PageDataViewController()
-        dataViewController.data = items[index]
-        return dataViewController
+        let vc = BookPageViewController()
+        vc.item = items[index]
+        return vc
     }
 
     
-    func indexOfViewController(_ viewController: PageDataViewController) -> Int {
-        let page = viewController.data
+    func indexOfViewController(_ viewController: BookPageViewController) -> Int {
+        let page = viewController.item
         var pageIndex = 0
         
         if let index = items.firstIndex(where: { $0 == page }) {
@@ -41,11 +40,11 @@ class PageModelController: NSObject {
     }
 }
 
-extension PageModelController: UIPageViewControllerDataSource {
+extension BookPagesController: UIPageViewControllerDataSource {
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         var index = Int()
     
-        if let vc = viewController as? PageDataViewController {
+        if let vc = viewController as? BookPageViewController {
             index = indexOfViewController(vc)
             if (index == 0) || (index == NSNotFound) {
                 return nil
@@ -60,7 +59,7 @@ extension PageModelController: UIPageViewControllerDataSource {
 
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        var index = indexOfViewController(viewController as! PageDataViewController)
+        var index = indexOfViewController(viewController as! BookPageViewController)
         if index == NSNotFound {
             return nil
         }

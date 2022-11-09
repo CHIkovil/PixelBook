@@ -28,8 +28,8 @@
 		17820932291BC79E00EFA23C /* BookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17820931291BC79E00EFA23C /* BookViewController.swift */; };
 		17820934291BC7B100EFA23C /* BookViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17820933291BC7B100EFA23C /* BookViewModel.swift */; };
 		17820936291BC7C000EFA23C /* BookRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17820935291BC7C000EFA23C /* BookRouter.swift */; };
-		17820938291BCEBF00EFA23C /* PageDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17820937291BCEBF00EFA23C /* PageDataViewController.swift */; };
-		1782093A291BFE3800EFA23C /* PageModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17820939291BFE3800EFA23C /* PageModelController.swift */; };
+		17820938291BCEBF00EFA23C /* BookPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17820937291BCEBF00EFA23C /* BookPageViewController.swift */; };
+		1782093A291BFE3800EFA23C /* BookPagesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17820939291BFE3800EFA23C /* BookPagesController.swift */; };
 		8C2188609C7AA4960F960970 /* Pods_BlackBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A608E7487150B1ECB671798 /* Pods_BlackBook.framework */; };
 /* End PBXBuildFile section */
 
@@ -58,8 +58,8 @@
 		17820931291BC79E00EFA23C /* BookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookViewController.swift; sourceTree = "<group>"; };
 		17820933291BC7B100EFA23C /* BookViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookViewModel.swift; sourceTree = "<group>"; };
 		17820935291BC7C000EFA23C /* BookRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookRouter.swift; sourceTree = "<group>"; };
-		17820937291BCEBF00EFA23C /* PageDataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageDataViewController.swift; sourceTree = "<group>"; };
-		17820939291BFE3800EFA23C /* PageModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageModelController.swift; sourceTree = "<group>"; };
+		17820937291BCEBF00EFA23C /* BookPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookPageViewController.swift; sourceTree = "<group>"; };
+		17820939291BFE3800EFA23C /* BookPagesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookPagesController.swift; sourceTree = "<group>"; };
 		2A608E7487150B1ECB671798 /* Pods_BlackBook.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlackBook.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8A0299BF765F76C4AE41D40 /* Pods-BlackBook.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlackBook.release.xcconfig"; path = "Target Support Files/Pods-BlackBook/Pods-BlackBook.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -155,8 +155,8 @@
 		178208CC291410A200EFA23C /* Book */ = {
 			isa = PBXGroup;
 			children = (
-				17820937291BCEBF00EFA23C /* PageDataViewController.swift */,
-				17820939291BFE3800EFA23C /* PageModelController.swift */,
+				17820937291BCEBF00EFA23C /* BookPageViewController.swift */,
+				17820939291BFE3800EFA23C /* BookPagesController.swift */,
 				178208CD291410B900EFA23C /* BookModel.swift */,
 				17820931291BC79E00EFA23C /* BookViewController.swift */,
 				17820933291BC7B100EFA23C /* BookViewModel.swift */,
@@ -312,12 +312,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				17820938291BCEBF00EFA23C /* PageDataViewController.swift in Sources */,
+				17820938291BCEBF00EFA23C /* BookPageViewController.swift in Sources */,
 				178208C929140B3D00EFA23C /* LibraryRouter.swift in Sources */,
 				1782088F290D3ED300EFA23C /* WelcomeViewController.swift in Sources */,
 				17820899291022FD00EFA23C /* AppColor.swift in Sources */,
 				17820936291BC7C000EFA23C /* BookRouter.swift in Sources */,
-				1782093A291BFE3800EFA23C /* PageModelController.swift in Sources */,
+				1782093A291BFE3800EFA23C /* BookPagesController.swift in Sources */,
 				178208CB29140E1700EFA23C /* LibraryTableViewCell.swift in Sources */,
 				17820932291BC79E00EFA23C /* BookViewController.swift in Sources */,
 				17820934291BC7B100EFA23C /* BookViewModel.swift in Sources */,

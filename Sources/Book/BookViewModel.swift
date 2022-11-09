@@ -22,12 +22,6 @@ final class BookViewModel: BookViewModelProtocol {
     }
     
     func getPages() -> [String] {
-        var pages: [String] = []
-        let chapters = model.chapters
-        chapters.forEach {chapter in
-            let nextPages = chapter.text.split(separator: "\n").map {String($0)}
-            pages += Array(nextPages)
-        }
-        return pages
+        return BookParser.parseModelToPages(model: model)
     }
 }

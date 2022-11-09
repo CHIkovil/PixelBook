@@ -17,7 +17,7 @@ final class WelcomeRouter: Router<WelcomeViewController>, WelcomeRouterProtocol 
         let viewModel = LibraryViewModel(router: router)
         controller.setup(viewModel: viewModel)
         controller.modalPresentationStyle = .overFullScreen
-        viewController?.present(controller, animated: true)
+        viewController?.present(controller, animated: false)
     }
 }
 
