@@ -1,5 +1,5 @@
 //
-//  CurrentBookView.swift
+//  LibraryCurrentItemView.swift
 //  BlackBook
 //
 //  Created by Nikolas on 09.11.2022.
@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-final class CurrentBookView: UIView {
+final class LibraryCurrentItemView: UIView {
     private enum Constants {
         static let recentText = "ВЫ НЕДАВНО ЧИТАЛИ:"
         static let continueText = "ПРОДОЛЖИТЬ"

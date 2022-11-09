@@ -18,14 +18,14 @@ final class LibraryViewController: UIViewController {
         static let contentOffset: CGFloat = 10
     }
     
-    private lazy var currentBookView: CurrentBookView = {
-        let view = CurrentBookView()
+    private lazy var currentBookView: LibraryCurrentItemView = {
+        let view = LibraryCurrentItemView()
         return view
     }()
     
     private lazy var booksTableView: UITableView = {
         let tableView = UITableView()
-        tableView.register(BookTableViewCell.self, forCellReuseIdentifier: Constants.cellIdentifier)
+        tableView.register(LibraryTableViewCell.self, forCellReuseIdentifier: Constants.cellIdentifier)
         tableView.backgroundColor = AppColor.background
         tableView.separatorStyle = .none
         tableView.allowsMultipleSelection = false
@@ -38,34 +38,11 @@ final class LibraryViewController: UIViewController {
         return tableView
     }()
     
-    private var selectedBookRelay = BehaviorRelay<Int?>(value: nil)
     private var viewModel: LibraryViewModelProtocol!
     private let disposeBag = DisposeBag()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        viewModel.viewDidLoad()
-    }
-    
-    func setup(viewModel: LibraryViewModelProtocol) {
-        self.viewModel = viewModel
-        
-        selectedBookRelay
-            .subscribe(onNext: { [weak self] index in
-                guard let index = index else {return}
-                self?.viewModel.selectedBook(index: index)
-            })
-            .disposed(by: disposeBag)
-        
-        viewModel.stateDriver
-            .drive(onNext: { [weak self] _ in
-                self?.addUI()
-            }).disposed(by: disposeBag)
-    }
-}
-
-private extension LibraryViewController {
-    func addUI() {
+    override func loadView() {
+        super.loadView()
         view.backgroundColor = AppColor.background
         view.addSubview(currentBookView)
         view.addSubview(booksTableView)
@@ -84,6 +61,10 @@ private extension LibraryViewController {
             $0.width.equalToSuperview()
         }
     }
+    
+    func setup(viewModel: LibraryViewModelProtocol) {
+        self.viewModel = viewModel
+    }
 }
 
 extension LibraryViewController: UITableViewDelegate, UITableViewDataSource {
@@ -92,7 +73,7 @@ extension LibraryViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellIdentifier) as! BookTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellIdentifier) as! LibraryTableViewCell
         cell.setup(model: viewModel.books[indexPath.item])
         return cell
     }
@@ -102,6 +83,6 @@ extension LibraryViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectedBookRelay.accept(indexPath.item)
+        viewModel?.selectedBookRelay.accept(indexPath.item)
     }
 }

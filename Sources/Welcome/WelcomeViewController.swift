@@ -37,22 +37,8 @@ final class WelcomeViewController: UIViewController {
     private var viewModel: WelcomeViewModelProtocol?
     private let disposeBag = DisposeBag()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        viewModel?.viewDidLoad()
-    }
-    
-    func setup(viewModel: WelcomeViewModelProtocol) {
-        self.viewModel = viewModel
-        viewModel.stateDriver
-            .drive(onNext: { [weak self] state in
-                self?.addUI(state)
-            }).disposed(by: disposeBag)
-    }
-}
-
-private extension WelcomeViewController {
-    func addUI(_ state: WelcomeViewState) {
+    override func loadView() {
+        super.loadView()
         view.backgroundColor = AppColor.background
         view.addSubview(appLabel)
         
@@ -62,6 +48,21 @@ private extension WelcomeViewController {
             $0.width.equalTo(Constants.labelWidth)
             $0.height.equalTo(Constants.labelHeight)
         }
+    }
+    
+    func setup(viewModel: WelcomeViewModelProtocol) {
+        self.viewModel = viewModel
+        viewModel.quotesDriver
+            .drive(onNext: { [weak self] quotes in
+                guard let self = self else{return}
+                self.showQuotes(quotes)
+            }).disposed(by: disposeBag)
+    }
+}
+
+private extension WelcomeViewController {
+    func showQuotes(_ quotes: WelcomeViewModel.Quotes) {
+
         
     }
 }

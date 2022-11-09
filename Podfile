@@ -19,4 +19,5 @@ target 'BlackBook' do
   rx_pods
   pod 'SnapKit'
   pod 'EPUBKit'
+  pod 'SwiftSoup'
 end

@@ -8,6 +8,7 @@
 import Foundation
 import EPUBKit
 import UIKit
+import SwiftSoup
 
 
 final class BookParser  {
@@ -21,18 +22,27 @@ final class BookParser  {
     }
     
     private static func parseEpub(url: URL) -> BookModel? {
+        
         guard let document = EPUBDocument(url: url), let contents = document.tableOfContents.subTable else{return nil}
         
         var chapters: [Chapter] = []
         contents.forEach { content in
-            guard let item = content.item else{return}
-            let file = String(item.components(separatedBy: ".xhtml")[0]) + ".xhtml"
-            let path = document.contentDirectory.appendingPathComponent(file).path
-            let xhtml = try? String(contentsOfFile: path, encoding: String.Encoding.utf8)
-            let text = xhtml?.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
-            guard let text = text else{return}
-            
-            chapters.append(Chapter(title: content.label, text: text))
+            do {
+                guard let item = content.item else{return}
+                let file = String(item.components(separatedBy: ".xhtml")[0]) + ".xhtml"
+                let url = document.contentDirectory.appendingPathComponent(file)
+                
+                let xhtml = try String(contentsOfFile: url.path, encoding: String.Encoding.utf8)
+                
+                let chapter = try SwiftSoup.parse(xhtml)
+                let paragraphs = try chapter.select("p").eachText()
+                
+                let text = paragraphs.joined(separator: "\n")
+                
+                chapters.append(Chapter(title: content.label, text: text))
+            }catch {
+                return
+            }
         }
         
         var cover: Data?
@@ -47,3 +57,4 @@ final class BookParser  {
         }
     }
 }
+

@@ -14,6 +14,11 @@ protocol LibraryRouterProtocol: AnyObject {
 final class LibraryRouter: Router<LibraryViewController>, LibraryRouterProtocol {
     
     func showBook(model: BookModel) {
-        
+        let controller = BookViewController()
+        let router = BookRouter(viewController: controller)
+        let viewModel = BookViewModel(router: router, model: model)
+        controller.setup(viewModel: viewModel)
+        controller.modalPresentationStyle = .overFullScreen
+        viewController?.present(controller, animated: true)
     }
 }

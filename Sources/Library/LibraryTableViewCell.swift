@@ -1,5 +1,5 @@
 //
-//  BookTableViewCell.swift
+//  LibraryTableViewCell.swift
 //  BlackBook
 //
 //  Created by Nikolas on 03.11.2022.
@@ -8,7 +8,7 @@
 import SnapKit
 import UIKit
 
-final class BookTableViewCell: UITableViewCell {
+final class LibraryTableViewCell: UITableViewCell {
     private enum Constants {
         static let imageWidth: CGFloat = 87
         static let labelHeight: CGFloat = 30
