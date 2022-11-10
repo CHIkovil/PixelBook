@@ -8,12 +8,13 @@ import RxCocoa
 import RxSwift
 
 protocol LibraryViewModelProtocol: AnyObject {
-    var books: [BookModel] { get }
+    var books: [BookModel]? { get }
+    func reloadBooks()
     var selectedBookRelay: PublishRelay<Int> { get }
 }
 
 final class LibraryViewModel: LibraryViewModelProtocol {
-    private(set) lazy var books:[BookModel] = getBooks()
+    private(set) var books:[BookModel]?
     let selectedBookRelay = PublishRelay<Int>()
 
     
@@ -28,16 +29,18 @@ final class LibraryViewModel: LibraryViewModelProtocol {
                 self.selectedBook(index)
             })
             .disposed(by: disposeBag)
+        
+    }
+    
+    func reloadBooks() {
+        guard let books = BookRequests.fetch() else {return}
+        self.books = books.sorted {$0.title > $1.title}
     }
 }
 
 private extension LibraryViewModel {
-    func getBooks() -> [BookModel] {
-        guard let books = BookRequests.fetch() else {return []}
-        return books.sorted {$0.title > $1.title}
-    }
-    
     func selectedBook(_ index: Int){
+        guard let books = books else{return}
         self.router.showBook(model: books[index])
     }
 }

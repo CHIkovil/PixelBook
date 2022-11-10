@@ -46,7 +46,7 @@ extension BookViewController: UIPageViewControllerDelegate {
                                               animated   : true,
                                               completion : { done in })
         
-        pageViewController.isDoubleSided = true
+        pageViewController.isDoubleSided = false
         return .min
     }
 }

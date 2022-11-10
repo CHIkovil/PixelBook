@@ -50,6 +50,11 @@ final class WelcomeViewController: UIViewController {
         }
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        viewModel?.moveToLibrary()
+    }
+    
     func setup(viewModel: WelcomeViewModelProtocol) {
         self.viewModel = viewModel
         viewModel.quotesDriver

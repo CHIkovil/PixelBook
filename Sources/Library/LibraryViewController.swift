@@ -41,6 +41,10 @@ final class LibraryViewController: UIViewController {
     private var viewModel: LibraryViewModelProtocol!
     private let disposeBag = DisposeBag()
     
+    deinit {
+       NotificationCenter.default.removeObserver(self)
+    }
+    
     override func loadView() {
         super.loadView()
         view.backgroundColor = AppColor.background
@@ -62,19 +66,41 @@ final class LibraryViewController: UIViewController {
         }
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        NotificationCenter.default.addObserver(self,
+                                                  selector: #selector(didBecomeActiveNotification(notification:)),
+                                                  name: UIApplication.didBecomeActiveNotification,
+                                                  object: nil)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.viewModel.reloadBooks()
+    }
+    
     func setup(viewModel: LibraryViewModelProtocol) {
         self.viewModel = viewModel
     }
 }
 
+private extension LibraryViewController {
+    @objc func didBecomeActiveNotification(notification: Notification){
+        viewModel.reloadBooks()
+        booksTableView.reloadData()
+    }
+}
+
 extension LibraryViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        viewModel.books.count
+        guard let books = viewModel.books else{return 0}
+        return books.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellIdentifier) as! LibraryTableViewCell
-        cell.setup(model: viewModel.books[indexPath.item])
+        guard let books = viewModel.books else{return cell}
+        cell.setup(model: books[indexPath.item])
         return cell
     }
 

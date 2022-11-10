@@ -10,6 +10,7 @@ import RxSwift
 
 protocol WelcomeViewModelProtocol: AnyObject {
     var quotesDriver: Driver<WelcomeViewModel.Quotes> { get }
+    func moveToLibrary()
 }
 
 final class WelcomeViewModel: WelcomeViewModelProtocol {
@@ -24,7 +25,10 @@ final class WelcomeViewModel: WelcomeViewModelProtocol {
     
     init(router: WelcomeRouterProtocol) {
         self.router = router
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {[weak self] in
+    }
+    
+    func moveToLibrary() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {[weak self] in
             self?.router.showLibrary()
         }
     }
