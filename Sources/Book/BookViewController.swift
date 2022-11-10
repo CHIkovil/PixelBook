@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 
 final class BookViewController: UIViewController{
+    private var pagesController: BookPagesController?
     
     private lazy var contentViewController: UIPageViewController = {
         let viewController = UIPageViewController(transitionStyle: .pageCurl, navigationOrientation: .horizontal, options: nil)
@@ -30,8 +31,6 @@ final class BookViewController: UIViewController{
         contentViewController.didMove(toParent: self)
     }
     
-    private var pagesController: BookPagesController?
-    
     func setup(viewModel: BookViewModelProtocol) {
         let pages = viewModel.getPages()
         self.pagesController = BookPagesController(pages)
@@ -40,17 +39,15 @@ final class BookViewController: UIViewController{
 
 extension BookViewController: UIPageViewControllerDelegate {
     func pageViewController(_ pageViewController: UIPageViewController, spineLocationFor orientation: UIInterfaceOrientation) -> UIPageViewController.SpineLocation {
+        let viewController = pageViewController.viewControllers?[0] ?? UIViewController()
+        let viewControllers = [viewController]
+        pageViewController.setViewControllers(viewControllers,
+                                              direction  : .forward,
+                                              animated   : true,
+                                              completion : { done in })
         
-            let viewController = pageViewController.viewControllers?[0] ?? UIViewController()
-            let viewControllers = [viewController]
-            
-            pageViewController.setViewControllers(viewControllers,
-                                                  direction  : .forward,
-                                                  animated   : true,
-                                                  completion : { done in })
-            
-            pageViewController.isDoubleSided = false
-            return .min
+        pageViewController.isDoubleSided = true
+        return .min
     }
 }
 

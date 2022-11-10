@@ -7,6 +7,7 @@
 import UIKit
 
 enum AppColor {
+    static let readText: UIColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
     static let mainText: UIColor = .white
     static let supportText: UIColor = UIColor(0x767676)
     static let background = UIColor(0x000000)

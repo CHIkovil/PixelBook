@@ -21,11 +21,8 @@ class BookPageViewController: UIViewController {
     private lazy var textView:UITextView = {
         let textView = UITextView()
         textView.backgroundColor = AppColor.contentBackground
-        textView.textColor = AppColor.mainText
         textView.frame = self.view.bounds
-        textView.font = UIFont(name: ".SFUIText", size: Constants.fontSize)
-        textView.textContainerInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
-        textView.textAlignment = .justified
+        textView.textContainerInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
         textView.layoutManager.usesDefaultHyphenation = true
         textView.isUserInteractionEnabled = false
         return textView
@@ -45,6 +42,14 @@ class BookPageViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        textView.text = item
+        let style = NSMutableParagraphStyle()
+        style.lineSpacing = 7
+        style.alignment = .justified
+        let attrs: [NSAttributedString.Key : Any] = [.kern: 0,
+                                                     .font: UIFont(name: "Arial", size: Constants.fontSize) as Any,
+                                                     .foregroundColor:
+                                                        AppColor.readText,
+                                                     .paragraphStyle : style]
+        textView.attributedText = NSAttributedString(string: item, attributes: attrs)
     }
 }

@@ -77,21 +77,17 @@ class BookRequests {
     private static func check(_ book: BookModel) -> BlackBook.Book?{
         do {
             let fetchRequest = NSFetchRequest<BlackBook.Book>(entityName: Constants.entityName)
+            let predicateTitle = NSPredicate(format: "title = %@", book.title)
+            let predicateAuthor = NSPredicate(format: "author = %@", book.author)
+            let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicateTitle, predicateAuthor])
+            fetchRequest.predicate = predicate
+            
             let results = try context.fetch(fetchRequest)
-            
-            let filteredResult = results.filter {
-                var hasher = Hasher()
-                hasher.combine(($0.title! + $0.author!).replacingOccurrences(of: " ", with: "").lowercased())
-                
-                return hasher.finalize() == book.hashValue
-            }
-            
             try context.save()
-
-            if let item = filteredResult.first{
-                return item
-            }
-            else{
+            
+            if !results.isEmpty {
+                return results.first
+            }else{
                 return nil
             }
         } catch {
