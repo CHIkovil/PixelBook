@@ -9,7 +9,7 @@ import Foundation
 
 
 protocol BookViewModelProtocol: AnyObject {
-    func getPages() -> [String]
+    func getModel() -> BookModel
 }
 
 final class BookViewModel: BookViewModelProtocol {
@@ -21,7 +21,7 @@ final class BookViewModel: BookViewModelProtocol {
         self.model = model
     }
     
-    func getPages() -> [String] {
-        return BookParser.parseModelToPages(model: model)
+    func getModel() -> BookModel{
+        return model
     }
 }

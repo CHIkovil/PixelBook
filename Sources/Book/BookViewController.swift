@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-final class BookViewController: UIViewController{
+final class BookViewController: UIViewController{    
     private var pagesController: BookPagesController?
     
     private lazy var contentViewController: UIPageViewController = {
@@ -32,8 +32,10 @@ final class BookViewController: UIViewController{
     }
     
     func setup(viewModel: BookViewModelProtocol) {
-        let pages = viewModel.getPages()
-        self.pagesController = BookPagesController(pages)
+        let model = viewModel.getModel()
+        let controller = BookPagesController()
+        controller.setup(model: model)
+        self.pagesController = controller
     }
 }
 

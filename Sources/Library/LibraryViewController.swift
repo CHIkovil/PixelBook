@@ -9,6 +9,7 @@ import UIKit
 import RxCocoa
 import RxSwift
 import SnapKit
+import CoreData
 
 
 final class LibraryViewController: UIViewController {
@@ -16,7 +17,10 @@ final class LibraryViewController: UIViewController {
         static let cellIdentifier = "BookCell"
         static let currentViewHeight: CGFloat = 300
         static let contentOffset: CGFloat = 10
+        static let sortedKey: String = "title"
     }
+    
+    private var fetchBooksController: NSFetchedResultsController<BlackBook.Book>?
     
     private lazy var currentBookView: LibraryCurrentItemView = {
         let view = LibraryCurrentItemView()
@@ -69,38 +73,75 @@ final class LibraryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self,
-                                                  selector: #selector(didBecomeActiveNotification(notification:)),
-                                                  name: UIApplication.didBecomeActiveNotification,
-                                                  object: nil)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        self.viewModel.reloadBooks()
+                                               selector: #selector(self.managedObjectContextDidChange(notification:)),
+                                               name: .NSManagedObjectContextObjectsDidChange,
+                                               object: nil)
     }
     
     func setup(viewModel: LibraryViewModelProtocol) {
         self.viewModel = viewModel
+        self.setupFetchedBooks()
+    }
+    
+    private func setupFetchedBooks(){
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        let request = NSFetchRequest<BlackBook.Book>(entityName: AppConstants.bookEntityName)
+        request.sortDescriptors = [NSSortDescriptor(key: Constants.sortedKey,ascending: true)]
+        fetchBooksController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+        fetchBooksController?.delegate = self
+        do {
+            try fetchBooksController?.performFetch()
+        } catch{
+        
+        }
     }
 }
 
 private extension LibraryViewController {
-    @objc func didBecomeActiveNotification(notification: Notification){
-        viewModel.reloadBooks()
+    @objc func managedObjectContextDidChange(notification: Notification){
         booksTableView.reloadData()
+    }
+}
+
+
+extension LibraryViewController: NSFetchedResultsControllerDelegate {
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        booksTableView.beginUpdates()
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        booksTableView.endUpdates()
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        switch type {
+        case .insert:
+            guard let insertIndex = newIndexPath else{return}
+            booksTableView.insertRows(at: [insertIndex], with: .automatic)
+        case .delete:
+            guard let deleteIndex = indexPath else{return}
+            booksTableView.deleteRows(at: [deleteIndex], with: .automatic)
+        case .move:
+            guard let fromIndex = indexPath, let toIndex = newIndexPath else{return}
+            booksTableView.moveRow(at: fromIndex, to: toIndex)
+        case .update:
+            guard let updateindex = indexPath else{return}
+            booksTableView.reloadRows(at: [updateindex], with: .automatic)
+        @unknown default:
+            fatalError("Unhandled case")
+        }
     }
 }
 
 extension LibraryViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        guard let books = viewModel.books else{return 0}
-        return books.count
+        return fetchBooksController?.fetchedObjects?.count ?? 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellIdentifier) as! LibraryTableViewCell
-        guard let books = viewModel.books else{return cell}
-        cell.setup(model: books[indexPath.item])
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellIdentifier) as? LibraryTableViewCell, let item = fetchBooksController?.object(at: indexPath) as? BlackBook.Book else {fatalError("Wrong cell indetifier requested")}
+        let model = BookRequests.convertToModel(item)
+        cell.setup(model)
         return cell
     }
 
@@ -109,6 +150,8 @@ extension LibraryViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-        viewModel?.selectedBookRelay.accept(indexPath.item)
+        guard let item = fetchBooksController?.object(at: indexPath) as? BlackBook.Book else {fatalError("Wrong cell indetifier requested")}
+        let model = BookRequests.convertToModel(item)
+        viewModel?.selectedBookRelay.accept(model)
     }
 }

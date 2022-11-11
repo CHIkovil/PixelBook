@@ -8,7 +8,6 @@
 import Foundation
 import EPUBKit
 import UIKit
-import SwiftSoup
 
 
 final class BookParser  {
@@ -19,16 +18,6 @@ final class BookParser  {
         default:
             return nil
         }
-    }
-    
-    static func parseModelToPages(model: BookModel) -> [String] {
-        var pages: [String] = []
-        let chapters = model.chapters
-        chapters.forEach {chapter in
-            let nextPages = chapter.text.split(separator: "\n").map {String($0)}
-            pages += Array(nextPages)
-        }
-        return pages
     }
     
     private static func parseEpub(url: URL) -> BookModel? {
@@ -43,13 +32,7 @@ final class BookParser  {
                 let url = document.contentDirectory.appendingPathComponent(file)
                 
                 let xhtml = try String(contentsOfFile: url.path, encoding: String.Encoding.utf8)
-                
-                let chapter = try SwiftSoup.parse(xhtml)
-                let paragraphs = try chapter.select("p").eachText()
-                
-                let text = paragraphs.joined(separator: "\n")
-                
-                chapters.append(Chapter(title: content.label, text: text))
+                chapters.append(Chapter(title: content.label, xhtml: xhtml))
             }catch {
                 return
             }

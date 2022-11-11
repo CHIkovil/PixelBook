@@ -8,12 +8,12 @@
 import Foundation
 
 protocol LibraryRouterProtocol: AnyObject {
-    func showBook(model: BookModel)
+    func showBook(_ model: BookModel)
 }
 
 final class LibraryRouter: Router<LibraryViewController>, LibraryRouterProtocol {
     
-    func showBook(model: BookModel) {
+    func showBook(_ model: BookModel) {
         let controller = BookViewController()
         let router = BookRouter(viewController: controller)
         let viewModel = BookViewModel(router: router, model: model)

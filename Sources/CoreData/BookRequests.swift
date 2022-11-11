@@ -10,12 +10,16 @@ import UIKit
 import CoreData
 
 class BookRequests {
-    enum Constants {
-        static let entityName: String = "Book"
-    }
-    
     private static let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
+    static func convertToModel(_ item: BlackBook.Book) -> BookModel{
+        let chapters: [Chapter] = try! JSONDecoder().decode([Chapter].self, from: item.chapters!)
+        let book = BookModel(cover: item.cover,
+                             title: item.title!,
+                             author: item.author!,
+                             chapters: chapters)
+        return book
+    }
     
     static func insert(_ book: BookModel) {
         do {
@@ -23,7 +27,7 @@ class BookRequests {
                 return
             }
             
-            let newItem = NSEntityDescription.insertNewObject(forEntityName: Constants.entityName, into: context) as! BlackBook.Book
+            let newItem = NSEntityDescription.insertNewObject(forEntityName: AppConstants.bookEntityName, into: context) as! BlackBook.Book
             
             let chaptersData = try? JSONEncoder().encode(book.chapters)
                 
@@ -42,16 +46,12 @@ class BookRequests {
         var result: [BookModel]?
         
         do {
-            let fetchRequest = NSFetchRequest<BlackBook.Book>(entityName: Constants.entityName)
+            let fetchRequest = NSFetchRequest<BlackBook.Book>(entityName: AppConstants.bookEntityName)
             let results = try context.fetch(fetchRequest)
             
             var books: [BookModel] = []
             results.forEach { item in
-                let chapters: [Chapter] = try! JSONDecoder().decode([Chapter].self, from: item.chapters!)
-                let book = BookModel(cover: item.cover,
-                                     title: item.title!,
-                                     author: item.author!,
-                                     chapters: chapters)
+                let book = BookRequests.convertToModel(item)
                 books.append(book)
             }
             
@@ -60,6 +60,7 @@ class BookRequests {
             try context.save()
         } catch {
         }
+        
         return result
     }
 
@@ -76,7 +77,7 @@ class BookRequests {
     
     private static func check(_ book: BookModel) -> BlackBook.Book?{
         do {
-            let fetchRequest = NSFetchRequest<BlackBook.Book>(entityName: Constants.entityName)
+            let fetchRequest = NSFetchRequest<BlackBook.Book>(entityName: AppConstants.bookEntityName)
             let predicateTitle = NSPredicate(format: "title = %@", book.title)
             let predicateAuthor = NSPredicate(format: "author = %@", book.author)
             let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicateTitle, predicateAuthor])

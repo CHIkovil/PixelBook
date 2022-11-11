@@ -88,7 +88,7 @@ final class LibraryTableViewCell: UITableViewCell {
         }
     }
 
-    func setup(model: BookModel) {
+    func setup(_ model: BookModel) {
         titleLabel.text = model.title
         authorLabel.text = model.author
         

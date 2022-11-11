@@ -10,7 +10,7 @@ import Foundation
 public struct BookModel {
     struct Chapter: Codable {
         let title: String
-        let text: String
+        let xhtml: String
     }
     
     let cover: Data?
