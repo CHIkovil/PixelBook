@@ -7,17 +7,12 @@
 
 import ObjectiveC
 import UIKit
-import SwiftSoup
 
 class BookPagesController: NSObject {
-    private var items: [String]
+    private let items: [NSAttributedString]
     
-    override init() {
-        items = []
-    }
-    
-    func setup(model: BookModel){
-        self.parseModelToPages(model)
+    init(_ items: [NSAttributedString]) {
+        self.items = items
     }
     
     func viewControllerAtIndex(_ index: Int) -> BookPageViewController? {
@@ -42,21 +37,6 @@ class BookPagesController: NSObject {
         }
         
         return pageIndex
-    }
-}
-
-private extension BookPagesController {
-    func parseModelToPages(_ model: BookModel) {
-        var pages: [String] = []
-        
-        model.chapters.forEach { chapter in
-            let parsedChapter = try? SwiftSoup.parse(chapter.xhtml)
-            let paragraphs = try? parsedChapter?.select("p").eachText()
-            guard let paragraphs = paragraphs else{return}
-            pages += paragraphs
-        }
-        
-        items = pages
     }
 }
 

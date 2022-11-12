@@ -20,4 +20,5 @@ target 'BlackBook' do
   pod 'SnapKit'
   pod 'EPUBKit'
   pod 'SwiftSoup'
+  pod 'DTCoreText'
 end

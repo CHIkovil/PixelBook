@@ -12,19 +12,19 @@ import SnapKit
 
 class BookPageViewController: UIViewController {
     enum Constants {
-        static let contentOffset: CGFloat = 60
-        static let fontSize: CGFloat = 20
+        static let verticalOffset: CGFloat = 60
+        static let horizontalOffset: CGFloat = 15
     }
     
-    var item = ""
+    var item: NSAttributedString?
     
     private lazy var textView:UITextView = {
         let textView = UITextView()
         textView.backgroundColor = AppColor.contentBackground
         textView.frame = self.view.bounds
-        textView.textContainerInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
+        textView.textContainerInset = UIEdgeInsets(top: 0, left: Constants.horizontalOffset, bottom: 0, right: Constants.horizontalOffset)
         textView.layoutManager.usesDefaultHyphenation = true
-        textView.isUserInteractionEnabled = false
+        textView.isUserInteractionEnabled = true
         return textView
     }()
     
@@ -33,23 +33,15 @@ class BookPageViewController: UIViewController {
         self.view.addSubview(textView)
         
         textView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(Constants.contentOffset)
-            $0.bottom.equalToSuperview().offset(-Constants.contentOffset)
+            $0.top.equalToSuperview().offset(Constants.verticalOffset)
+            $0.bottom.equalToSuperview().offset(-Constants.verticalOffset)
             $0.width.equalToSuperview()
         }
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let style = NSMutableParagraphStyle()
-        style.lineSpacing = 7
-        style.alignment = .justified
-        let attrs: [NSAttributedString.Key : Any] = [.kern: 0,
-                                                     .font: UIFont(name: "Arial", size: Constants.fontSize) as Any,
-                                                     .foregroundColor:
-                                                        AppColor.readText,
-                                                     .paragraphStyle : style]
-        textView.attributedText = NSAttributedString(string: item, attributes: attrs)
+        guard let item = item else{return}
+        textView.attributedText = item
     }
 }

@@ -12,7 +12,7 @@ public struct BookModel {
         let title: String
         let xhtml: String
     }
-    
+
     let cover: Data?
     let title: String
     let author: String
@@ -23,7 +23,7 @@ extension BookModel: Hashable {
     public static func == (lhs: BookModel, rhs: BookModel) -> Bool {
         lhs.hashValue == rhs.hashValue
     }
-    
+
     public func hash(into hasher: inout Hasher) {
         hasher.combine((title + author).replacingOccurrences(of: " ", with: "").lowercased())
     }
