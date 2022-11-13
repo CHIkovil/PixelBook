@@ -14,6 +14,6 @@ protocol BookRouterProtocol: AnyObject {
 final class BookRouter: Router<BookViewController>, BookRouterProtocol {
     
     func close() {
-        
+        viewController?.dismiss(animated: false)
     }
 }

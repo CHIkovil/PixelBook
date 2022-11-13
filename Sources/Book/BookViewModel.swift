@@ -8,19 +8,33 @@
 import Foundation
 import SwiftSoup
 import DTCoreText
+import RxCocoa
+import RxSwift
 
 
 protocol BookViewModelProtocol: AnyObject {
+    var closeBookRelay: PublishRelay<Void> { get }
     func parseModelToPages(bounds: CGRect, attrs: (title: [NSAttributedString.Key : Any], text: [NSAttributedString.Key : Any]), callback: @escaping(Pages) -> Void)
 }
 
 final class BookViewModel: BookViewModelProtocol {
+    let closeBookRelay = PublishRelay<Void>()
+    
     private let model: BookModel
+    
     private let router: BookRouterProtocol
+    private let disposeBag = DisposeBag()
     
     init(router: BookRouterProtocol, model: BookModel) {
         self.router = router
         self.model = model
+        
+        closeBookRelay
+            .subscribe(onNext: { [weak self] model in
+                guard let self = self else {return}
+                self.closeBook()
+            })
+            .disposed(by: disposeBag)
     }
     
     func parseModelToPages(bounds: CGRect, attrs: (title: [NSAttributedString.Key : Any], text: [NSAttributedString.Key : Any]), callback: @escaping(Pages) -> Void){
@@ -37,13 +51,17 @@ final class BookViewModel: BookViewModelProtocol {
             let attributedString: NSMutableAttributedString = NSMutableAttributedString()
             
             if let titleIndex = paragraphs.firstIndex(of: chapter.title){
-                let titleString = paragraphs[0...titleIndex].lazy.joined(separator: "\n") + "\n"
-                let textString = paragraphs[(titleIndex + 1)...].map({"\t" + $0 + "\n"}).joined()
-                attributedString.append(NSAttributedString(string: titleString, attributes: attrs.title))
-                attributedString.append(NSAttributedString(string: textString, attributes: attrs.text))
+                paragraphs.enumerated().forEach {index, p in
+                    if index <= titleIndex {
+                        attributedString.append(NSAttributedString(string: p + "\n", attributes: attrs.title))
+                    }else{
+                        attributedString.append(NSAttributedString(string: "\t" + p + "\n", attributes: attrs.text))
+                    }
+                }
             }else {
-                let textString = paragraphs.map({"\t" + $0 + "\n"}).joined()
-                attributedString.append(NSAttributedString(string: textString, attributes: attrs.text))
+                paragraphs.forEach { p in
+                    attributedString.append(NSAttributedString(string: "\t" + p + "\n", attributes: attrs.text))
+                }
             }
             
             let nextPagesItems = self.cutPageWith(attrString: attributedString, bounds: bounds)
@@ -59,6 +77,9 @@ final class BookViewModel: BookViewModelProtocol {
 }
 
 private extension BookViewModel {
+    func closeBook() {
+        self.router.close()
+    }
     func cutPageWith(attrString: NSAttributedString, bounds: CGRect) -> [NSAttributedString]{
         let layouter = DTCoreTextLayouter.init(attributedString: attrString)
         let rect = CGRect(x: bounds.origin.x, y: bounds.origin.y, width: bounds.size.width, height: bounds.size.height)

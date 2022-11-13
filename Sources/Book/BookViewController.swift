@@ -7,6 +7,8 @@
 
 import Foundation
 import UIKit
+import RxSwift
+import SnapKit
 
 typealias PageConstants = BookViewController.PageConstants
 typealias Pages = BookViewController.Pages
@@ -23,6 +25,11 @@ final class BookViewController: UIViewController {
         static let widthOffset: CGFloat = 15
     }
     
+    private enum Constants {
+        static let buttonSide: CGFloat = 30
+        static let buttonOffset: CGFloat = 20
+    }
+    
     
     private var pagesController: BookPagesController?
     
@@ -32,16 +39,40 @@ final class BookViewController: UIViewController {
         return viewController
     }()
     
+    private lazy var closeButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "back"), for: .normal)
+        button.backgroundColor = AppColor.unactive
+        button.layer.cornerRadius = 0.5 * Constants.buttonSide
+        button.layer.masksToBounds = true
+        return button
+    }()
+    
     override func loadView() {
         super.loadView()
         setupPagesController()
         setupContentController()
+        
+        view.insertSubview(closeButton, at: 1)
+        
+        closeButton.snp.makeConstraints {
+            $0.leading.equalTo(view.snp.leading).offset(Constants.buttonOffset)
+            $0.bottom.equalTo(view.snp.bottom).offset(-Constants.buttonOffset * 2)
+            $0.height.equalTo(Constants.buttonSide)
+            $0.width.equalTo(Constants.buttonSide)
+        }
     }
     
     private var viewModel: BookViewModelProtocol?
+    private let disposeBag = DisposeBag()
     
     func setup(viewModel: BookViewModelProtocol) {
         self.viewModel = viewModel
+        
+        closeButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                self?.viewModel?.closeBookRelay.accept(())
+            }).disposed(by: disposeBag)
     }
 }
 
@@ -78,7 +109,7 @@ private extension BookViewController {
     func setupPagesController() {
         var pageBounds = self.view.bounds
         pageBounds.size.width -= PageConstants.widthOffset * 2 + 20
-        pageBounds.size.height -= PageConstants.heightOffset * 2 + 120
+        pageBounds.size.height -= PageConstants.heightOffset * 2 + 150
         
         let attrs = self.setupAttrs()
         
@@ -97,7 +128,7 @@ private extension BookViewController {
         
         contentViewController.dataSource = pagesController
         contentViewController.view.frame = self.view.bounds
-        self.view.addSubview(contentViewController.view)
+        self.view.insertSubview(contentViewController.view, at: 0)
         contentViewController.didMove(toParent: self)
     }
     
