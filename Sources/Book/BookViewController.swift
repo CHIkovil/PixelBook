@@ -59,7 +59,8 @@ private extension BookViewController {
         let textStyle = NSMutableParagraphStyle()
         textStyle.lineSpacing = universalTextSpacing
         textStyle.paragraphSpacing = universalTextSpacing
-        textStyle.hyphenationFactor = 1
+        textStyle.hyphenationFactor = 1.0
+        textStyle.lineBreakMode = .byWordWrapping
         textStyle.alignment = .justified
         
         let titleAttrs: [NSAttributedString.Key : Any] = [.font: titleFont as Any,
@@ -77,7 +78,7 @@ private extension BookViewController {
     func setupPagesController() {
         var pageBounds = self.view.bounds
         pageBounds.size.width -= PageConstants.widthOffset * 2 + 20
-        pageBounds.size.height -= PageConstants.heightOffset * 2 + 150
+        pageBounds.size.height -= PageConstants.heightOffset * 2 + 120
         
         let attrs = self.setupAttrs()
         
@@ -111,7 +112,7 @@ extension BookViewController: UIPageViewControllerDelegate {
                                               animated   : true,
                                               completion : { done in })
         
-        pageViewController.isDoubleSided = false
+        pageViewController.isDoubleSided = true
         return .min
     }
 }

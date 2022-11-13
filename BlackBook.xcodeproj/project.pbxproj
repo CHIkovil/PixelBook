@@ -31,7 +31,6 @@
 		17820938291BCEBF00EFA23C /* BookPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17820937291BCEBF00EFA23C /* BookPageViewController.swift */; };
 		1782093A291BFE3800EFA23C /* BookPagesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17820939291BFE3800EFA23C /* BookPagesController.swift */; };
 		17820946291E649F00EFA23C /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17820945291E649F00EFA23C /* AppConstants.swift */; };
-		17820949291FC37500EFA23C /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17820948291FC37500EFA23C /* Extensions.swift */; };
 		8C2188609C7AA4960F960970 /* Pods_BlackBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A608E7487150B1ECB671798 /* Pods_BlackBook.framework */; };
 /* End PBXBuildFile section */
 
@@ -63,7 +62,6 @@
 		17820937291BCEBF00EFA23C /* BookPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookPageViewController.swift; sourceTree = "<group>"; };
 		17820939291BFE3800EFA23C /* BookPagesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookPagesController.swift; sourceTree = "<group>"; };
 		17820945291E649F00EFA23C /* AppConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
-		17820948291FC37500EFA23C /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		2A608E7487150B1ECB671798 /* Pods_BlackBook.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlackBook.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8A0299BF765F76C4AE41D40 /* Pods-BlackBook.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlackBook.release.xcconfig"; path = "Target Support Files/Pods-BlackBook/Pods-BlackBook.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -117,7 +115,6 @@
 			children = (
 				17820898291022FD00EFA23C /* AppColor.swift */,
 				17820945291E649F00EFA23C /* AppConstants.swift */,
-				17820947291FC34A00EFA23C /* Extensions */,
 				178208E0291813AA00EFA23C /* CoreData */,
 				178208D92916A9CB00EFA23C /* Parsing */,
 				178208A129102EA000EFA23C /* Routing */,
@@ -185,14 +182,6 @@
 				178208EA2918355400EFA23C /* BookRequests.swift */,
 			);
 			path = CoreData;
-			sourceTree = "<group>";
-		};
-		17820947291FC34A00EFA23C /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				17820948291FC37500EFA23C /* Extensions.swift */,
-			);
-			path = Extensions;
 			sourceTree = "<group>";
 		};
 		C7C6480D00BE8E47A36C02C0 /* Frameworks */ = {
@@ -335,7 +324,6 @@
 				1782093A291BFE3800EFA23C /* BookPagesController.swift in Sources */,
 				178208CB29140E1700EFA23C /* LibraryTableViewCell.swift in Sources */,
 				17820932291BC79E00EFA23C /* BookViewController.swift in Sources */,
-				17820949291FC37500EFA23C /* Extensions.swift in Sources */,
 				17820934291BC7B100EFA23C /* BookViewModel.swift in Sources */,
 				178208C529140B1300EFA23C /* LibraryViewController.swift in Sources */,
 				178208E9291828BC00EFA23C /* BlackBook.xcdatamodeld in Sources */,

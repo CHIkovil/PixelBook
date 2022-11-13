@@ -70,7 +70,9 @@ private extension BookViewModel {
         var pages: [NSAttributedString] = []
         
         while rangeOffset <= attrString.length && rangeOffset != 0 {
+            let emptyPage = NSAttributedString(string: "\(pages.count)")
             pages.append(attrString.attributedSubstring(from: pageVisibleRange!))
+            pages.append(emptyPage)
             
             frame = layouter?.layoutFrame(with: rect, range: NSRange(location: rangeOffset, length: attrString.length - rangeOffset))
             pageVisibleRange = frame?.visibleStringRange()
