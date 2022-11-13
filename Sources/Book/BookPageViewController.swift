@@ -11,20 +11,14 @@ import SnapKit
 
 
 class BookPageViewController: UIViewController {
-    enum Constants {
-        static let verticalOffset: CGFloat = 60
-        static let horizontalOffset: CGFloat = 15
-    }
-    
     var item: NSAttributedString?
     
     private lazy var textView:UITextView = {
         let textView = UITextView()
-        textView.backgroundColor = AppColor.contentBackground
+        textView.backgroundColor = AppColor.background
         textView.frame = self.view.bounds
-        textView.textContainerInset = UIEdgeInsets(top: 0, left: Constants.horizontalOffset, bottom: 0, right: Constants.horizontalOffset)
-        textView.layoutManager.usesDefaultHyphenation = true
-        textView.isUserInteractionEnabled = true
+        textView.textContainerInset = UIEdgeInsets(top: 0, left: PageConstants.widthOffset, bottom: 0, right: PageConstants.widthOffset)
+        textView.isUserInteractionEnabled = false
         return textView
     }()
     
@@ -33,8 +27,8 @@ class BookPageViewController: UIViewController {
         self.view.addSubview(textView)
         
         textView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(Constants.verticalOffset)
-            $0.bottom.equalToSuperview().offset(-Constants.verticalOffset)
+            $0.top.equalToSuperview().offset(PageConstants.heightOffset)
+            $0.bottom.equalToSuperview().offset(-PageConstants.heightOffset)
             $0.width.equalToSuperview()
         }
     }

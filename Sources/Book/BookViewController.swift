@@ -8,7 +8,21 @@
 import Foundation
 import UIKit
 
+typealias PageConstants = BookViewController.PageConstants
+typealias Pages = BookViewController.Pages
+
 final class BookViewController: UIViewController {
+    
+    struct Pages {
+        let spine: [String: Int]
+        let items: [NSAttributedString]
+    }
+    
+    enum PageConstants {
+        static let heightOffset: CGFloat = 60
+        static let widthOffset: CGFloat = 15
+    }
+    
     
     private var pagesController: BookPagesController?
     
@@ -32,28 +46,42 @@ final class BookViewController: UIViewController {
 }
 
 private extension BookViewController {
-    func setupTextAttrs() -> [NSAttributedString.Key : Any] {
+    func setupAttrs() -> (title: [NSAttributedString.Key : Any], text: [NSAttributedString.Key : Any]) {
         let universalTextSpacing: CGFloat = 7
-        let textKern: CGFloat = 0
-        let fontName: String = "Arial"
-        let fontSize: CGFloat = 20
-        let textFont: UIFont = UIFont(name: fontName, size: fontSize)!
+        let titleFont:UIFont = UIFont(name: "Arial", size: 25)!
+        let textFont: UIFont = UIFont(name: "Arial", size: 20)!
         
-        let style = NSMutableParagraphStyle()
-        style.lineSpacing = universalTextSpacing
-        style.paragraphSpacing = universalTextSpacing
-        style.alignment = .justified
+        let titleStyle = NSMutableParagraphStyle()
+        titleStyle.lineSpacing = universalTextSpacing
+        titleStyle.paragraphSpacing = universalTextSpacing + 5
+        titleStyle.alignment = .center
         
-        let fontAttrs: [NSAttributedString.Key : Any] = [.kern: textKern,
-                                                                .font: textFont as Any,
-                                                                .foregroundColor:
-                                                                    AppColor.readText,
-                                                                .paragraphStyle:    style]
-        return fontAttrs
+        let textStyle = NSMutableParagraphStyle()
+        textStyle.lineSpacing = universalTextSpacing
+        textStyle.paragraphSpacing = universalTextSpacing
+        textStyle.hyphenationFactor = 1
+        textStyle.alignment = .justified
+        
+        let titleAttrs: [NSAttributedString.Key : Any] = [.font: titleFont as Any,
+                                                          .foregroundColor:
+                                                            AppColor.readText,
+                                                          .paragraphStyle: titleStyle]
+        
+        let textAttrs: [NSAttributedString.Key : Any] = [.font: textFont as Any,
+                                                         .foregroundColor:
+                                                            AppColor.readText,
+                                                         .paragraphStyle: textStyle]
+        return (title: titleAttrs, text: textAttrs)
     }
     
     func setupPagesController() {
-        viewModel?.parseModelToPages(bounds: self.view.bounds, attrs: self.setupTextAttrs()) {[weak self] pages in
+        var pageBounds = self.view.bounds
+        pageBounds.size.width -= PageConstants.widthOffset * 2 + 20
+        pageBounds.size.height -= PageConstants.heightOffset * 2 + 150
+        
+        let attrs = self.setupAttrs()
+        
+        viewModel?.parseModelToPages(bounds: pageBounds, attrs: attrs) {[weak self] pages in
             guard let self = self else{return}
             self.pagesController = BookPagesController(pages)
         }

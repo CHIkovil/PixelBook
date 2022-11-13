@@ -9,19 +9,19 @@ import ObjectiveC
 import UIKit
 
 class BookPagesController: NSObject {
-    private let items: [NSAttributedString]
+    private let pages: Pages
     
-    init(_ items: [NSAttributedString]) {
-        self.items = items
+    init(_ pages: Pages) {
+        self.pages = pages
     }
     
     func viewControllerAtIndex(_ index: Int) -> BookPageViewController? {
-        if (items.count == 0) || (index >= items.count - 1) {
+        if (pages.items.count == 0) || (index >= pages.items.count - 1) {
             return nil
         }
         
         let vc = BookPageViewController()
-        vc.item = items[index]
+        vc.item = pages.items[index]
         return vc
     }
 
@@ -30,7 +30,7 @@ class BookPagesController: NSObject {
         let page = viewController.item
         var pageIndex = 0
         
-        if let index = items.firstIndex(where: { $0 == page }) {
+        if let index = pages.items.firstIndex(where: { $0 == page }) {
             pageIndex = index
         } else {
             pageIndex = NSNotFound
@@ -66,7 +66,7 @@ extension BookPagesController: UIPageViewControllerDataSource {
         
         index += 1
         
-        if index == items.count {
+        if index == pages.items.count {
             return nil
         }
         
