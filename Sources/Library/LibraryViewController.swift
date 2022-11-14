@@ -160,13 +160,15 @@ extension LibraryViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView,
                    trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration?
     {
-        let deleteAction = UIContextualAction(style: .normal, title:  nil, handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
-            let a = 0
+        let deleteAction = UIContextualAction(style: .normal, title:  nil, handler: { [weak self] (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
+            
+            guard let self = self, let item = self.fetchBooksController?.object(at: indexPath) as? BlackBook.Book else{return}
+            let model = BookRequests.convertToModel(item)
+            BookRequests.delete(model)
         })
         deleteAction.image = UIGraphicsImageRenderer(size: CGSize(width: 30, height: 30)).image { _ in
             UIImage(named: "delete")?.draw(in: CGRect(x: 0, y: 0, width: 30, height: 30))
         }
-        deleteAction
         deleteAction.backgroundColor = AppColor.unactive
         
         return UISwipeActionsConfiguration(actions: [deleteAction])
