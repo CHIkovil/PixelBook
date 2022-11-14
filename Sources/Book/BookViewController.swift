@@ -71,7 +71,8 @@ final class BookViewController: UIViewController {
         
         closeButton.rx.tap
             .subscribe(onNext: { [weak self] in
-                self?.viewModel?.closeBookRelay.accept(())
+                guard let self = self, let vc = self.contentViewController.viewControllers?.first as? BookPageViewController, let index = self.pagesController?.indexOfViewController(vc) else{return}
+                self.viewModel?.closeBookRelay.accept(index)
             }).disposed(by: disposeBag)
     }
 }

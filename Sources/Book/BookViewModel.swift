@@ -13,12 +13,12 @@ import RxSwift
 
 
 protocol BookViewModelProtocol: AnyObject {
-    var closeBookRelay: PublishRelay<Void> { get }
+    var closeBookRelay: PublishRelay<Int> { get }
     func parseModelToPages(bounds: CGRect, attrs: (title: [NSAttributedString.Key : Any], text: [NSAttributedString.Key : Any]), callback: @escaping(Pages) -> Void)
 }
 
 final class BookViewModel: BookViewModelProtocol {
-    let closeBookRelay = PublishRelay<Void>()
+    let closeBookRelay = PublishRelay<Int>()
     
     private let model: BookModel
     
@@ -30,8 +30,9 @@ final class BookViewModel: BookViewModelProtocol {
         self.model = model
         
         closeBookRelay
-            .subscribe(onNext: { [weak self] model in
+            .subscribe(onNext: { [weak self] index in
                 guard let self = self else {return}
+                UserRequests.update(bookTitle: model.title, bookAuthor: model.author, pageIndex: index)
                 self.closeBook()
             })
             .disposed(by: disposeBag)
@@ -80,6 +81,7 @@ private extension BookViewModel {
     func closeBook() {
         self.router.close()
     }
+    
     func cutPageWith(attrString: NSAttributedString, bounds: CGRect) -> [NSAttributedString]{
         let layouter = DTCoreTextLayouter.init(attributedString: attrString)
         let rect = CGRect(x: bounds.origin.x, y: bounds.origin.y, width: bounds.size.width, height: bounds.size.height)

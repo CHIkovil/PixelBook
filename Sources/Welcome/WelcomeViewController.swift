@@ -50,6 +50,11 @@ final class WelcomeViewController: UIViewController {
         }
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        viewModel?.viewDidLoad()
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         viewModel?.moveToLibrary()
@@ -68,7 +73,6 @@ final class WelcomeViewController: UIViewController {
 private extension WelcomeViewController {
     func showQuotes(_ quotes: WelcomeViewModel.Quotes) {
 
-        
     }
 }
 

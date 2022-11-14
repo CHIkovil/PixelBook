@@ -83,6 +83,12 @@ final class LibraryViewController: UIViewController {
     func setup(viewModel: LibraryViewModelProtocol) {
         self.viewModel = viewModel
         self.setupFetchedBooks()
+        
+        viewModel.currentBookDriver
+            .drive(onNext: { [weak self] model in
+                guard let self = self, let model = model else{return}
+                self.currentBookView.setup(model: model)
+            }).disposed(by: disposeBag)
     }
     
     private func setupFetchedBooks(){
@@ -101,6 +107,7 @@ final class LibraryViewController: UIViewController {
 
 private extension LibraryViewController {
     @objc func managedObjectContextDidChange(notification: Notification){
+        viewModel?.viewDidLoad()
         booksTableView.reloadData()
     }
 }

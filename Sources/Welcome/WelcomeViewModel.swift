@@ -9,6 +9,7 @@ import RxSwift
 
 
 protocol WelcomeViewModelProtocol: AnyObject {
+    func viewDidLoad()
     var quotesDriver: Driver<WelcomeViewModel.Quotes> { get }
     func moveToLibrary()
 }
@@ -25,6 +26,10 @@ final class WelcomeViewModel: WelcomeViewModelProtocol {
     
     init(router: WelcomeRouterProtocol) {
         self.router = router
+    }
+    
+    func viewDidLoad() {
+        updateState()
     }
     
     func moveToLibrary() {

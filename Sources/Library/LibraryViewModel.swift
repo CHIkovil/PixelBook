@@ -8,11 +8,16 @@ import RxCocoa
 import RxSwift
 
 protocol LibraryViewModelProtocol: AnyObject {
+    func viewDidLoad()
     var selectedBookRelay: PublishRelay<BookModel> { get }
+    var currentBookDriver: Driver<BookModel?> { get }
 }
 
 final class LibraryViewModel: LibraryViewModelProtocol {
     let selectedBookRelay = PublishRelay<BookModel>()
+    private lazy var currentBookRelay = PublishRelay<BookModel?>()
+    private(set) lazy var currentBookDriver = currentBookRelay.asDriver(
+        onErrorJustReturn: nil)
 
     private let router: LibraryRouterProtocol
     private let disposeBag = DisposeBag()
@@ -26,9 +31,18 @@ final class LibraryViewModel: LibraryViewModelProtocol {
             })
             .disposed(by: disposeBag)
     }
+    
+    func viewDidLoad(){
+        updateState()
+    }
 }
 
 private extension LibraryViewModel {
+    func updateState() {
+        guard let userModel = UserRequests.fetch(), let bookModel = BookRequests.fetchOne(title: userModel.bookTitle, author: userModel.bookAuthor) else{return}
+        currentBookRelay.accept(bookModel)
+    }
+    
     func selectedBook(_ model: BookModel){
         self.router.showBook(model)
     }

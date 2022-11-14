@@ -41,28 +41,31 @@ class BookRequests {
             fatalError()
         }
     }
-
-    static func fetch() -> [BookModel]? {
-        var result: [BookModel]?
-        
-        do {
-            let fetchRequest = NSFetchRequest<BlackBook.Book>(entityName: AppConstants.bookEntityName)
-            let results = try context.fetch(fetchRequest)
-            
-            var books: [BookModel] = []
-            results.forEach { item in
-                let book = BookRequests.convertToModel(item)
-                books.append(book)
-            }
-            
-            result = books
-            
-            try context.save()
-        } catch {
-        }
-        
-        return result
-    }
+    
+    static func fetchOne(title: String, author: String) -> BookModel? {
+         var result: BookModel?
+         
+         do {
+             let fetchRequest = NSFetchRequest<BlackBook.Book>(entityName: AppConstants.bookEntityName)
+             
+             let predicateTitle = NSPredicate(format: "title = %@", title)
+             let predicateAuthor = NSPredicate(format: "author = %@", author)
+             let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicateTitle, predicateAuthor])
+             
+             fetchRequest.predicate = predicate
+             
+             let results = try context.fetch(fetchRequest)
+             
+             if let item = results.first {
+                 let model = convertToModel(item)
+                 result = model
+             }
+             try context.save()
+         } catch {
+         }
+         
+         return result
+     }
 
     static func delete(_ book: BookModel) {
         do {
