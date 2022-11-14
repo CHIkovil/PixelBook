@@ -18,6 +18,7 @@ final class LibraryViewController: UIViewController {
         static let currentViewHeight: CGFloat = 300
         static let contentOffset: CGFloat = 10
         static let sortedKey: String = "title"
+        static let cellDeleteText: String = "Удалить"
     }
     
     private var fetchBooksController: NSFetchedResultsController<BlackBook.Book>?
@@ -33,6 +34,7 @@ final class LibraryViewController: UIViewController {
         tableView.backgroundColor = AppColor.background
         tableView.separatorStyle = .none
         tableView.allowsMultipleSelection = false
+        tableView.allowsMultipleSelectionDuringEditing = false
         tableView.keyboardDismissMode = .onDrag
         tableView.bounces = false
         tableView.showsVerticalScrollIndicator = false
@@ -46,7 +48,7 @@ final class LibraryViewController: UIViewController {
     private let disposeBag = DisposeBag()
     
     deinit {
-       NotificationCenter.default.removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
     
     override func loadView() {
@@ -92,7 +94,7 @@ final class LibraryViewController: UIViewController {
         do {
             try fetchBooksController?.performFetch()
         } catch{
-        
+            
         }
     }
 }
@@ -137,21 +139,36 @@ extension LibraryViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         return fetchBooksController?.fetchedObjects?.count ?? 0
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellIdentifier) as? LibraryTableViewCell, let item = fetchBooksController?.object(at: indexPath) as? BlackBook.Book else {fatalError("Wrong cell indetifier requested")}
         let model = BookRequests.convertToModel(item)
         cell.setup(model)
         return cell
     }
-
+    
     func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
         150
     }
-
+    
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let item = fetchBooksController?.object(at: indexPath) as? BlackBook.Book else {fatalError("Wrong cell indetifier requested")}
         let model = BookRequests.convertToModel(item)
         viewModel?.selectedBookRelay.accept(model)
+    }
+    
+    func tableView(_ tableView: UITableView,
+                   trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration?
+    {
+        let deleteAction = UIContextualAction(style: .normal, title:  nil, handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
+            let a = 0
+        })
+        deleteAction.image = UIGraphicsImageRenderer(size: CGSize(width: 30, height: 30)).image { _ in
+            UIImage(named: "delete")?.draw(in: CGRect(x: 0, y: 0, width: 30, height: 30))
+        }
+        deleteAction
+        deleteAction.backgroundColor = AppColor.unactive
+        
+        return UISwipeActionsConfiguration(actions: [deleteAction])
     }
 }

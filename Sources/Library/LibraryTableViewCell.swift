@@ -14,7 +14,6 @@ final class LibraryTableViewCell: UITableViewCell {
         static let labelHeight: CGFloat = 30
         static let labelFontSizeBase: CGFloat = 17
         static let labelFontSizeInterlineation: CGFloat = 12
-        static let viewCornerRadius: CGFloat = 10
         static let contentOffset = 20
     }
     
@@ -61,7 +60,6 @@ final class LibraryTableViewCell: UITableViewCell {
         layer.masksToBounds = false
         layer.borderColor = AppColor.contentBorder.cgColor
         layer.borderWidth = 0.5
-        layer.cornerRadius = Constants.viewCornerRadius
         addSubview(coverImageView)
         addSubview(titleLabel)
         addSubview(authorLabel)
