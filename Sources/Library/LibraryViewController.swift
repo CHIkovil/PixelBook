@@ -72,12 +72,9 @@ final class LibraryViewController: UIViewController {
         }
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(self.managedObjectContextDidChange(notification:)),
-                                               name: .NSManagedObjectContextObjectsDidChange,
-                                               object: nil)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel?.viewWillAppear()
     }
     
     func setup(viewModel: LibraryViewModelProtocol) {
@@ -89,6 +86,11 @@ final class LibraryViewController: UIViewController {
                 guard let self = self, let model = model else{return}
                 self.currentBookView.setup(model: model)
             }).disposed(by: disposeBag)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(self.managedObjectContextDidChange(notification:)),
+                                               name: .NSManagedObjectContextObjectsDidChange,
+                                               object: nil)
     }
     
     private func setupFetchedBooks(){
@@ -107,7 +109,7 @@ final class LibraryViewController: UIViewController {
 
 private extension LibraryViewController {
     @objc func managedObjectContextDidChange(notification: Notification){
-        viewModel?.viewDidLoad()
+        viewModel?.viewWillAppear()
         booksTableView.reloadData()
     }
 }

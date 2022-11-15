@@ -4,11 +4,12 @@
         <attribute name="author" attributeType="String"/>
         <attribute name="chapters" attributeType="Binary" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[Chapter]"/>
         <attribute name="cover" optional="YES" attributeType="Binary"/>
+        <attribute name="currentPage" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="title" attributeType="String"/>
     </entity>
     <entity name="User" representedClassName="User" syncable="YES" codeGenerationType="class">
         <attribute name="bookAuthor" optional="YES" attributeType="String"/>
         <attribute name="bookTitle" optional="YES" attributeType="String"/>
-        <attribute name="pageIndex" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="isRead" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
     </entity>
 </model>

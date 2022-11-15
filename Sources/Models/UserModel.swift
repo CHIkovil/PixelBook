@@ -10,5 +10,5 @@ import Foundation
 public struct UserModel {
     let bookTitle: String
     let bookAuthor: String
-    let pageIndex: Int
+    var isRead: Bool
 }

@@ -8,7 +8,7 @@ import RxCocoa
 import RxSwift
 
 protocol LibraryViewModelProtocol: AnyObject {
-    func viewDidLoad()
+    func viewWillAppear()
     var selectedBookRelay: PublishRelay<BookModel> { get }
     var currentBookDriver: Driver<BookModel?> { get }
 }
@@ -32,7 +32,7 @@ final class LibraryViewModel: LibraryViewModelProtocol {
             .disposed(by: disposeBag)
     }
     
-    func viewDidLoad(){
+    func viewWillAppear(){
         updateState()
     }
 }

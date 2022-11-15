@@ -17,6 +17,7 @@ public struct BookModel {
     let title: String
     let author: String
     let chapters: [Chapter]
+    var currentPage: Int
 }
 
 typealias Chapter = BookModel.Chapter

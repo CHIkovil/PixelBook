@@ -44,7 +44,7 @@ final class BookParser  {
         }
         
         if let title = document.title, let author = document.author, !chapters.isEmpty{
-            return BookModel(cover: cover, title: title, author: author, chapters: chapters)
+            return BookModel(cover: cover, title: title, author: author, chapters: chapters, currentPage: 0)
         }else{
             return nil
         }

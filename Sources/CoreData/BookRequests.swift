@@ -17,7 +17,7 @@ class BookRequests {
         let book = BookModel(cover: item.cover,
                              title: item.title!,
                              author: item.author!,
-                             chapters: chapters)
+                             chapters: chapters, currentPage: Int(item.currentPage))
         return book
     }
     
@@ -35,9 +35,20 @@ class BookRequests {
             newItem.title = book.title
             newItem.author = book.author
             newItem.chapters = chaptersData
+            newItem.currentPage = Int32(book.currentPage)
             
             try context.save()
         } catch {
+            fatalError()
+        }
+    }
+    
+    static func updateState(model: BookModel, currentPage: Int) {
+        do {
+            guard let item = check(model) else {return}
+            item.setValue(currentPage, forKey: "currentPage")
+            try context.save()
+        }catch {
             fatalError()
         }
     }
@@ -87,10 +98,11 @@ class BookRequests {
             fetchRequest.predicate = predicate
             
             let results = try context.fetch(fetchRequest)
+            
             try context.save()
             
-            if !results.isEmpty {
-                return results.first
+            if let item = results.first {
+                return item
             }else{
                 return nil
             }

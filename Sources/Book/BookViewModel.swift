@@ -13,12 +13,17 @@ import RxSwift
 
 
 protocol BookViewModelProtocol: AnyObject {
+    func viewWillAppear()
     var closeBookRelay: PublishRelay<Int> { get }
+    var currentPageDriver: Driver<Int?> { get }
     func parseModelToPages(bounds: CGRect, attrs: (title: [NSAttributedString.Key : Any], text: [NSAttributedString.Key : Any]), callback: @escaping(Pages) -> Void)
 }
 
 final class BookViewModel: BookViewModelProtocol {
     let closeBookRelay = PublishRelay<Int>()
+    private lazy var currentPageRelay = PublishRelay<Int?>()
+    private(set) lazy var currentPageDriver = currentPageRelay.asDriver(
+        onErrorJustReturn: nil)
     
     private let model: BookModel
     
@@ -32,10 +37,15 @@ final class BookViewModel: BookViewModelProtocol {
         closeBookRelay
             .subscribe(onNext: { [weak self] index in
                 guard let self = self else {return}
-                UserRequests.update(bookTitle: model.title, bookAuthor: model.author, pageIndex: index)
+                BookRequests.updateState(model: self.model, currentPage: index)
+                UserRequests.updateState(isRead: false)
                 self.closeBook()
             })
             .disposed(by: disposeBag)
+    }
+    
+    func viewWillAppear(){
+        updateState()
     }
     
     func parseModelToPages(bounds: CGRect, attrs: (title: [NSAttributedString.Key : Any], text: [NSAttributedString.Key : Any]), callback: @escaping(Pages) -> Void){
@@ -78,6 +88,12 @@ final class BookViewModel: BookViewModelProtocol {
 }
 
 private extension BookViewModel {
+    func updateState() {
+        UserRequests.update(UserModel(bookTitle: model.title, bookAuthor: model.author, isRead: true))
+        guard let model = BookRequests.fetchOne(title: model.title, author: model.author) else{return}
+        currentPageRelay.accept(model.currentPage)
+    }
+    
     func closeBook() {
         self.router.close()
     }

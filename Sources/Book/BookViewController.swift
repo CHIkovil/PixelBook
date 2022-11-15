@@ -66,6 +66,11 @@ final class BookViewController: UIViewController {
     private var viewModel: BookViewModelProtocol?
     private let disposeBag = DisposeBag()
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel?.viewWillAppear()
+    }
+    
     func setup(viewModel: BookViewModelProtocol) {
         self.viewModel = viewModel
         
@@ -74,7 +79,15 @@ final class BookViewController: UIViewController {
                 guard let self = self, let vc = self.contentViewController.viewControllers?.first as? BookPageViewController, let index = self.pagesController?.indexOfViewController(vc) else{return}
                 self.viewModel?.closeBookRelay.accept(index)
             }).disposed(by: disposeBag)
+        
+        viewModel.currentPageDriver
+            .drive(onNext: { [weak self] index in
+                guard let self = self, let index = index, let continuationViewController = self.pagesController?.viewControllerAtIndex(index)  else{return}
+                self.contentViewController.setViewControllers([continuationViewController], direction: .forward, animated: false, completion: {done in })
+            }).disposed(by: disposeBag)
     }
+    
+
 }
 
 private extension BookViewController {
@@ -121,10 +134,8 @@ private extension BookViewController {
     }
     
     func setupContentController() {
-        if let viewController = pagesController?.viewControllerAtIndex(0) {
-            let startingViewController: BookPageViewController = viewController
-            let viewControllers = [startingViewController]
-            contentViewController.setViewControllers(viewControllers, direction: .forward, animated: false, completion: {done in })
+        if let startingViewController = pagesController?.viewControllerAtIndex(0) {
+            contentViewController.setViewControllers([startingViewController], direction: .forward, animated: false, completion: {done in })
         }
         
         contentViewController.dataSource = pagesController
