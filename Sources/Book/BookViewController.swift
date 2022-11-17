@@ -11,14 +11,8 @@ import RxSwift
 import SnapKit
 
 typealias PageConstants = BookViewController.PageConstants
-typealias Pages = BookViewController.Pages
 
 final class BookViewController: UIViewController {
-    
-    struct Pages {
-        let spine: [String: Int]
-        let items: [NSAttributedString]
-    }
     
     enum PageConstants {
         static let heightOffset: CGFloat = 60
@@ -104,46 +98,9 @@ private extension BookViewController {
         self.viewModel?.closeBookRelay.accept(pageIndex)
     }
     
-    func setupAttrs() -> (title: [NSAttributedString.Key : Any], text: [NSAttributedString.Key : Any]) {
-        let universalTextSpacing: CGFloat = 7
-        let titleFont:UIFont = UIFont(name: "Arial", size: 25)!
-        let textFont: UIFont = UIFont(name: "Arial", size: 20)!
-        
-        let titleStyle = NSMutableParagraphStyle()
-        titleStyle.lineSpacing = universalTextSpacing
-        titleStyle.paragraphSpacing = universalTextSpacing + 5
-        titleStyle.alignment = .center
-        
-        let textStyle = NSMutableParagraphStyle()
-        textStyle.lineSpacing = universalTextSpacing
-        textStyle.paragraphSpacing = universalTextSpacing
-        textStyle.hyphenationFactor = 1.0
-        textStyle.lineBreakMode = .byWordWrapping
-        textStyle.alignment = .justified
-        
-        let titleAttrs: [NSAttributedString.Key : Any] = [.font: titleFont as Any,
-                                                          .foregroundColor:
-                                                            AppColor.readText,
-                                                          .paragraphStyle: titleStyle]
-        
-        let textAttrs: [NSAttributedString.Key : Any] = [.font: textFont as Any,
-                                                         .foregroundColor:
-                                                            AppColor.readText,
-                                                         .paragraphStyle: textStyle]
-        return (title: titleAttrs, text: textAttrs)
-    }
-    
     func setupPagesController() {
-        var pageBounds = self.view.bounds
-        pageBounds.size.width -= PageConstants.widthOffset * 2 + 20
-        pageBounds.size.height -= PageConstants.heightOffset * 2 + 150
-        
-        let attrs = self.setupAttrs()
-        
-        viewModel?.parseModelToPages(bounds: pageBounds, attrs: attrs) {[weak self] pages in
-            guard let self = self else{return}
-            self.pagesController = BookPagesController(pages)
-        }
+        guard let pages = viewModel?.getPages() else {return}
+        self.pagesController = BookPagesController(pages)
     }
     
     func setupContentController() {        

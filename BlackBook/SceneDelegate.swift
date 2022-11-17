@@ -25,8 +25,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         controller.setup(viewModel: viewModel)
         window.rootViewController = controller
         self.window = window
-        BookParser.checkContexts(contexts: connectionOptions.urlContexts)
         window.makeKeyAndVisible()
+        BookParser.checkContexts(contexts: connectionOptions.urlContexts)
     }
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {

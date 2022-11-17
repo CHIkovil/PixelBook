@@ -13,11 +13,15 @@ class BookRequests {
     private static let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     static func convertToModel(_ item: BlackBook.Book) -> BookModel{
-        let chapters: [Chapter] = try! JSONDecoder().decode([Chapter].self, from: item.chapters!)
+        let spine: [String:Int] = try! JSONDecoder().decode([String:Int].self, from: item.spine!)
+        let pages: [AttributedString] = try! JSONDecoder().decode([AttributedString].self, from: item.pages!)
+        
         let book = BookModel(cover: item.cover,
                              title: item.title!,
                              author: item.author!,
-                             chapters: chapters, currentPage: Int(item.currentPage))
+                             spine: spine,
+                             pages: pages,
+                             currentPage: Int(item.currentPage))
         return book
     }
     
@@ -29,12 +33,15 @@ class BookRequests {
             
             let newItem = NSEntityDescription.insertNewObject(forEntityName: AppConstants.bookEntityName, into: context) as! BlackBook.Book
             
-            let chaptersData = try? JSONEncoder().encode(book.chapters)
+            let spineData = try? JSONEncoder().encode(book.spine)
+            let pagesData = try? JSONEncoder().encode(book.pages)
+           
                 
             newItem.cover = book.cover
             newItem.title = book.title
             newItem.author = book.author
-            newItem.chapters = chaptersData
+            newItem.spine = spineData
+            newItem.pages = pagesData
             newItem.currentPage = Int32(book.currentPage)
             
             try context.save()
