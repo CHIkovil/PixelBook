@@ -36,6 +36,7 @@ final class BookViewController: UIViewController {
     private lazy var contentViewController: UIPageViewController = {
         let viewController = UIPageViewController(transitionStyle: .pageCurl, navigationOrientation: .horizontal, options: nil)
         viewController.delegate = self
+        viewController.isDoubleSided = true
         return viewController
     }()
     
@@ -57,18 +58,22 @@ final class BookViewController: UIViewController {
         
         closeButton.snp.makeConstraints {
             $0.leading.equalTo(view.snp.leading).offset(Constants.buttonOffset)
-            $0.bottom.equalTo(view.snp.bottom).offset(-Constants.buttonOffset * 2)
+            $0.bottom.equalTo(view.snp.bottom).offset(-Constants.buttonOffset)
             $0.height.equalTo(Constants.buttonSide)
             $0.width.equalTo(Constants.buttonSide)
         }
     }
     
-    private var viewModel: BookViewModelProtocol?
-    private let disposeBag = DisposeBag()
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewModel?.viewWillAppear()
+    }
+    
+    private var viewModel: BookViewModelProtocol?
+    private let disposeBag = DisposeBag()
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     func setup(viewModel: BookViewModelProtocol) {
@@ -76,21 +81,29 @@ final class BookViewController: UIViewController {
         
         closeButton.rx.tap
             .subscribe(onNext: { [weak self] in
-                guard let self = self, let vc = self.contentViewController.viewControllers?.first as? BookPageViewController, let index = self.pagesController?.indexOfViewController(vc) else{return}
-                self.viewModel?.closeBookRelay.accept(index)
+                guard let self = self, let pageIndex = self.getCurrentPageIndex() else{return}
+                self.viewModel?.closeBookRelay.accept(pageIndex)
             }).disposed(by: disposeBag)
         
         viewModel.currentPageDriver
-            .drive(onNext: { [weak self] index in
-                guard let self = self, let index = index, let continuationViewController = self.pagesController?.viewControllerAtIndex(index)  else{return}
-                self.contentViewController.setViewControllers([continuationViewController], direction: .forward, animated: false, completion: {done in })
+            .drive(onNext: { [weak self] pageIndex in
+                guard let self = self , let pageIndex = pageIndex else{return}
+                self.setCurrentPageIndex(pageIndex)
             }).disposed(by: disposeBag)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(self.didNewBook(notification:)),
+                                               name: .init(rawValue: AppConstants.newBookNotificationName),
+                                               object: nil)
     }
-    
-
 }
 
 private extension BookViewController {
+    @objc func didNewBook(notification: Notification){
+        guard let pageIndex = self.getCurrentPageIndex() else{return}
+        self.viewModel?.closeBookRelay.accept(pageIndex)
+    }
+    
     func setupAttrs() -> (title: [NSAttributedString.Key : Any], text: [NSAttributedString.Key : Any]) {
         let universalTextSpacing: CGFloat = 7
         let titleFont:UIFont = UIFont(name: "Arial", size: 25)!
@@ -133,29 +146,27 @@ private extension BookViewController {
         }
     }
     
-    func setupContentController() {
-        if let startingViewController = pagesController?.viewControllerAtIndex(0) {
-            contentViewController.setViewControllers([startingViewController], direction: .forward, animated: false, completion: {done in })
-        }
-        
+    func setupContentController() {        
         contentViewController.dataSource = pagesController
         contentViewController.view.frame = self.view.bounds
         self.view.insertSubview(contentViewController.view, at: 0)
         contentViewController.didMove(toParent: self)
     }
     
+    func setCurrentPageIndex(_ pageIndex: Int){
+        guard let continuationViewController = self.pagesController?.viewControllerAtIndex(pageIndex)  else{return}
+        self.contentViewController.setViewControllers([continuationViewController], direction: .forward, animated: false, completion: {done in })
+    }
+    
+    func getCurrentPageIndex() -> Int?{
+        guard let vc = self.contentViewController.viewControllers?.first as? BookPageViewController, let pageIndex = self.pagesController?.indexOfViewController(vc) else{return nil}
+        return pageIndex
+    }
+    
 }
 
 extension BookViewController: UIPageViewControllerDelegate {
     func pageViewController(_ pageViewController: UIPageViewController, spineLocationFor orientation: UIInterfaceOrientation) -> UIPageViewController.SpineLocation {
-        let viewController = pageViewController.viewControllers?[0] ?? UIViewController()
-        let viewControllers = [viewController]
-        pageViewController.setViewControllers(viewControllers,
-                                              direction  : .forward,
-                                              animated   : true,
-                                              completion : { done in })
-        
-        pageViewController.isDoubleSided = true
         return .min
     }
 }

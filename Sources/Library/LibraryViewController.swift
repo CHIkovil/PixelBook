@@ -44,12 +44,6 @@ final class LibraryViewController: UIViewController {
         return tableView
     }()
     
-    private var viewModel: LibraryViewModelProtocol!
-    private let disposeBag = DisposeBag()
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
     
     override func loadView() {
         super.loadView()
@@ -74,43 +68,58 @@ final class LibraryViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel?.viewWillAppear()
+        viewModel?.viewWillAppear(true)
+        try? fetchBooksController?.performFetch()
+    }
+    
+    private var viewModel: LibraryViewModelProtocol!
+    private let disposeBag = DisposeBag()
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     func setup(viewModel: LibraryViewModelProtocol) {
         self.viewModel = viewModel
         self.setupFetchedBooks()
         
-        viewModel.currentBookDriver
-            .drive(onNext: { [weak self] model in
-                guard let self = self, let model = model else{return}
-                self.currentBookView.setup(model: model)
+        viewModel.сurrentBookDriver
+            .drive(onNext: { [weak self] book in
+                guard let self = self, let book = book else{return}
+                self.updateCurrentBook(book)
             }).disposed(by: disposeBag)
         
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(self.managedObjectContextDidChange(notification:)),
-                                               name: .NSManagedObjectContextObjectsDidChange,
+                                               selector: #selector(self.didNewBook(notification:)),
+                                               name: .init(rawValue: AppConstants.newBookNotificationName),
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(self.didNewCurrentBook(notification:)),
+                                               name: .init(rawValue: AppConstants.newCurrentBookNotificationName),
                                                object: nil)
     }
+}
+
+private extension LibraryViewController {
+    func updateCurrentBook(_ book: BookModel){
+        self.currentBookView.setup(model: book)
+    }
     
-    private func setupFetchedBooks(){
+    @objc func didNewBook(notification: Notification){
+        booksTableView.reloadData()
+    }
+    
+    @objc func didNewCurrentBook(notification: Notification){
+        viewModel?.viewWillAppear(false)
+    }
+    
+    func setupFetchedBooks(){
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         let request = NSFetchRequest<BlackBook.Book>(entityName: AppConstants.bookEntityName)
         request.sortDescriptors = [NSSortDescriptor(key: Constants.sortedKey,ascending: true)]
         fetchBooksController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
         fetchBooksController?.delegate = self
-        do {
-            try fetchBooksController?.performFetch()
-        } catch{
-            
-        }
-    }
-}
-
-private extension LibraryViewController {
-    @objc func managedObjectContextDidChange(notification: Notification){
-        viewModel?.viewWillAppear()
-        booksTableView.reloadData()
     }
 }
 

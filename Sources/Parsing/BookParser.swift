@@ -11,12 +11,17 @@ import UIKit
 
 
 final class BookParser  {
-    static func parseFile(url: URL) -> BookModel? {
-        switch url.pathExtension {
-        case "epub":
-            return parseEpub(url: url)
-        default:
-            return nil
+    static func checkContexts(contexts: Set<UIOpenURLContext>){
+        if let urlContext = contexts.first {
+            let url = urlContext.url
+            switch url.pathExtension {
+            case "epub":
+                guard let model = parseEpub(url: url) else {return}
+                BookRequests.insert(model)
+                UserRequests.updateState(isRead: false)
+                NotificationCenter.default.post(name: .init(rawValue: AppConstants.newBookNotificationName), object: nil)
+            default: break
+            }
         }
     }
     

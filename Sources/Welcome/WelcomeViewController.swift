@@ -64,14 +64,14 @@ final class WelcomeViewController: UIViewController {
         self.viewModel = viewModel
         viewModel.quotesDriver
             .drive(onNext: { [weak self] quotes in
-                guard let self = self else{return}
+                guard let self = self, let quotes = quotes else{return}
                 self.showQuotes(quotes)
             }).disposed(by: disposeBag)
     }
 }
 
 private extension WelcomeViewController {
-    func showQuotes(_ quotes: WelcomeViewModel.Quotes) {
+    func showQuotes(_ quotes: Quotes) {
 
     }
 }

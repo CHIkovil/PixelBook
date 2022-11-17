@@ -7,20 +7,18 @@
 import RxCocoa
 import RxSwift
 
+typealias Quotes = [(text: String, author: String)]
 
 protocol WelcomeViewModelProtocol: AnyObject {
     func viewDidLoad()
-    var quotesDriver: Driver<WelcomeViewModel.Quotes> { get }
+    var quotesDriver: Driver<Quotes?> { get }
     func moveToLibrary()
 }
 
 final class WelcomeViewModel: WelcomeViewModelProtocol {
-    typealias Quotes = [(text: String, author: String)]
-    
-    private lazy var quotesRelay = PublishRelay<WelcomeViewModel.Quotes>()
+    private lazy var quotesRelay = PublishRelay<Quotes?>()
     private(set) lazy var quotesDriver = quotesRelay.asDriver(
-        onErrorJustReturn: [(text: "", author: "")]
-        )
+        onErrorJustReturn: nil)
     
     private let router: WelcomeRouterProtocol
     
@@ -41,6 +39,7 @@ final class WelcomeViewModel: WelcomeViewModelProtocol {
 
 private extension WelcomeViewModel {
     func updateState() {
-        quotesRelay.accept([(text: "Classic – a book which people praise and don’t read.", author: "Mark Twain")])
+        let quotes =  [(text: "Classic – a book which people praise and don’t read.", author: "Mark Twain")]
+        quotesRelay.accept(quotes)
     }
 }

@@ -10,4 +10,6 @@ import Foundation
 enum AppConstants {
     static let bookEntityName:String = "Book"
     static let userEntityName:String = "User"
+    static let newCurrentBookNotificationName: String = "newCurrentBook"
+    static let newBookNotificationName: String = "newBook"
 }

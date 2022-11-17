@@ -35,17 +35,15 @@ final class BookViewModel: BookViewModelProtocol {
         self.model = model
         
         closeBookRelay
-            .subscribe(onNext: { [weak self] index in
+            .subscribe(onNext: { [weak self] pageIndex in
                 guard let self = self else {return}
-                BookRequests.updateState(model: self.model, currentPage: index)
-                UserRequests.updateState(isRead: false)
-                self.closeBook()
+                self.closeBook(pageIndex)
             })
             .disposed(by: disposeBag)
     }
     
     func viewWillAppear(){
-        updateState()
+        updateCurrentPage()
     }
     
     func parseModelToPages(bounds: CGRect, attrs: (title: [NSAttributedString.Key : Any], text: [NSAttributedString.Key : Any]), callback: @escaping(Pages) -> Void){
@@ -88,13 +86,16 @@ final class BookViewModel: BookViewModelProtocol {
 }
 
 private extension BookViewModel {
-    func updateState() {
+    func updateCurrentPage() {
         UserRequests.update(UserModel(bookTitle: model.title, bookAuthor: model.author, isRead: true))
+        NotificationCenter.default.post(name: .init(rawValue: AppConstants.newCurrentBookNotificationName), object: nil)
         guard let model = BookRequests.fetchOne(title: model.title, author: model.author) else{return}
         currentPageRelay.accept(model.currentPage)
     }
     
-    func closeBook() {
+    func closeBook(_ pageIndex: Int) {
+        BookRequests.updateState(model: self.model, currentPage: pageIndex)
+        UserRequests.updateState(isRead: false)
         self.router.close()
     }
     
@@ -109,7 +110,7 @@ private extension BookViewModel {
         var pages: [NSAttributedString] = []
         
         while rangeOffset <= attrString.length && rangeOffset != 0 {
-            let emptyPage = NSAttributedString(string: "\(pages.count)")
+            let emptyPage = NSAttributedString(string: "\(NSUUID().uuidString)")
             pages.append(attrString.attributedSubstring(from: pageVisibleRange!))
             pages.append(emptyPage)
             
