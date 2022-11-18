@@ -10,130 +10,128 @@ import EPUBKit
 import UIKit
 import DTCoreText
 import SwiftSoup
+import Dispatch
 
 final class BookParser  {
+    enum BookConfig {
+        struct Config{
+            let screenSize: CGRect
+            let stringAttributes: [NSAttributedString.Key : Any]
+        }
+        
+        case epub
+        
+        var value: Config {
+            switch self {
+            case .epub:
+                var screenSize: CGRect = UIScreen.main.bounds
+                screenSize.size.width -= PageConstants.widthOffset * 2 + 20
+                screenSize.size.height -= PageConstants.heightOffset * 2 + 200
+                
+                let universalTextSpacing: CGFloat = 10
+                let textFont: UIFont = UIFont(name: "Arial", size: 20)!
+                
+                let style = NSMutableParagraphStyle()
+                style.lineSpacing = universalTextSpacing
+                style.paragraphSpacing = universalTextSpacing
+                style.hyphenationFactor = 1.0
+                style.lineBreakMode = .byWordWrapping
+                style.alignment = .natural
+                
+                let attrs: [NSAttributedString.Key : Any] = [.font: textFont as Any,
+                                                                 .foregroundColor:
+                                                                    AppColor.readText,
+                                                                 .paragraphStyle: style]
+                
+                return Config(screenSize: screenSize,
+                              stringAttributes: attrs)
+            }
+        }
+    }
+    
+    
     static func checkContexts(contexts: Set<UIOpenURLContext>){
         if let urlContext = contexts.first {
             let url = urlContext.url
             switch url.pathExtension {
             case "epub":
-                guard let model = parseEpub(url: url) else {return}
-                BookRequests.insert(model)
-                UserRequests.updateState(isRead: false)
-                NotificationCenter.default.post(name: .init(rawValue: AppConstants.newBookNotificationName), object: nil)
+                parseEpub(url: url)
             default: break
             }
         }
     }
     
-    private static func parseEpub(url: URL) -> BookModel? {
-        guard let document = EPUBDocument(url: url), let contents = document.tableOfContents.subTable else{return nil}
+    private static func parseEpub(url: URL) {
+        guard let document = EPUBDocument(url: url), let contents = document.tableOfContents.subTable else{return}
         
-        var screenSize: CGRect = UIScreen.main.bounds
-        screenSize.size.width -= PageConstants.widthOffset * 2 + 20
-        screenSize.size.height -= PageConstants.heightOffset * 2 + 150
-        
-        let attrs = setupAttrs()
-        var chapterPageIndex: Int = 0
-        var bookSpine: [String: Int] = [:]
-        var pages: [AttributedString] = []
+        let group = DispatchGroup()
+        let config = BookConfig.epub.value
+        let bookChapters = contents.compactMap {$0.label}
+        var chapterPages: [String:[AttributedString]] = [:]
         
         contents.forEach { content in
+            group.enter()
             do {
-                guard let item = content.item else{return}
+                defer {group.leave()}
+            
+                guard let item = content.item else {return}
+                
                 let file = String(item.components(separatedBy: ".xhtml")[0]) + ".xhtml"
                 let url = document.contentDirectory.appendingPathComponent(file)
-                
                 let xhtml = try String(contentsOfFile: url.path, encoding: String.Encoding.utf8)
                 
-                let parsedChapter = try? SwiftSoup.parse(xhtml)
-                let paragraphs = try? parsedChapter?.select("p").eachText()
-                guard let paragraphs = paragraphs else{return}
+                let parsedChapter = try SwiftSoup.parse(xhtml)
+                let text = try parsedChapter.select("p").eachText().joined(separator: "\n")
+                let chapterAttributedString = NSAttributedString(string: text, attributes: config.stringAttributes)
                 
-                let attributedString: NSMutableAttributedString = NSMutableAttributedString()
+                let pages = self.cutPageWith(attrString: chapterAttributedString, bounds: config.screenSize)
                 
-                if let titleIndex = paragraphs.firstIndex(of: content.label){
-                    paragraphs.enumerated().forEach {index, p in
-                        if index <= titleIndex {
-                            attributedString.append(NSAttributedString(string: p + "\n", attributes: attrs.title))
-                        }else{
-                            attributedString.append(NSAttributedString(string: "\t" + p + "\n", attributes: attrs.text))
-                        }
-                    }
-                    
-                }else {
-                    paragraphs.forEach { p in
-                        attributedString.append(NSAttributedString(string: "\t" + p + "\n", attributes: attrs.text))
-                    }
-                }
+                chapterPages[content.label] = pages
                 
-                let nextPages = self.cutPageWith(attrString: attributedString, bounds: screenSize)
-                bookSpine[content.label] = chapterPageIndex
-                pages += nextPages
-                chapterPageIndex = nextPages.count + 1
-            }catch {
-                return
+            } catch {
             }
         }
         
-        var cover: Data?
-        if let coverUrl = document.cover, let img = UIImage(named: coverUrl.path) {
-            cover = img.pngData() as Data?
+        group.notify(queue: .main) {
+            var bookPages: [AttributedString] = []
+            
+            bookChapters.forEach {
+                guard let pages = chapterPages[$0] else{return}
+                bookPages += pages
+            }
+            
+            var cover: Data?
+            if let coverUrl = document.cover, let img = UIImage(named: coverUrl.path) {
+                cover = img.pngData() as Data?
+            }
+            
+            if let title = document.title, let author = document.author, !bookPages.isEmpty{
+                let model = BookModel(cover: cover, title: title, author: author, pages: bookPages, currentPage: 0)
+                BookRequests.insert(model)
+                UserRequests.updateState(isRead: false)
+                NotificationCenter.default.post(name: .init(rawValue: AppConstants.newBookNotificationName), object: nil)
+            }
         }
-        
-        if let title = document.title, let author = document.author, !bookSpine.isEmpty, !pages.isEmpty{
-            return BookModel(cover: cover, title: title, author: author, spine: bookSpine, pages: pages, currentPage: 0)
-        }else{
-            return nil
-        }
-    }
-    
-    private static func setupAttrs() -> (title: [NSAttributedString.Key : Any], text: [NSAttributedString.Key : Any]) {
-        let universalTextSpacing: CGFloat = 7
-        let titleFont:UIFont = UIFont(name: "Arial", size: 25)!
-        let textFont: UIFont = UIFont(name: "Arial", size: 20)!
-        
-        let titleStyle = NSMutableParagraphStyle()
-        titleStyle.lineSpacing = universalTextSpacing
-        titleStyle.paragraphSpacing = universalTextSpacing + 5
-        titleStyle.alignment = .center
-        
-        let textStyle = NSMutableParagraphStyle()
-        textStyle.lineSpacing = universalTextSpacing
-        textStyle.paragraphSpacing = universalTextSpacing
-        textStyle.hyphenationFactor = 1.0
-        textStyle.lineBreakMode = .byWordWrapping
-        textStyle.alignment = .justified
-        
-        let titleAttrs: [NSAttributedString.Key : Any] = [.font: titleFont as Any,
-                                                          .foregroundColor:
-                                                            AppColor.readText,
-                                                          .paragraphStyle: titleStyle]
-        
-        let textAttrs: [NSAttributedString.Key : Any] = [.font: textFont as Any,
-                                                         .foregroundColor:
-                                                            AppColor.readText,
-                                                         .paragraphStyle: textStyle]
-        return (title: titleAttrs, text: textAttrs)
+
     }
     
     private static func cutPageWith(attrString: NSAttributedString, bounds: CGRect) -> [AttributedString]{
         
         let layouter = DTCoreTextLayouter.init(attributedString: attrString)
+        
         let rect = CGRect(x: bounds.origin.x, y: bounds.origin.y, width: bounds.size.width, height: bounds.size.height)
         var frame = layouter?.layoutFrame(with: rect, range: NSRange(location: 0, length: attrString.length))
         
         var pageVisibleRange = frame?.visibleStringRange()
         var rangeOffset = pageVisibleRange!.location + pageVisibleRange!.length
-    
+        
         var pages: [AttributedString] = []
         
         while rangeOffset <= attrString.length && rangeOffset != 0 {
             let pageAttrString = attrString.attributedSubstring(from: pageVisibleRange!)
             let emptyPageAttrString = NSAttributedString(string: NSUUID().uuidString)
             
-            pages.append(AttributedString(nsAttributedString: pageAttrString))
-            pages.append(AttributedString(nsAttributedString: emptyPageAttrString))
+            pages += [AttributedString(nsAttributedString: pageAttrString), AttributedString(nsAttributedString: emptyPageAttrString)]
             
             frame = layouter?.layoutFrame(with: rect, range: NSRange(location: rangeOffset, length: attrString.length - rangeOffset))
             

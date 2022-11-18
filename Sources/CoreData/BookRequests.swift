@@ -13,13 +13,11 @@ class BookRequests {
     private static let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     static func convertToModel(_ item: BlackBook.Book) -> BookModel{
-        let spine: [String:Int] = try! JSONDecoder().decode([String:Int].self, from: item.spine!)
         let pages: [AttributedString] = try! JSONDecoder().decode([AttributedString].self, from: item.pages!)
         
         let book = BookModel(cover: item.cover,
                              title: item.title!,
                              author: item.author!,
-                             spine: spine,
                              pages: pages,
                              currentPage: Int(item.currentPage))
         return book
@@ -33,14 +31,12 @@ class BookRequests {
             
             let newItem = NSEntityDescription.insertNewObject(forEntityName: AppConstants.bookEntityName, into: context) as! BlackBook.Book
             
-            let spineData = try? JSONEncoder().encode(book.spine)
             let pagesData = try? JSONEncoder().encode(book.pages)
            
                 
             newItem.cover = book.cover
             newItem.title = book.title
             newItem.author = book.author
-            newItem.spine = spineData
             newItem.pages = pagesData
             newItem.currentPage = Int32(book.currentPage)
             

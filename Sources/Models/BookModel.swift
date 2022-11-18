@@ -11,7 +11,6 @@ public struct BookModel {
     let cover: Data?
     let title: String
     let author: String
-    let spine: [String: Int]
     let pages: [AttributedString]
     var currentPage: Int
 }

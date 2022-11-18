@@ -20,7 +20,7 @@ final class BookViewController: UIViewController {
     }
     
     private enum Constants {
-        static let buttonSide: CGFloat = 30
+        static let buttonSide: CGFloat = 40
         static let buttonOffset: CGFloat = 20
     }
     
