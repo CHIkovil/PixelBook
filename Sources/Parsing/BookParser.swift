@@ -16,7 +16,8 @@ final class BookParser  {
     enum BookConfig {
         struct Config{
             let screenSize: CGRect
-            let stringAttributes: [NSAttributedString.Key : Any]
+            let titleAttributes: [NSAttributedString.Key : Any]
+            let textAttributes: [NSAttributedString.Key : Any]
         }
         
         case epub
@@ -29,22 +30,37 @@ final class BookParser  {
                 screenSize.size.height -= PageConstants.heightOffset * 2 + 200
                 
                 let universalTextSpacing: CGFloat = 10
+                let titleFont: UIFont = UIFont(name: "Arial", size: 25)!
                 let textFont: UIFont = UIFont(name: "Arial", size: 20)!
                 
-                let style = NSMutableParagraphStyle()
-                style.lineSpacing = universalTextSpacing
-                style.paragraphSpacing = universalTextSpacing
-                style.hyphenationFactor = 1.0
-                style.lineBreakMode = .byWordWrapping
-                style.alignment = .natural
+                let titleStyle = NSMutableParagraphStyle()
+                titleStyle.lineSpacing = universalTextSpacing
+                titleStyle.paragraphSpacing = universalTextSpacing * 2
+                titleStyle.alignment = .center
                 
-                let attrs: [NSAttributedString.Key : Any] = [.font: textFont as Any,
+                let textStyle = NSMutableParagraphStyle()
+                textStyle.lineSpacing = universalTextSpacing
+                textStyle.paragraphSpacing = universalTextSpacing
+                textStyle.hyphenationFactor = 1.0
+                textStyle.firstLineHeadIndent = 20
+                textStyle.lineBreakMode = .byCharWrapping
+                textStyle.alignment = .justified
+                
+                let titleAttrs: [NSAttributedString.Key : Any] = [.font: titleFont as Any,
                                                                  .foregroundColor:
                                                                     AppColor.readText,
-                                                                 .paragraphStyle: style]
+                                                                 .paragraphStyle: titleStyle]
+                
+                let textAttrs: [NSAttributedString.Key : Any] = [.font: textFont as Any,
+                                                                 .foregroundColor:
+                                                                    AppColor.readText,
+                                                                 .paragraphStyle: textStyle]
+                
+       
                 
                 return Config(screenSize: screenSize,
-                              stringAttributes: attrs)
+                              titleAttributes: titleAttrs,
+                              textAttributes: textAttrs)
             }
         }
     }
@@ -81,8 +97,14 @@ final class BookParser  {
                 let xhtml = try String(contentsOfFile: url.path, encoding: String.Encoding.utf8)
                 
                 let parsedChapter = try SwiftSoup.parse(xhtml)
-                let text = try parsedChapter.select("p").eachText().joined(separator: "\n")
-                let chapterAttributedString = NSAttributedString(string: text, attributes: config.stringAttributes)
+                var paragraphs = try parsedChapter.select("p").eachText()
+                
+                let chapterAttributedString: NSMutableAttributedString = NSMutableAttributedString()
+                
+                guard let titleIndex = paragraphs.firstIndex(of: content.label) else{return}
+                
+                chapterAttributedString.append(NSAttributedString(string: paragraphs[0...titleIndex].joined(separator: "\n") + "\n", attributes:  config.titleAttributes))
+                chapterAttributedString.append(NSAttributedString(string: paragraphs[(titleIndex + 1)...].joined(separator: "\n"), attributes: config.textAttributes))
                 
                 let pages = self.cutPageWith(attrString: chapterAttributedString, bounds: config.screenSize)
                 
@@ -129,9 +151,7 @@ final class BookParser  {
         
         while rangeOffset <= attrString.length && rangeOffset != 0 {
             let pageAttrString = attrString.attributedSubstring(from: pageVisibleRange!)
-            let emptyPageAttrString = NSAttributedString(string: NSUUID().uuidString)
-            
-            pages += [AttributedString(nsAttributedString: pageAttrString), AttributedString(nsAttributedString: emptyPageAttrString)]
+            pages.append(AttributedString(nsAttributedString: pageAttrString))
             
             frame = layouter?.layoutFrame(with: rect, range: NSRange(location: rangeOffset, length: attrString.length - rangeOffset))
             

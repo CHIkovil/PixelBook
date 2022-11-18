@@ -12,7 +12,7 @@ class BookPagesController: NSObject {
     private let pageItems: [AttributedString]
     
     init(_ pageItems: [AttributedString]) {
-        self.pageItems = pageItems
+        self.pageItems = BookPagesController.editToDoubleSided(pageItems)
     }
     
     func viewControllerAtIndex(_ index: Int) -> BookPageViewController? {
@@ -37,6 +37,16 @@ class BookPagesController: NSObject {
         }
         
         return pageIndex
+    }
+}
+
+private extension BookPagesController {
+    static func editToDoubleSided(_ pages: [AttributedString]) -> [AttributedString] {
+        var doublePages: [AttributedString] = []
+        pages.forEach {
+            doublePages.append(contentsOf: [$0,AttributedString(nsAttributedString: NSAttributedString(string: NSUUID().uuidString))])
+        }
+        return doublePages
     }
 }
 
