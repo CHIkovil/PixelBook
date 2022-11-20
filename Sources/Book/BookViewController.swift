@@ -11,8 +11,56 @@ import RxSwift
 import SnapKit
 
 typealias PageConstants = BookViewController.PageConstants
+typealias BookConfig = BookViewController.BookConfig
 
 final class BookViewController: UIViewController {
+    
+     enum BookConfig {
+        struct Config{
+            let visibleScreenSize: CGRect
+            let titleAttributes: [NSAttributedString.Key : Any]
+            let textAttributes: [NSAttributedString.Key : Any]
+        }
+        
+        static let value: Config = {
+            var visibleScreenSize: CGRect = UIScreen.main.bounds
+            visibleScreenSize.size.width -= PageConstants.widthOffset * 2 + 20
+            visibleScreenSize.size.height -= PageConstants.heightOffset * 2 + 150
+            
+            let universalTextSpacing: CGFloat = 10
+            let titleFont: UIFont = UIFont(name: "Arial", size: 25)!
+            let textFont: UIFont = UIFont(name: "Arial", size: 20)!
+            
+            let titleStyle = NSMutableParagraphStyle()
+            titleStyle.lineSpacing = universalTextSpacing
+            titleStyle.paragraphSpacing = universalTextSpacing * 2
+            titleStyle.alignment = .center
+            
+            let textStyle = NSMutableParagraphStyle()
+            textStyle.lineSpacing = universalTextSpacing
+            textStyle.paragraphSpacing = universalTextSpacing
+            textStyle.hyphenationFactor = 1.0
+            textStyle.firstLineHeadIndent = 20
+            textStyle.lineBreakMode = .byCharWrapping
+            textStyle.alignment = .justified
+            
+            let titleAttrs: [NSAttributedString.Key : Any] = [.font: titleFont as Any,
+                                                             .foregroundColor:
+                                                                AppColor.readText,
+                                                             .paragraphStyle: titleStyle]
+            
+            let textAttrs: [NSAttributedString.Key : Any] = [.font: textFont as Any,
+                                                             .foregroundColor:
+                                                                AppColor.readText,
+                                                             .paragraphStyle: textStyle]
+            
+   
+            
+            return Config(visibleScreenSize: visibleScreenSize,
+                          titleAttributes: titleAttrs,
+                          textAttributes: textAttrs)
+        }()
+    }
     
     enum PageConstants {
         static let heightOffset: CGFloat = 60
@@ -23,7 +71,6 @@ final class BookViewController: UIViewController {
         static let buttonSide: CGFloat = 40
         static let buttonOffset: CGFloat = 20
     }
-    
     
     private var pagesController: BookPagesController?
     
@@ -99,8 +146,10 @@ private extension BookViewController {
     }
     
     func setupPagesController() {
-        guard let pages = viewModel?.getPages() else {return}
-        self.pagesController = BookPagesController(pages)
+        viewModel?.parseToPages() {[weak self] pages in
+                 guard let self = self else{return}
+                 self.pagesController = BookPagesController(pages)
+        }
     }
     
     func setupContentController() {        

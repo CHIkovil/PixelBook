@@ -11,7 +11,7 @@ import SnapKit
 
 
 class BookPageViewController: UIViewController {
-    var item: AttributedString?
+    var item: NSAttributedString?
     
     private lazy var textView:UITextView = {
         let textView = UITextView()
@@ -36,6 +36,6 @@ class BookPageViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         guard let item = item else{return}
-        textView.attributedText = item.attributedString
+        textView.attributedText = item
     }
 }

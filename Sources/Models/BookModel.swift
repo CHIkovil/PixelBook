@@ -7,11 +7,19 @@
 
 import Foundation
 
+typealias Chapter = BookModel.Chapter
+
 public struct BookModel {
+    struct Chapter:Codable {
+        let title: String
+        let xhtml: String
+    }
+    
     let cover: Data?
     let title: String
     let author: String
-    let pages: [AttributedString]
+    let chapters: [Chapter]
     var currentPage: Int
 }
+
 

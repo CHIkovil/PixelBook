@@ -9,10 +9,10 @@ import ObjectiveC
 import UIKit
 
 class BookPagesController: NSObject {
-    private let pageItems: [AttributedString]
+    private let pageItems: [NSAttributedString]
     
-    init(_ pageItems: [AttributedString]) {
-        self.pageItems = BookPagesController.editToDoubleSided(pageItems)
+    init(_ pageItems: [NSAttributedString]) {
+        self.pageItems = pageItems
     }
     
     func viewControllerAtIndex(_ index: Int) -> BookPageViewController? {
@@ -30,23 +30,13 @@ class BookPagesController: NSObject {
         let pageItem = viewController.item
         var pageIndex = 0
         
-        if let index = pageItems.firstIndex(where: { $0.attributedString == pageItem?.attributedString }) {
+        if let index = pageItems.firstIndex(where: { $0 == pageItem }) {
             pageIndex = index
         } else {
             pageIndex = NSNotFound
         }
         
         return pageIndex
-    }
-}
-
-private extension BookPagesController {
-    static func editToDoubleSided(_ pages: [AttributedString]) -> [AttributedString] {
-        var doublePages: [AttributedString] = []
-        pages.forEach {
-            doublePages.append(contentsOf: [$0,AttributedString(nsAttributedString: NSAttributedString(string: NSUUID().uuidString))])
-        }
-        return doublePages
     }
 }
 
