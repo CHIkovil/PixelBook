@@ -24,8 +24,8 @@ final class BookViewController: UIViewController {
         
         static let value: Config = {
             var visibleScreenSize: CGRect = UIScreen.main.bounds
-            visibleScreenSize.size.width -= PageConstants.widthOffset * 2 + 20
-            visibleScreenSize.size.height -= PageConstants.heightOffset * 2 + 150
+            visibleScreenSize.size.width -= PageConstants.widthOffset * 2
+            visibleScreenSize.size.height -= PageConstants.heightOffset * 2 + 250
             
             let universalTextSpacing: CGFloat = 10
             let titleFont: UIFont = UIFont(name: "Arial", size: 25)!
@@ -38,10 +38,9 @@ final class BookViewController: UIViewController {
             
             let textStyle = NSMutableParagraphStyle()
             textStyle.lineSpacing = universalTextSpacing
-            textStyle.paragraphSpacing = universalTextSpacing
             textStyle.hyphenationFactor = 1.0
             textStyle.firstLineHeadIndent = 20
-            textStyle.lineBreakMode = .byCharWrapping
+            textStyle.lineBreakMode = .byWordWrapping
             textStyle.alignment = .justified
             
             let titleAttrs: [NSAttributedString.Key : Any] = [.font: titleFont as Any,
@@ -136,6 +135,11 @@ final class BookViewController: UIViewController {
                                                selector: #selector(self.didNewBook(notification:)),
                                                name: .init(rawValue: AppConstants.newBookNotificationName),
                                                object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(self.didAppClose(notification:)),
+                                               name: UIApplication.willResignActiveNotification,
+                                               object: nil)
     }
 }
 
@@ -143,6 +147,11 @@ private extension BookViewController {
     @objc func didNewBook(notification: Notification){
         guard let pageIndex = self.getCurrentPageIndex() else{return}
         self.viewModel?.closeBookRelay.accept(pageIndex)
+    }
+    
+    @objc func didAppClose(notification: Notification){
+        guard let pageIndex = self.getCurrentPageIndex() else{return}
+        self.viewModel?.newCurrentPageRelay.accept(pageIndex)
     }
     
     func setupPagesController() {

@@ -66,7 +66,6 @@ final class BookParser  {
                                       currentPage: 0)
                 
                 BookRequests.insert(model)
-                let book = BookRequests.fetchOne(title: model.title, author: model.author)
                 UserRequests.updateState(isRead: false)
                 NotificationCenter.default.post(name: .init(rawValue: AppConstants.newBookNotificationName), object: nil)
             }

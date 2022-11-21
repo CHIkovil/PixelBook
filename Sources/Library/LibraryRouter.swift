@@ -19,7 +19,7 @@ final class LibraryRouter: Router<LibraryViewController>, LibraryRouterProtocol 
         let router = BookRouter(viewController: controller)
         let viewModel = BookViewModel(router: router, model: model)
         controller.setup(viewModel: viewModel)
-        controller.modalPresentationStyle = .overFullScreen
+        controller.modalPresentationStyle = .fullScreen
         viewController?.present(controller, animated: false)
     }
 }

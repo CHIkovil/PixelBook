@@ -25,7 +25,7 @@ class BookPageViewController: UIViewController {
     override func loadView() {
         super.loadView()
         self.view.addSubview(textView)
-        
+
         textView.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.bottom.equalToSuperview()

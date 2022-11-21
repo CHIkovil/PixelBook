@@ -15,6 +15,7 @@ import Dispatch
 
 
 protocol BookViewModelProtocol: AnyObject {
+    var newCurrentPageRelay: PublishRelay<Int> {get}
     var closeBookRelay: PublishRelay<Int> { get }
     var currentPageDriver: Driver<Int?> { get }
     
@@ -23,6 +24,7 @@ protocol BookViewModelProtocol: AnyObject {
 }
 
 final class BookViewModel: BookViewModelProtocol {
+    let newCurrentPageRelay = PublishRelay<Int>()
     let closeBookRelay = PublishRelay<Int>()
     private lazy var currentPageRelay = PublishRelay<Int?>()
     private(set) lazy var currentPageDriver = currentPageRelay.asDriver(
@@ -43,10 +45,16 @@ final class BookViewModel: BookViewModelProtocol {
                 self.closeBook(pageIndex)
             })
             .disposed(by: disposeBag)
+        
+        newCurrentPageRelay.subscribe(onNext: { [weak self] pageIndex in
+            guard let self = self else {return}
+            self.updateCurrentPage(pageIndex)
+        })
+        .disposed(by: disposeBag)
     }
     
     func viewWillAppear(){
-        updateCurrentPage()
+        getCurrentPage()
     }
     
     func parseToPages(callback:@escaping ([NSAttributedString]) -> Void) {
@@ -57,7 +65,11 @@ final class BookViewModel: BookViewModelProtocol {
 }
 
 private extension BookViewModel {
-    func updateCurrentPage() {
+    func updateCurrentPage(_ pageIndex: Int) {
+        BookRequests.updateState(book: self.model, currentPage: pageIndex)
+    }
+    
+    func getCurrentPage() {
         UserRequests.update(UserModel(bookTitle: model.title, bookAuthor: model.author, isRead: true))
         NotificationCenter.default.post(name: .init(rawValue: AppConstants.newCurrentBookNotificationName), object: nil)
         guard let model = BookRequests.fetchOne(title: model.title, author: model.author) else{return}
@@ -88,11 +100,23 @@ private extension BookViewModel {
                     
                     let chapterAttributedString: NSMutableAttributedString = NSMutableAttributedString()
                     
-                    guard let titleIndex = paragraphs.firstIndex(of: chapter.title) else{return}
+                    let variationsTitles = chapter.title.permute()
+                    let titleIndex = variationsTitles.compactMap({
+                        paragraphs.firstIndex(of:$0)
+                    }).max()
+
+                    let titleString = titleIndex != nil ? paragraphs[0...titleIndex!].joined(separator: "\n") + "\n" : ""
+                    let textString = paragraphs[((titleIndex ?? -1) + 1)...].joined(separator: "\n")
+
+                    let textLanguage = textString.detectedLanguage()
+
+                    let hyphenatedTitleString = titleString.hyphenated(languageCode: textLanguage)
+                    let hyphenatedTextString = textString.hyphenated(languageCode:  textLanguage)
                     
-                    chapterAttributedString.append(NSAttributedString(string: paragraphs[0...titleIndex].joined(separator: "\n") + "\n", attributes:  config.titleAttributes))
+                    chapterAttributedString.append(NSAttributedString(string: hyphenatedTitleString, attributes:  config.titleAttributes))
                     
-                    chapterAttributedString.append(NSAttributedString(string: paragraphs[(titleIndex + 1)...].joined(separator: "\n"), attributes: config.textAttributes))
+                    chapterAttributedString.append(NSAttributedString(string: hyphenatedTextString, attributes: config.textAttributes))
+                    
                     
                     let pages = self.cutPageWith(attrString: chapterAttributedString, bounds: config.visibleScreenSize)
                     
@@ -116,6 +140,7 @@ private extension BookViewModel {
         
         callback(pages)
     }
+    
     
     static func cutPageWith(attrString: NSAttributedString, bounds: CGRect) -> [NSAttributedString]{
         
