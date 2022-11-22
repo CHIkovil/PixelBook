@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import CoreData
 
-class BookRequests {
+final class BookRequests {
     private static let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     static func convertToModel(_ item: BlackBook.Book) -> BookModel{
@@ -23,10 +23,10 @@ class BookRequests {
         return book
     }
     
-    static func insert(_ book: BookModel) {
+    static func insert(_ book: BookModel) -> Bool{
         do {
             if let _ = check(title: book.title, author: book.author){
-                return
+                return false
             }
             
             let newItem = NSEntityDescription.insertNewObject(forEntityName: AppConstants.bookEntityName, into: context) as! BlackBook.Book
@@ -41,6 +41,8 @@ class BookRequests {
             newItem.currentPage = Int32(book.currentPage)
             
             try context.save()
+            
+            return true
         } catch {
             fatalError()
         }

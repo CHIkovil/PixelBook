@@ -8,10 +8,12 @@
 import Foundation
 import NaturalLanguage
 
+//MARK: Collection
 extension Collection {
     var second: Element? { dropFirst().first }
 }
 
+//MARK: String
 extension String {
     func permute(minStringLen: Int = 1) -> Set<String> {
         func permute(fromList: [String], toList: [String], minStringLen: Int, set: inout Set<String>) {
@@ -42,10 +44,6 @@ extension String {
         guard let languageCode = recognizer.dominantLanguage?.rawValue else { return nil }
         let detectedLanguage = Locale.current.localizedString(forIdentifier: languageCode)
         return detectedLanguage
-    }
-    
-    func autoHyphenated() -> String {
-        return self.hyphenated(languageCode: detectedLanguage() ?? "")
     }
     
     func hyphenated(languageCode: String?) -> String {

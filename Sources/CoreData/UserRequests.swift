@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import CoreData
 
-class UserRequests {
+final class UserRequests {
     private static let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     static func update(_ model: UserModel) {

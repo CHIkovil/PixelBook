@@ -9,9 +9,9 @@ import ObjectiveC
 import UIKit
 
 class BookPagesController: NSObject {
-    private let pageItems: [NSAttributedString]
+    private let pageItems: [AttributedString]
     
-    init(_ pageItems: [NSAttributedString]) {
+    init(_ pageItems: [AttributedString]) {
         self.pageItems = pageItems
     }
     
@@ -30,7 +30,7 @@ class BookPagesController: NSObject {
         let pageItem = viewController.item
         var pageIndex = 0
         
-        if let index = pageItems.firstIndex(where: { $0 == pageItem }) {
+        if let index = pageItems.firstIndex(where: { $0.attributedString == pageItem?.attributedString }) {
             pageIndex = index
         } else {
             pageIndex = NSNotFound

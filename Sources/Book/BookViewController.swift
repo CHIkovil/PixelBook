@@ -155,10 +155,8 @@ private extension BookViewController {
     }
     
     func setupPagesController() {
-        viewModel?.parseToPages() {[weak self] pages in
-                 guard let self = self else{return}
-                 self.pagesController = BookPagesController(pages)
-        }
+        guard let pages = viewModel?.getPages() else{return}
+        self.pagesController = BookPagesController(pages)
     }
     
     func setupContentController() {        
