@@ -72,6 +72,16 @@ final class LibraryViewController: UIViewController {
         try? fetchBooksController?.performFetch()
     }
     
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if let firstTouch = touches.first {
+            let hitView = self.view.hitTest(firstTouch.location(in: self.view), with: event)
+
+            if hitView === self.currentBookView {
+                self.selectCurrentBook()
+            }
+        }
+    }
+    
     private var viewModel: LibraryViewModelProtocol!
     private let disposeBag = DisposeBag()
     
@@ -104,6 +114,11 @@ final class LibraryViewController: UIViewController {
 private extension LibraryViewController {
     func updateCurrentBook(_ book: BookModel){
         self.currentBookView.setup(model: book)
+    }
+    
+    func selectCurrentBook() {
+        guard let model = self.currentBookView.model else{return}
+        viewModel?.selectedBookRelay.accept(model)
     }
     
     @objc func didNewBook(notification: Notification){

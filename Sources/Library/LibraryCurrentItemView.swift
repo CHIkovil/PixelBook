@@ -111,7 +111,10 @@ final class LibraryCurrentItemView: UIView {
         }
     }
     
+    var model: BookModel?
+    
     func setup(model: BookModel) {
+        self.model = model
         titleLabel.text = model.title
     
         guard let cover = model.cover else {return}

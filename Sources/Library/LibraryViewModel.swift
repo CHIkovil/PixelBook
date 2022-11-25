@@ -43,7 +43,7 @@ private extension LibraryViewModel {
         
         if isCheckRead {
             if userModel.isRead {
-                self.router.showBook(bookModel)
+                self.selectedBook(bookModel)
             }
         }
         
