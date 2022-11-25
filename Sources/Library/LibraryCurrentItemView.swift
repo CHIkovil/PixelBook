@@ -116,9 +116,15 @@ final class LibraryCurrentItemView: UIView {
     func setup(model: BookModel) {
         self.model = model
         titleLabel.text = model.title
-    
+        
         guard let cover = model.cover else {return}
         coverImageView.image = UIImage(data: cover)
     }
     
+    func reset() {
+        self.model = nil
+        titleLabel.text = nil
+        coverImageView.image = nil
+        
+    }
 }

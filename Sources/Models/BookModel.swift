@@ -9,7 +9,7 @@ import Foundation
 
 typealias Chapter = BookModel.Chapter
 
-public struct BookModel {
+public struct BookModel: Equatable {
     struct Chapter:Codable {
         let title: String
         let xhtml: String
@@ -20,6 +20,10 @@ public struct BookModel {
     let author: String
     let chapters: [Chapter]
     var currentPage: Int
+    
+    public static func ==(lhs: BookModel, rhs: BookModel) -> Bool {
+        return lhs.title == rhs.title && lhs.author == rhs.author
+    }
 }
 
 

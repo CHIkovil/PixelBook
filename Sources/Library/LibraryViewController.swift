@@ -116,6 +116,10 @@ private extension LibraryViewController {
         self.currentBookView.setup(model: book)
     }
     
+    func resetCuttentBook(_ book: BookModel) {
+        self.currentBookView.reset()
+    }
+    
     func selectCurrentBook() {
         guard let model = self.currentBookView.model else{return}
         viewModel?.selectedBookRelay.accept(model)
@@ -198,6 +202,10 @@ extension LibraryViewController: UITableViewDelegate, UITableViewDataSource {
             guard let self = self, let item = self.fetchBooksController?.object(at: indexPath) as? BlackBook.Book else{return}
             let model = BookRequests.convertToModel(item)
             BookRequests.delete(model)
+            
+            if self.currentBookView.model == model {
+                self.resetCuttentBook(model)
+            }
         })
         deleteAction.image = UIGraphicsImageRenderer(size: CGSize(width: 30, height: 30)).image { _ in
             UIImage(named: "delete")?.draw(in: CGRect(x: 0, y: 0, width: 30, height: 30))
