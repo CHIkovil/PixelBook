@@ -10,12 +10,11 @@ import UIKit
 import RxSwift
 import SnapKit
 
-typealias PageConstants = BookViewController.PageConstants
-typealias BookConfig = BookViewController.BookConfig
+typealias BookConfig = BookViewController.Config
 
 final class BookViewController: UIViewController {
     
-     enum BookConfig {
+     enum Config {
         struct Config{
             let visibleScreenSize: CGRect
             let titleAttributes: [NSAttributedString.Key : Any]
@@ -59,11 +58,6 @@ final class BookViewController: UIViewController {
                           titleAttributes: titleAttrs,
                           textAttributes: textAttrs)
         }()
-    }
-    
-    enum PageConstants {
-        static let heightOffset: CGFloat = 60
-        static let widthOffset: CGFloat = 15
     }
     
     private enum Constants {

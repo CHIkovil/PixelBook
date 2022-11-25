@@ -9,8 +9,15 @@ import Foundation
 import UIKit
 import SnapKit
 
+typealias PageConstants = BookPageViewController.Constants
 
 class BookPageViewController: UIViewController {
+    
+    enum Constants {
+        static let heightOffset: CGFloat = 60
+        static let widthOffset: CGFloat = 15
+    }
+    
     var item: AttributedString?
     
     private lazy var textView:UITextView = {

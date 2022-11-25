@@ -59,8 +59,7 @@ final class BookViewModel: BookViewModelProtocol {
         if let pages =  PagesRequests.fetchOne(title: model.title, author: model.author) {
             currentPages = pages
         }else{
-            PagesRequests.insert(model)
-            let pages =  PagesRequests.fetchOne(title: model.title, author: model.author)!
+            let pages = BookParser.parseModelToPages(model)
             currentPages = pages
         }
         
