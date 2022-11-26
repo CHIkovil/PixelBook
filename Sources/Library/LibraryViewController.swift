@@ -19,6 +19,13 @@ final class LibraryViewController: UIViewController {
         static let contentOffset: CGFloat = 10
         static let sortedKey: String = "title"
         static let cellDeleteText: String = "Удалить"
+        static let cellHeight: CGFloat = 150
+        static let topContentOffset: CGFloat = 60
+        static let minTableTopOffset: CGFloat = Constants.topContentOffset
+        static let maxTableTopOffset: CGFloat = Constants.currentViewHeight + Constants.contentOffset
+        static let maxTableHeight: CGFloat = UIScreen.main.bounds.height - Constants.topContentOffset
+        static let minTableHeight: CGFloat = UIScreen.main.bounds.height - Constants.currentViewHeight - Constants.contentOffset
+        static let tableWidth: CGFloat =  UIScreen.main.bounds.width
     }
     
     private var fetchBooksController: NSFetchedResultsController<BlackBook.Book>?
@@ -29,7 +36,7 @@ final class LibraryViewController: UIViewController {
     }()
     
     private lazy var booksTableView: UITableView = {
-        let tableView = UITableView()
+        let tableView = UITableView(frame: CGRect(x: 0, y: Constants.maxTableTopOffset, width: Constants.tableWidth, height: Constants.minTableHeight))
         tableView.register(LibraryTableViewCell.self, forCellReuseIdentifier: Constants.cellIdentifier)
         tableView.backgroundColor = AppColor.background
         tableView.separatorStyle = .none
@@ -41,6 +48,7 @@ final class LibraryViewController: UIViewController {
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.panGestureRecognizer.addTarget(self, action: #selector(self.tableViewDragged(gestureRecognizer:)))
         return tableView
     }()
     
@@ -57,13 +65,6 @@ final class LibraryViewController: UIViewController {
             $0.height.equalTo(Constants.currentViewHeight)
             $0.width.equalToSuperview()
         }
-        
-        booksTableView.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.top.equalTo(currentBookView.snp.bottom).offset(Constants.contentOffset)
-            $0.bottom.equalTo(view.snp.bottom)
-            $0.width.equalToSuperview()
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -75,7 +76,7 @@ final class LibraryViewController: UIViewController {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let firstTouch = touches.first {
             let hitView = self.view.hitTest(firstTouch.location(in: self.view), with: event)
-
+            
             if hitView === self.currentBookView {
                 self.selectCurrentBook()
             }
@@ -112,6 +113,14 @@ final class LibraryViewController: UIViewController {
 }
 
 private extension LibraryViewController {
+    func setupFetchedBooks(){
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        let request = NSFetchRequest<BlackBook.Book>(entityName: AppConstants.bookEntityName)
+        request.sortDescriptors = [NSSortDescriptor(key: Constants.sortedKey,ascending: true)]
+        fetchBooksController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+        fetchBooksController?.delegate = self
+    }
+    
     func updateCurrentBook(_ book: BookModel){
         self.currentBookView.setup(model: book)
     }
@@ -133,15 +142,32 @@ private extension LibraryViewController {
         viewModel?.viewWillAppear(false)
     }
     
-    func setupFetchedBooks(){
-        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-        let request = NSFetchRequest<BlackBook.Book>(entityName: AppConstants.bookEntityName)
-        request.sortDescriptors = [NSSortDescriptor(key: Constants.sortedKey,ascending: true)]
-        fetchBooksController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
-        fetchBooksController?.delegate = self
+    @objc func tableViewDragged(gestureRecognizer: UIPanGestureRecognizer) {
+        if gestureRecognizer.state == .began || gestureRecognizer.state == .changed {
+            let translation = gestureRecognizer.translation(in: self.view)
+            
+            if translation.y < 0 && self.booksTableView.frame.height < Constants.maxTableHeight{
+                UIView.animate(withDuration: 0.25) {[weak self] in
+                    guard let self = self else{return}
+                    var frame = self.booksTableView.frame
+                    frame.origin.y = Constants.minTableTopOffset
+                    frame.size.height = Constants.maxTableHeight
+                    self.booksTableView.frame = frame
+                }
+            }
+            
+            if translation.y > 0 && self.booksTableView.frame.height > Constants.minTableHeight{
+                UIView.animate(withDuration: 0.15) {[weak self] in
+                    guard let self = self else{return}
+                    var frame = self.booksTableView.frame
+                    frame.origin.y = Constants.maxTableTopOffset
+                    frame.size.height = Constants.minTableHeight
+                    self.booksTableView.frame = frame
+                }
+            }
+        }
     }
 }
-
 
 extension LibraryViewController: NSFetchedResultsControllerDelegate {
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
@@ -185,7 +211,7 @@ extension LibraryViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
-        150
+        Constants.cellHeight
     }
     
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
