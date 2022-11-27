@@ -39,15 +39,17 @@ final class LibraryViewModel: LibraryViewModelProtocol {
 
 private extension LibraryViewModel {
     func updateState(_ isCheckRead: Bool) {
-        guard let userModel = UserRequests.fetch(), let bookModel = BookRequests.fetchOne(title: userModel.bookTitle, author: userModel.bookAuthor) else{return}
-        
-        if isCheckRead {
-            if userModel.isRead {
-                self.selectedBook(bookModel)
+        if let userModel = UserRequests.fetch(), let bookModel = BookRequests.fetchOne(title: userModel.bookTitle, author: userModel.bookAuthor){
+            if isCheckRead {
+                if userModel.isRead {
+                    self.selectedBook(bookModel)
+                }
             }
+            сurrentBookRelay.accept(bookModel)
+            
+        }else{
+            сurrentBookRelay.accept(nil)
         }
-        
-        сurrentBookRelay.accept(bookModel)
     }
     
     func selectedBook(_ model: BookModel){

@@ -114,8 +114,7 @@ private extension BookParser {
         if BookRequests.insert(model) {
             UserRequests.updateState(isRead: false)
             NotificationCenter.default.post(name: .init(rawValue: AppConstants.newBookNotificationName), object: nil)
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            DispatchQueue.main.asyncAfter(deadline: .now()) {
                 PagesRequests.insert(model)
             }
         }

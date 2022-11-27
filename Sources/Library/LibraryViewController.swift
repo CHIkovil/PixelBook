@@ -26,6 +26,8 @@ final class LibraryViewController: UIViewController {
         static let maxTableHeight: CGFloat = UIScreen.main.bounds.height - Constants.topContentOffset
         static let minTableHeight: CGFloat = UIScreen.main.bounds.height - Constants.currentViewHeight - Constants.contentOffset
         static let tableWidth: CGFloat =  UIScreen.main.bounds.width
+        static let deleteIconName: String = "delete"
+        static let deleteIconSide: CGFloat = 30
     }
     
     private var fetchBooksController: NSFetchedResultsController<BlackBook.Book>?
@@ -36,7 +38,7 @@ final class LibraryViewController: UIViewController {
     }()
     
     private lazy var booksTableView: UITableView = {
-        let tableView = UITableView(frame: CGRect(x: 0, y: Constants.maxTableTopOffset, width: Constants.tableWidth, height: Constants.minTableHeight))
+        let tableView = UITableView(frame: CGRect(x: 0, y: Constants.minTableTopOffset, width: Constants.tableWidth, height: Constants.maxTableHeight))
         tableView.register(LibraryTableViewCell.self, forCellReuseIdentifier: Constants.cellIdentifier)
         tableView.backgroundColor = AppColor.background
         tableView.separatorStyle = .none
@@ -48,7 +50,7 @@ final class LibraryViewController: UIViewController {
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.panGestureRecognizer.addTarget(self, action: #selector(self.tableViewDragged(gestureRecognizer:)))
+        tableView.panGestureRecognizer.addTarget(self, action: #selector(self.didTouchTableView(gestureRecognizer:)))
         return tableView
     }()
     
@@ -98,6 +100,7 @@ final class LibraryViewController: UIViewController {
             .drive(onNext: { [weak self] book in
                 guard let self = self, let book = book else{return}
                 self.updateCurrentBook(book)
+                self.animateMoveDownTableView()
             }).disposed(by: disposeBag)
         
         NotificationCenter.default.addObserver(self,
@@ -125,7 +128,8 @@ private extension LibraryViewController {
         self.currentBookView.setup(model: book)
     }
     
-    func resetCuttentBook(_ book: BookModel) {
+    func resetCurrentBook(_ book: BookModel) {
+        self.animateMoveUpTableView()
         self.currentBookView.reset()
     }
     
@@ -139,32 +143,44 @@ private extension LibraryViewController {
     }
     
     @objc func didNewCurrentBook(notification: Notification){
-        viewModel?.viewWillAppear(false)
+        if self.booksTableView.frame.height > Constants.minTableHeight {
+            self.animateMoveDownTableView()
+        }else{
+            viewModel?.viewWillAppear(false)
+        }
     }
     
-    @objc func tableViewDragged(gestureRecognizer: UIPanGestureRecognizer) {
-        if gestureRecognizer.state == .began || gestureRecognizer.state == .changed {
+    @objc func didTouchTableView(gestureRecognizer: UIPanGestureRecognizer) {
+        if gestureRecognizer.state == .changed {
             let translation = gestureRecognizer.translation(in: self.view)
             
-            if translation.y < 0 && self.booksTableView.frame.height < Constants.maxTableHeight{
-                UIView.animate(withDuration: 0.25) {[weak self] in
-                    guard let self = self else{return}
-                    var frame = self.booksTableView.frame
-                    frame.origin.y = Constants.minTableTopOffset
-                    frame.size.height = Constants.maxTableHeight
-                    self.booksTableView.frame = frame
-                }
+            if translation.y < 0 && self.booksTableView.frame.height < Constants.maxTableHeight && CGFloat(self.booksTableView.numberOfRows(inSection: 0)) * Constants.cellHeight > Constants.maxTableHeight{
+                self.animateMoveUpTableView()
             }
             
-            if translation.y > 0 && self.booksTableView.frame.height > Constants.minTableHeight{
-                UIView.animate(withDuration: 0.15) {[weak self] in
-                    guard let self = self else{return}
-                    var frame = self.booksTableView.frame
-                    frame.origin.y = Constants.maxTableTopOffset
-                    frame.size.height = Constants.minTableHeight
-                    self.booksTableView.frame = frame
-                }
+            if translation.y > 0 && self.booksTableView.frame.height > Constants.minTableHeight && self.currentBookView.model != nil{
+                self.animateMoveDownTableView()
             }
+        }
+    }
+    
+    func animateMoveUpTableView() {
+        UIView.animate(withDuration: 0.25) {[weak self] in
+            guard let self = self else{return}
+            var frame = self.booksTableView.frame
+            frame.origin.y = Constants.minTableTopOffset
+            frame.size.height = Constants.maxTableHeight
+            self.booksTableView.frame = frame
+        }
+    }
+    
+    func animateMoveDownTableView() {
+        UIView.animate(withDuration: 0.2) {[weak self] in
+            guard let self = self else{return}
+            var frame = self.booksTableView.frame
+            frame.origin.y = Constants.maxTableTopOffset
+            frame.size.height = Constants.minTableHeight
+            self.booksTableView.frame = frame
         }
     }
 }
@@ -230,11 +246,12 @@ extension LibraryViewController: UITableViewDelegate, UITableViewDataSource {
             BookRequests.delete(model)
             
             if self.currentBookView.model == model {
-                self.resetCuttentBook(model)
+                self.resetCurrentBook(model)
             }
         })
-        deleteAction.image = UIGraphicsImageRenderer(size: CGSize(width: 30, height: 30)).image { _ in
-            UIImage(named: "delete")?.draw(in: CGRect(x: 0, y: 0, width: 30, height: 30))
+        
+        deleteAction.image = UIGraphicsImageRenderer(size: CGSize(width: Constants.deleteIconSide, height: Constants.deleteIconSide)).image { _ in
+            UIImage(named: Constants.deleteIconName)?.draw(in: CGRect(x: 0, y: 0, width: Constants.deleteIconSide, height: Constants.deleteIconSide))
         }
         deleteAction.backgroundColor = AppColor.unactive
         
