@@ -20,7 +20,7 @@ final class LibraryViewController: UIViewController {
         static let sortedKey: String = "title"
         static let cellDeleteText: String = "Удалить"
         static let cellHeight: CGFloat = 150
-        static let topContentOffset: CGFloat = 60
+        static let topContentOffset: CGFloat = 50
         static let minTableTopOffset: CGFloat = Constants.topContentOffset
         static let maxTableTopOffset: CGFloat = Constants.currentViewHeight + Constants.contentOffset
         static let maxTableHeight: CGFloat = UIScreen.main.bounds.height - Constants.topContentOffset
@@ -28,9 +28,16 @@ final class LibraryViewController: UIViewController {
         static let tableWidth: CGFloat =  UIScreen.main.bounds.width
         static let deleteIconName: String = "delete"
         static let deleteIconSide: CGFloat = 30
+        static let notificationViewHeight: CGFloat = 100
+        static let notificationViewWidth: CGFloat = 150
     }
     
     private var fetchBooksController: NSFetchedResultsController<BlackBook.Book>?
+    
+    private lazy var notificationView: LibraryNotificationView = {
+        let view = LibraryNotificationView()
+        return view
+    }()
     
     private lazy var currentBookView: LibraryCurrentItemView = {
         let view = LibraryCurrentItemView()
@@ -60,12 +67,20 @@ final class LibraryViewController: UIViewController {
         view.backgroundColor = AppColor.background
         view.addSubview(currentBookView)
         view.addSubview(booksTableView)
+        view.addSubview(notificationView)
         
         currentBookView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(view.snp.top)
             $0.height.equalTo(Constants.currentViewHeight)
             $0.width.equalToSuperview()
+        }
+        
+        notificationView.snp.makeConstraints {
+            $0.top.equalTo(view.snp.top).offset(Constants.topContentOffset - Constants.notificationViewHeight)
+            $0.centerX.equalToSuperview()
+            $0.height.equalTo(Constants.notificationViewHeight)
+            $0.width.equalTo(Constants.notificationViewWidth)
         }
     }
     
@@ -112,6 +127,10 @@ final class LibraryViewController: UIViewController {
                                                selector: #selector(self.didNewCurrentBook(notification:)),
                                                name: .init(rawValue: AppConstants.newCurrentBookNotificationName),
                                                object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(self.didRepeatedBook(notification:)),
+                                               name: .init(rawValue: AppConstants.repeatedBookNotificationName),
+                                               object: nil)
     }
 }
 
@@ -138,8 +157,25 @@ private extension LibraryViewController {
         viewModel?.selectedBookRelay.accept(model)
     }
     
+    func deleteBook(_ indexPath: IndexPath) {
+        guard let item = self.fetchBooksController?.object(at: indexPath) as? BlackBook.Book else{return}
+        notificationView.setup(.deleted)
+        let model = BookRequests.convertToModel(item)
+        BookRequests.delete(model)
+        
+        
+        if self.currentBookView.model == model {
+            self.resetCurrentBook(model)
+        }
+    }
+    
     @objc func didNewBook(notification: Notification){
+        notificationView.setup(.added)
         booksTableView.reloadData()
+    }
+    
+    @objc func didRepeatedBook(notification: Notification){
+        notificationView.setup(.repeated)
     }
     
     @objc func didNewCurrentBook(notification: Notification){
@@ -240,19 +276,14 @@ extension LibraryViewController: UITableViewDelegate, UITableViewDataSource {
                    trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration?
     {
         let deleteAction = UIContextualAction(style: .normal, title:  nil, handler: { [weak self] (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
-            
-            guard let self = self, let item = self.fetchBooksController?.object(at: indexPath) as? BlackBook.Book else{return}
-            let model = BookRequests.convertToModel(item)
-            BookRequests.delete(model)
-            
-            if self.currentBookView.model == model {
-                self.resetCurrentBook(model)
-            }
+            guard let self = self else{return}
+            self.deleteBook(indexPath)
         })
         
         deleteAction.image = UIGraphicsImageRenderer(size: CGSize(width: Constants.deleteIconSide, height: Constants.deleteIconSide)).image { _ in
             UIImage(named: Constants.deleteIconName)?.draw(in: CGRect(x: 0, y: 0, width: Constants.deleteIconSide, height: Constants.deleteIconSide))
         }
+        
         deleteAction.backgroundColor = AppColor.unactive
         
         return UISwipeActionsConfiguration(actions: [deleteAction])

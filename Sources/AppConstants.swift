@@ -12,5 +12,6 @@ enum AppConstants {
     static let userEntityName:String = "User"
     static let pagesEntityName:String = "Pages"
     static let newCurrentBookNotificationName: String = "newCurrentBook"
+    static let repeatedBookNotificationName: String = "repeatedBook"
     static let newBookNotificationName: String = "newBook"
 }
