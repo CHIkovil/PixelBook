@@ -18,7 +18,6 @@ final class LibraryCurrentItemView: UIView {
         static let interlineationLabelHeight: CGFloat = 40
         static let labelFontSizeBase: CGFloat = 20
         static let labelFontSizeInterlineation: CGFloat = 12
-        static let viewCornerRadius: CGFloat = 10
         static let contentOffset:CGFloat = 20
     }
     
@@ -35,7 +34,7 @@ final class LibraryCurrentItemView: UIView {
     lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.backgroundColor = .clear
-        label.font = label.font.withSize(Constants.labelFontSizeBase)
+        label.font = UIFont(name: AppConstants.textFontName, size: Constants.labelFontSizeBase)
         label.textColor = AppColor.mainText
         label.numberOfLines = 0
         return label
@@ -44,7 +43,7 @@ final class LibraryCurrentItemView: UIView {
     lazy var recentLabel: UILabel = {
         let label = UILabel()
         label.backgroundColor = .clear
-        label.font = label.font.withSize(Constants.labelFontSizeInterlineation)
+        label.font = UIFont(name: AppConstants.textFontName, size: Constants.labelFontSizeInterlineation)
         label.textColor = AppColor.supportText
         label.text = Constants.recentText
         return label
@@ -53,7 +52,7 @@ final class LibraryCurrentItemView: UIView {
     lazy var continueLabel: UILabel = {
         let label = UILabel()
         label.backgroundColor = .clear
-        label.font = label.font.withSize(Constants.labelFontSizeInterlineation)
+        label.font = UIFont(name: AppConstants.textFontName, size: Constants.labelFontSizeInterlineation)
         label.textColor = AppColor.active
         label.text = Constants.continueText
         label.textAlignment = .right
@@ -74,9 +73,13 @@ final class LibraryCurrentItemView: UIView {
     private func commonInit() {
         backgroundColor = AppColor.contentBackground
         layer.masksToBounds = false
-        layer.borderColor = UIColor.clear.cgColor
-        layer.borderWidth = 0.5
-        layer.cornerRadius = Constants.viewCornerRadius
+        layer.borderColor = AppColor.contentBorder.cgColor
+        layer.borderWidth = AppConstants.contentBorderWidth
+        layer.cornerRadius = AppConstants.contentCornerRadius
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOpacity = 1
+        layer.shadowOffset = CGSize(width: 4, height: 4)
+        layer.shadowRadius = AppConstants.contentShadowRadius
         addSubview(coverImageView)
         addSubview(titleLabel)
         addSubview(recentLabel)

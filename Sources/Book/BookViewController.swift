@@ -62,7 +62,7 @@ final class BookViewController: UIViewController {
     
     private enum Constants {
         static let buttonSide: CGFloat = 40
-        static let buttonOffset: CGFloat = 20
+        static let buttonOffset: CGFloat = 25
     }
     
     private var pagesController: BookPagesController?
@@ -76,9 +76,12 @@ final class BookViewController: UIViewController {
     
     private lazy var closeButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "back"), for: .normal)
+        button.setImage(UIImage(named: "back")?.withRenderingMode(.alwaysTemplate), for: .normal)
         button.backgroundColor = AppColor.unactive
+        button.tintColor = AppColor.background
         button.layer.cornerRadius = 0.5 * Constants.buttonSide
+        button.layer.borderColor = AppColor.background.cgColor
+        button.layer.borderWidth = AppConstants.contentBorderWidth
         button.layer.masksToBounds = true
         return button
     }()

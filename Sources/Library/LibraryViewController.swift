@@ -16,7 +16,7 @@ final class LibraryViewController: UIViewController {
     private enum Constants {
         static let cellIdentifier = "BookCell"
         static let currentViewHeight: CGFloat = 300
-        static let contentOffset: CGFloat = 10
+        static let contentOffset: CGFloat = 15
         static let sortedKey: String = "title"
         static let cellDeleteText: String = "Удалить"
         static let cellHeight: CGFloat = 150
@@ -29,7 +29,7 @@ final class LibraryViewController: UIViewController {
         static let deleteIconName: String = "delete"
         static let deleteIconSide: CGFloat = 30
         static let notificationViewHeight: CGFloat = 100
-        static let notificationViewWidth: CGFloat = 150
+        static let notificationViewWidth: CGFloat = 170
     }
     
     private var fetchBooksController: NSFetchedResultsController<BlackBook.Book>?
@@ -49,6 +49,14 @@ final class LibraryViewController: UIViewController {
         tableView.register(LibraryTableViewCell.self, forCellReuseIdentifier: Constants.cellIdentifier)
         tableView.backgroundColor = AppColor.background
         tableView.separatorStyle = .none
+        tableView.layer.shadowColor = UIColor.black.cgColor
+        tableView.layer.shadowOpacity = 1
+        tableView.layer.shadowOffset = CGSize(width: 4, height: 4)
+        tableView.layer.shadowRadius = 10
+        tableView.layer.cornerRadius = AppConstants.contentCornerRadius
+        tableView.layer.masksToBounds = false
+        tableView.layer.borderColor = UIColor.clear.cgColor
+        tableView.layer.borderWidth = AppConstants.contentBorderWidth
         tableView.allowsMultipleSelection = false
         tableView.allowsMultipleSelectionDuringEditing = false
         tableView.keyboardDismissMode = .onDrag

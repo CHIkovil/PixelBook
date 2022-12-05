@@ -14,4 +14,8 @@ enum AppConstants {
     static let newCurrentBookNotificationName: String = "newCurrentBook"
     static let repeatedBookNotificationName: String = "repeatedBook"
     static let newBookNotificationName: String = "newBook"
+    static let contentCornerRadius: CGFloat = 10
+    static let contentBorderWidth: CGFloat = 3
+    static let contentShadowRadius: CGFloat = 10
+    static let textFontName: String = "Monocraft"
 }

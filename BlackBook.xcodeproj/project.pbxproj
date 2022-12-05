@@ -40,6 +40,8 @@
 		1782096829358C0F00EFA23C /* LibraryNotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1782096729358C0F00EFA23C /* LibraryNotificationView.swift */; };
 		1782096C2935977100EFA23C /* success.png in Resources */ = {isa = PBXBuildFile; fileRef = 178209692935977100EFA23C /* success.png */; };
 		17820972293598EB00EFA23C /* attention.png in Resources */ = {isa = PBXBuildFile; fileRef = 17820971293598EB00EFA23C /* attention.png */; };
+		17820977293E371200EFA23C /* Monocraft.otf in Resources */ = {isa = PBXBuildFile; fileRef = 17820976293E371200EFA23C /* Monocraft.otf */; };
+		1782097F293E46FE00EFA23C /* slkscre.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1782097E293E46FE00EFA23C /* slkscre.ttf */; };
 		8C2188609C7AA4960F960970 /* Pods_BlackBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A608E7487150B1ECB671798 /* Pods_BlackBook.framework */; };
 /* End PBXBuildFile section */
 
@@ -80,6 +82,8 @@
 		1782096729358C0F00EFA23C /* LibraryNotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryNotificationView.swift; sourceTree = "<group>"; };
 		178209692935977100EFA23C /* success.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = success.png; sourceTree = "<group>"; };
 		17820971293598EB00EFA23C /* attention.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = attention.png; sourceTree = "<group>"; };
+		17820976293E371200EFA23C /* Monocraft.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Monocraft.otf; sourceTree = "<group>"; };
+		1782097E293E46FE00EFA23C /* slkscre.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = slkscre.ttf; sourceTree = "<group>"; };
 		2A608E7487150B1ECB671798 /* Pods_BlackBook.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlackBook.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8A0299BF765F76C4AE41D40 /* Pods-BlackBook.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlackBook.release.xcconfig"; path = "Target Support Files/Pods-BlackBook/Pods-BlackBook.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -210,6 +214,7 @@
 		1782094E292174F000EFA23C /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				17820973293E36AD00EFA23C /* Fonts */,
 				1782094F292174FD00EFA23C /* Icons */,
 			);
 			path = Resources;
@@ -241,6 +246,15 @@
 				1782095C2922ECD900EFA23C /* UserModel.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		17820973293E36AD00EFA23C /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				1782097E293E46FE00EFA23C /* slkscre.ttf */,
+				17820976293E371200EFA23C /* Monocraft.otf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 		C7C6480D00BE8E47A36C02C0 /* Frameworks */ = {
@@ -323,7 +337,9 @@
 				1782096C2935977100EFA23C /* success.png in Resources */,
 				178209562922E10800EFA23C /* delete.png in Resources */,
 				17820972293598EB00EFA23C /* attention.png in Resources */,
+				1782097F293E46FE00EFA23C /* slkscre.ttf in Resources */,
 				17820880290D398800EFA23C /* LaunchScreen.storyboard in Resources */,
+				17820977293E371200EFA23C /* Monocraft.otf in Resources */,
 				1782087D290D398800EFA23C /* Assets.xcassets in Resources */,
 				178209512921751200EFA23C /* back.png in Resources */,
 			);

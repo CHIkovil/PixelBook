@@ -30,7 +30,7 @@ final class LibraryTableViewCell: UITableViewCell {
     lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.backgroundColor = .clear
-        label.font = label.font.withSize(Constants.labelFontSizeBase)
+        label.font = UIFont(name: AppConstants.textFontName, size: Constants.labelFontSizeBase)
         label.textColor = AppColor.mainText
         return label
     }()
@@ -38,7 +38,7 @@ final class LibraryTableViewCell: UITableViewCell {
     lazy var authorLabel: UILabel = {
         let label = UILabel()
         label.backgroundColor = .clear
-        label.font = UIFont.italicSystemFont(ofSize: Constants.labelFontSizeInterlineation)
+        label.font = UIFont(name: AppConstants.textFontName, size: Constants.labelFontSizeInterlineation)
         label.textColor = AppColor.supportText
         return label
     }()
@@ -57,9 +57,10 @@ final class LibraryTableViewCell: UITableViewCell {
     private func commonInit() {
         backgroundColor = AppColor.contentBackground
         selectionStyle = .none
-        layer.masksToBounds = false
+        layer.cornerRadius = AppConstants.contentCornerRadius
         layer.borderColor = AppColor.contentBorder.cgColor
-        layer.borderWidth = 0.5
+        layer.borderWidth = AppConstants.contentBorderWidth
+        layer.masksToBounds = true
         addSubview(coverImageView)
         addSubview(titleLabel)
         addSubview(authorLabel)

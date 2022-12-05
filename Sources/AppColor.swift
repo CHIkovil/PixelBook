@@ -7,13 +7,13 @@
 import UIKit
 
 enum AppColor {
-    static let readText: UIColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-    static let mainText: UIColor = .white
+    static let readText: UIColor = #colorLiteral(red: 0.8745097518, green: 0.874509871, blue: 0.8788154125, alpha: 1)
+    static let mainText: UIColor = #colorLiteral(red: 0.8745097518, green: 0.874509871, blue: 0.8788154125, alpha: 1)
     static let supportText: UIColor = UIColor(0x767676)
-    static let background = UIColor(0x000000)
-    static let contentBackground = #colorLiteral(red: 0.01240335125, green: 0.01240335125, blue: 0.01240335125, alpha: 1)
-    static let contentBorder = UIColor(0x454545)
-    static let active = UIColor(0xCCCCCC)
+    static let background = #colorLiteral(red: 0.03789947554, green: 0.03618649021, blue: 0.04389099777, alpha: 1)
+    static let contentBackground = #colorLiteral(red: 0.06175961345, green: 0.05897457153, blue: 0.07150980085, alpha: 1)
+    static let contentBorder = #colorLiteral(red: 0.03789947554, green: 0.03618649021, blue: 0.04389099777, alpha: 1)
+    static let active = #colorLiteral(red: 0.8745097518, green: 0.874509871, blue: 0.8788154125, alpha: 1)
     static let unactive = UIColor(0x7A7A7A)
 }
 
