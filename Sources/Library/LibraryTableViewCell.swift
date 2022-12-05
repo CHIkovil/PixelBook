@@ -93,7 +93,7 @@ final class LibraryTableViewCell: UITableViewCell {
         
         guard let cover = model.cover else {return}
         let coverImage = UIImage(data: cover)
-        coverImageView.image = coverImage?.toPixelImage() ?? coverImage
+        coverImageView.image = coverImage?.toPixelImage(12) ?? coverImage
     }
 }
 

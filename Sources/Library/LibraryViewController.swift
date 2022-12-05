@@ -26,7 +26,7 @@ final class LibraryViewController: UIViewController {
         static let maxTableHeight: CGFloat = UIScreen.main.bounds.height - Constants.topContentOffset
         static let minTableHeight: CGFloat = UIScreen.main.bounds.height - Constants.currentViewHeight - Constants.contentOffset
         static let tableWidth: CGFloat =  UIScreen.main.bounds.width
-        static let deleteIconName: String = "delete"
+        static let deleteIconName: String = "back"
         static let deleteIconSide: CGFloat = 30
         static let notificationViewHeight: CGFloat = 100
         static let notificationViewWidth: CGFloat = 170
@@ -170,7 +170,7 @@ private extension LibraryViewController {
         notificationView.setup(.deleted)
         let model = BookRequests.convertToModel(item)
         BookRequests.delete(model)
-        
+        PagesRequests.delete(model)
         
         if self.currentBookView.model == model {
             self.resetCurrentBook(model)

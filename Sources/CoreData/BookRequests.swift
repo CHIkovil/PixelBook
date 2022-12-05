@@ -59,19 +59,15 @@ final class BookRequests {
     }
     
     static func fetchOne(title: String, author: String) -> BookModel? {
-         var result: BookModel?
-         
          do {
              if let item = check(title: title, author: author) {
                  let model = convertToModel(item)
-                 result = model
+                 return model
+             }else {
+                 return nil
              }
-             
-             try context.save()
          } catch {
          }
-         
-         return result
      }
 
     static func delete(_ book: BookModel) {
@@ -99,11 +95,7 @@ final class BookRequests {
             
             try context.save()
             
-            if let item = results.first {
-                return item
-            }else{
-                return nil
-            }
+            return results.first
         } catch {
             fatalError()
         }

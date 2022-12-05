@@ -27,8 +27,8 @@ final class BookViewController: UIViewController {
             visibleScreenSize.size.height -= PageConstants.heightOffset * 2 + 250
             
             let universalTextSpacing: CGFloat = 10
-            let titleFont: UIFont = UIFont(name: "Arial", size: 25)!
-            let textFont: UIFont = UIFont(name: "Arial", size: 20)!
+            let titleFont: UIFont = UIFont(name: AppConstants.textFontName, size: 25)!
+            let textFont: UIFont = UIFont(name: AppConstants.textFontName, size: 20)!
             
             let titleStyle = NSMutableParagraphStyle()
             titleStyle.lineSpacing = universalTextSpacing
@@ -76,9 +76,8 @@ final class BookViewController: UIViewController {
     
     private lazy var closeButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "back")?.withRenderingMode(.alwaysTemplate), for: .normal)
-        button.backgroundColor = AppColor.unactive
-        button.tintColor = AppColor.background
+        button.setImage(UIImage(named: "back")?.inverseImage(cgResult: false)?.resizeImage(targetSize: CGSize(width: 15, height: 15)), for: .normal)
+        button.backgroundColor = AppColor.background
         button.layer.cornerRadius = 0.5 * Constants.buttonSide
         button.layer.borderColor = AppColor.background.cgColor
         button.layer.borderWidth = AppConstants.contentBorderWidth

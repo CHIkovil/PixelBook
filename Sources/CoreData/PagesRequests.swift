@@ -33,30 +33,39 @@ final class PagesRequests {
     }
     
     static func fetchOne(title: String, author: String) -> [AttributedString]? {
-         var result: [AttributedString]?
-         
-         do {
-             let fetchRequest = NSFetchRequest<BlackBook.Pages>(entityName: AppConstants.pagesEntityName)
-             
-             let predicateTitle = NSPredicate(format: "title = %@", title)
-             let predicateAuthor = NSPredicate(format: "author = %@", author)
-             let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicateTitle, predicateAuthor])
-             
-             fetchRequest.predicate = predicate
-             
-             let results = try context.fetch(fetchRequest)
-             
-             try context.save()
-             
-             if let item = results.first, let pages: [AttributedString] = try? JSONDecoder().decode([AttributedString].self, from: item.data!) {
-                 return pages
-             }else{
-                 return nil
-             }
-             
-         } catch {
-         }
-         
-         return result
+        if let item = check(title: title, author: author), let pages: [AttributedString] = try? JSONDecoder().decode([AttributedString].self, from: item.data!) {
+            return pages
+        }else{
+            return nil
+        }
      }
+    
+    static func delete(_ book: BookModel) {
+        do {
+            guard let item = check(title: book.title, author: book.author) else{return}
+            context.delete(item)
+            try context.save()
+        } catch {
+            fatalError()
+        }
+    }
+    
+    private static func check(title: String, author: String) -> BlackBook.Pages?{
+        do {
+            let fetchRequest = NSFetchRequest<BlackBook.Pages>(entityName: AppConstants.pagesEntityName)
+            
+            let predicateTitle = NSPredicate(format: "title = %@", title)
+            let predicateAuthor = NSPredicate(format: "author = %@", author)
+            let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicateTitle, predicateAuthor])
+            
+            fetchRequest.predicate = predicate
+            
+            let results = try context.fetch(fetchRequest)
+            try context.save()
+            
+            return results.first
+        } catch {
+            fatalError()
+        }
+    }
 }
