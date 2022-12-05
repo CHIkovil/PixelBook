@@ -9,9 +9,7 @@ import Foundation
 import NaturalLanguage
 
 //MARK: Collection
-extension Collection {
-    var second: Element? { dropFirst().first }
-}
+
 
 //MARK: String
 extension String {

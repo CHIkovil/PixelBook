@@ -92,7 +92,8 @@ final class LibraryTableViewCell: UITableViewCell {
         authorLabel.text = model.author
         
         guard let cover = model.cover else {return}
-        coverImageView.image = UIImage(data: cover)
+        let coverImage = UIImage(data: cover)
+        coverImageView.image = coverImage?.toPixelImage() ?? coverImage
     }
 }
 

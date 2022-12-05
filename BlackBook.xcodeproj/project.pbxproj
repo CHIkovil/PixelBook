@@ -31,7 +31,7 @@
 		17820938291BCEBF00EFA23C /* BookPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17820937291BCEBF00EFA23C /* BookPageViewController.swift */; };
 		1782093A291BFE3800EFA23C /* BookPagesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17820939291BFE3800EFA23C /* BookPagesController.swift */; };
 		178209512921751200EFA23C /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 178209502921751200EFA23C /* back.png */; };
-		178209542921808700EFA23C /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178209532921808700EFA23C /* Extensions.swift */; };
+		178209542921808700EFA23C /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178209532921808700EFA23C /* StringExtension.swift */; };
 		178209562922E10800EFA23C /* delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 178209552922E10800EFA23C /* delete.png */; };
 		178209582922E4A100EFA23C /* UserRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178209572922E4A100EFA23C /* UserRequests.swift */; };
 		1782095A2922E97000EFA23C /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178209592922E97000EFA23C /* AppConstants.swift */; };
@@ -42,6 +42,8 @@
 		17820972293598EB00EFA23C /* attention.png in Resources */ = {isa = PBXBuildFile; fileRef = 17820971293598EB00EFA23C /* attention.png */; };
 		17820977293E371200EFA23C /* Monocraft.otf in Resources */ = {isa = PBXBuildFile; fileRef = 17820976293E371200EFA23C /* Monocraft.otf */; };
 		1782097F293E46FE00EFA23C /* slkscre.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1782097E293E46FE00EFA23C /* slkscre.ttf */; };
+		17820981293E4AE400EFA23C /* CollectionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17820980293E4AE400EFA23C /* CollectionExtension.swift */; };
+		17820983293E4B2100EFA23C /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17820982293E4B2100EFA23C /* UIImageExtension.swift */; };
 		8C2188609C7AA4960F960970 /* Pods_BlackBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A608E7487150B1ECB671798 /* Pods_BlackBook.framework */; };
 /* End PBXBuildFile section */
 
@@ -73,7 +75,7 @@
 		17820937291BCEBF00EFA23C /* BookPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookPageViewController.swift; sourceTree = "<group>"; };
 		17820939291BFE3800EFA23C /* BookPagesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookPagesController.swift; sourceTree = "<group>"; };
 		178209502921751200EFA23C /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
-		178209532921808700EFA23C /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		178209532921808700EFA23C /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		178209552922E10800EFA23C /* delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delete.png; sourceTree = "<group>"; };
 		178209572922E4A100EFA23C /* UserRequests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRequests.swift; sourceTree = "<group>"; };
 		178209592922E97000EFA23C /* AppConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
@@ -84,6 +86,8 @@
 		17820971293598EB00EFA23C /* attention.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = attention.png; sourceTree = "<group>"; };
 		17820976293E371200EFA23C /* Monocraft.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Monocraft.otf; sourceTree = "<group>"; };
 		1782097E293E46FE00EFA23C /* slkscre.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = slkscre.ttf; sourceTree = "<group>"; };
+		17820980293E4AE400EFA23C /* CollectionExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionExtension.swift; sourceTree = "<group>"; };
+		17820982293E4B2100EFA23C /* UIImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
 		2A608E7487150B1ECB671798 /* Pods_BlackBook.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlackBook.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8A0299BF765F76C4AE41D40 /* Pods-BlackBook.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlackBook.release.xcconfig"; path = "Target Support Files/Pods-BlackBook/Pods-BlackBook.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -234,7 +238,9 @@
 		178209522921807900EFA23C /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				178209532921808700EFA23C /* Extensions.swift */,
+				178209532921808700EFA23C /* StringExtension.swift */,
+				17820980293E4AE400EFA23C /* CollectionExtension.swift */,
+				17820982293E4B2100EFA23C /* UIImageExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -394,7 +400,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				178209542921808700EFA23C /* Extensions.swift in Sources */,
+				178209542921808700EFA23C /* StringExtension.swift in Sources */,
 				17820938291BCEBF00EFA23C /* BookPageViewController.swift in Sources */,
 				178208C929140B3D00EFA23C /* LibraryRouter.swift in Sources */,
 				1782088F290D3ED300EFA23C /* WelcomeViewController.swift in Sources */,
@@ -409,10 +415,12 @@
 				178208E9291828BC00EFA23C /* BlackBook.xcdatamodeld in Sources */,
 				17820892290D3F4500EFA23C /* WelcomeViewModel.swift in Sources */,
 				178208EB2918355400EFA23C /* BookRequests.swift in Sources */,
+				17820983293E4B2100EFA23C /* UIImageExtension.swift in Sources */,
 				178208CE291410B900EFA23C /* BookModel.swift in Sources */,
 				17820966292D296400EFA23C /* PagesRequests.swift in Sources */,
 				1782096829358C0F00EFA23C /* LibraryNotificationView.swift in Sources */,
 				178209582922E4A100EFA23C /* UserRequests.swift in Sources */,
+				17820981293E4AE400EFA23C /* CollectionExtension.swift in Sources */,
 				17820930291BABEB00EFA23C /* LibraryCurrentItemView.swift in Sources */,
 				178208A329102EB900EFA23C /* Router.swift in Sources */,
 				17820874290D398700EFA23C /* AppDelegate.swift in Sources */,

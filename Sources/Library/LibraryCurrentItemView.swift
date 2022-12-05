@@ -121,7 +121,8 @@ final class LibraryCurrentItemView: UIView {
         titleLabel.text = model.title
         
         guard let cover = model.cover else {return}
-        coverImageView.image = UIImage(data: cover)
+        let coverImage = UIImage(data: cover)
+        coverImageView.image = coverImage?.toPixelImage() ?? coverImage
     }
     
     func reset() {
