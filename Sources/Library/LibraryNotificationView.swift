@@ -16,7 +16,7 @@ enum LibraryNotificationState:String {
     var imageName: String {
         switch self {
         case .deleted:
-            return "delete"
+            return "removal"
         case .repeated:
             return "attention"
         case .added:

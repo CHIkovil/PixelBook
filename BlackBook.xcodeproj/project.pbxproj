@@ -30,9 +30,9 @@
 		17820936291BC7C000EFA23C /* BookRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17820935291BC7C000EFA23C /* BookRouter.swift */; };
 		17820938291BCEBF00EFA23C /* BookPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17820937291BCEBF00EFA23C /* BookPageViewController.swift */; };
 		1782093A291BFE3800EFA23C /* BookPagesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17820939291BFE3800EFA23C /* BookPagesController.swift */; };
-		178209512921751200EFA23C /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 178209502921751200EFA23C /* back.png */; };
+		178209512921751200EFA23C /* delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 178209502921751200EFA23C /* delete.png */; };
 		178209542921808700EFA23C /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178209532921808700EFA23C /* StringExtension.swift */; };
-		178209562922E10800EFA23C /* delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 178209552922E10800EFA23C /* delete.png */; };
+		178209562922E10800EFA23C /* removal.png in Resources */ = {isa = PBXBuildFile; fileRef = 178209552922E10800EFA23C /* removal.png */; };
 		178209582922E4A100EFA23C /* UserRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178209572922E4A100EFA23C /* UserRequests.swift */; };
 		1782095A2922E97000EFA23C /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178209592922E97000EFA23C /* AppConstants.swift */; };
 		1782095D2922ECD900EFA23C /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1782095C2922ECD900EFA23C /* UserModel.swift */; };
@@ -44,6 +44,7 @@
 		1782097F293E46FE00EFA23C /* slkscre.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1782097E293E46FE00EFA23C /* slkscre.ttf */; };
 		17820981293E4AE400EFA23C /* CollectionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17820980293E4AE400EFA23C /* CollectionExtension.swift */; };
 		17820983293E4B2100EFA23C /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17820982293E4B2100EFA23C /* UIImageExtension.swift */; };
+		17820985293E628500EFA23C /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 17820984293E628500EFA23C /* back.png */; };
 		8C2188609C7AA4960F960970 /* Pods_BlackBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A608E7487150B1ECB671798 /* Pods_BlackBook.framework */; };
 /* End PBXBuildFile section */
 
@@ -74,9 +75,9 @@
 		17820935291BC7C000EFA23C /* BookRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookRouter.swift; sourceTree = "<group>"; };
 		17820937291BCEBF00EFA23C /* BookPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookPageViewController.swift; sourceTree = "<group>"; };
 		17820939291BFE3800EFA23C /* BookPagesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookPagesController.swift; sourceTree = "<group>"; };
-		178209502921751200EFA23C /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
+		178209502921751200EFA23C /* delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delete.png; sourceTree = "<group>"; };
 		178209532921808700EFA23C /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
-		178209552922E10800EFA23C /* delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delete.png; sourceTree = "<group>"; };
+		178209552922E10800EFA23C /* removal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = removal.png; sourceTree = "<group>"; };
 		178209572922E4A100EFA23C /* UserRequests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRequests.swift; sourceTree = "<group>"; };
 		178209592922E97000EFA23C /* AppConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
 		1782095C2922ECD900EFA23C /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
@@ -88,6 +89,7 @@
 		1782097E293E46FE00EFA23C /* slkscre.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = slkscre.ttf; sourceTree = "<group>"; };
 		17820980293E4AE400EFA23C /* CollectionExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionExtension.swift; sourceTree = "<group>"; };
 		17820982293E4B2100EFA23C /* UIImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
+		17820984293E628500EFA23C /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
 		2A608E7487150B1ECB671798 /* Pods_BlackBook.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlackBook.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8A0299BF765F76C4AE41D40 /* Pods-BlackBook.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlackBook.release.xcconfig"; path = "Target Support Files/Pods-BlackBook/Pods-BlackBook.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -227,10 +229,11 @@
 		1782094F292174FD00EFA23C /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				17820984293E628500EFA23C /* back.png */,
 				17820971293598EB00EFA23C /* attention.png */,
 				178209692935977100EFA23C /* success.png */,
-				178209552922E10800EFA23C /* delete.png */,
-				178209502921751200EFA23C /* back.png */,
+				178209552922E10800EFA23C /* removal.png */,
+				178209502921751200EFA23C /* delete.png */,
 			);
 			path = Icons;
 			sourceTree = "<group>";
@@ -341,13 +344,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				1782096C2935977100EFA23C /* success.png in Resources */,
-				178209562922E10800EFA23C /* delete.png in Resources */,
+				178209562922E10800EFA23C /* removal.png in Resources */,
+				17820985293E628500EFA23C /* back.png in Resources */,
 				17820972293598EB00EFA23C /* attention.png in Resources */,
 				1782097F293E46FE00EFA23C /* slkscre.ttf in Resources */,
 				17820880290D398800EFA23C /* LaunchScreen.storyboard in Resources */,
 				17820977293E371200EFA23C /* Monocraft.otf in Resources */,
 				1782087D290D398800EFA23C /* Assets.xcassets in Resources */,
-				178209512921751200EFA23C /* back.png in Resources */,
+				178209512921751200EFA23C /* delete.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -12,12 +12,12 @@ extension UIImage {
     func toPixelImage(_ scaleValue: Int) -> UIImage?{
         guard let currentCGImage = self.cgImage else { return nil}
         let currentCIImage = CIImage(cgImage: currentCGImage)
-
+        
         let filter = CIFilter(name: "CIPixellate")
         filter?.setValue(currentCIImage, forKey: kCIInputImageKey)
         filter?.setValue(scaleValue, forKey: kCIInputScaleKey)
         guard let outputImage = filter?.outputImage else { return nil}
-
+        
         let context = CIContext()
         
         guard let cgimg = context.createCGImage(outputImage, from: outputImage.extent) else{return nil}
@@ -34,28 +34,46 @@ extension UIImage {
             return UIImage(cgImage: CIContext(options: nil).createCGImage(result, from: result.extent)!)
         }
         return UIImage(ciImage: result)
-      }
+    }
     
-    func resizeImage(targetSize: CGSize) -> UIImage {
-            let size = self.size
-
-            let widthRatio  = targetSize.width  / size.width
-            let heightRatio = targetSize.height / size.height
-
-            var newSize: CGSize
-            if(widthRatio > heightRatio) {
-                newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
-            } else {
-                newSize = CGSize(width: size.width * widthRatio,  height: size.height * widthRatio)
-            }
-
-            let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
-
-            UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
-            self.draw(in: rect)
-            let newImage = UIGraphicsGetImageFromCurrentImageContext()
-            UIGraphicsEndImageContext()
-
-            return newImage!
+    func resizeImage(_ targetSize: CGSize) -> UIImage {
+        let size = self.size
+        
+        let widthRatio  = targetSize.width  / size.width
+        let heightRatio = targetSize.height / size.height
+        
+        var newSize: CGSize
+        if(widthRatio > heightRatio) {
+            newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
+        } else {
+            newSize = CGSize(width: size.width * widthRatio,  height: size.height * widthRatio)
         }
+        
+        let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
+        
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
+        self.draw(in: rect)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage!
+    }
+    
+    func mask(with color: UIColor) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(self.size, false, self.scale)
+        let context = UIGraphicsGetCurrentContext()!
+        
+        let rect = CGRect(origin: CGPoint.zero, size: size)
+        
+        color.setFill()
+        self.draw(in: rect)
+        
+        context.setBlendMode(.sourceIn)
+        context.fill(rect)
+        
+        let resultImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        return resultImage
+    }
+    
 }

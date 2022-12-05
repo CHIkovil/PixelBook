@@ -63,6 +63,7 @@ final class BookViewController: UIViewController {
     private enum Constants {
         static let buttonSide: CGFloat = 40
         static let buttonOffset: CGFloat = 25
+        static let backImageName: String = "back"
     }
     
     private var pagesController: BookPagesController?
@@ -76,7 +77,9 @@ final class BookViewController: UIViewController {
     
     private lazy var closeButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "back")?.inverseImage(cgResult: false)?.resizeImage(targetSize: CGSize(width: 15, height: 15)), for: .normal)
+        button.setImage(UIImage(named: Constants.backImageName)?.inverseImage(cgResult: false)?.resizeImage(CGSize(width: 20, height: 20)).withRenderingMode(.alwaysTemplate), for: .normal)
+   
+        button.tintColor = AppColor.backgroundActive
         button.backgroundColor = AppColor.background
         button.layer.cornerRadius = 0.5 * Constants.buttonSide
         button.layer.borderColor = AppColor.background.cgColor

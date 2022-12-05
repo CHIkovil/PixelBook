@@ -26,8 +26,8 @@ final class LibraryViewController: UIViewController {
         static let maxTableHeight: CGFloat = UIScreen.main.bounds.height - Constants.topContentOffset
         static let minTableHeight: CGFloat = UIScreen.main.bounds.height - Constants.currentViewHeight - Constants.contentOffset
         static let tableWidth: CGFloat =  UIScreen.main.bounds.width
-        static let deleteIconName: String = "back"
-        static let deleteIconSide: CGFloat = 30
+        static let deleteIconName: String = "delete"
+        static let deleteIconSide: CGFloat = 20
         static let notificationViewHeight: CGFloat = 100
         static let notificationViewWidth: CGFloat = 170
     }
@@ -289,10 +289,12 @@ extension LibraryViewController: UITableViewDelegate, UITableViewDataSource {
         })
         
         deleteAction.image = UIGraphicsImageRenderer(size: CGSize(width: Constants.deleteIconSide, height: Constants.deleteIconSide)).image { _ in
-            UIImage(named: Constants.deleteIconName)?.draw(in: CGRect(x: 0, y: 0, width: Constants.deleteIconSide, height: Constants.deleteIconSide))
+            let image = UIImage(named: Constants.deleteIconName)?.inverseImage(cgResult: false)
+            let backgroundActiveImage = image?.mask(with: AppColor.backgroundActive)
+            backgroundActiveImage?.draw(in: CGRect(x: 0, y: 0, width: Constants.deleteIconSide, height: Constants.deleteIconSide))
         }
         
-        deleteAction.backgroundColor = AppColor.unactive
+        deleteAction.backgroundColor = AppColor.background
         
         return UISwipeActionsConfiguration(actions: [deleteAction])
     }
