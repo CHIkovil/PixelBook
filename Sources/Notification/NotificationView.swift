@@ -1,5 +1,5 @@
 //
-//  LibraryNotificationView.swift
+//  NotificationView.swift
 //  BlackBook
 //
 //  Created by Nikolas on 29.11.2022.
@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-enum LibraryNotificationState:String {
+enum NotificationState:String {
     case deleted = "Удалена"
     case repeated = "Уже добавлена"
     case added = "Добавлена"
@@ -25,7 +25,7 @@ enum LibraryNotificationState:String {
     }
 }
     
-final class LibraryNotificationView: UIView {
+final class NotificationView: UIView {
     private enum Constants {
         static let rotationAngle: CGFloat = CGFloat.pi / 6
         static let labelFontSize: CGFloat = 18
@@ -94,20 +94,21 @@ final class LibraryNotificationView: UIView {
         }
     }
     
-    func setup(_ state: LibraryNotificationState) {
+    func setup(_ state: NotificationState, alpha: CGFloat) {
         imageView.image = UIImage(named: state.imageName)?.withRenderingMode(.alwaysTemplate)
         label.text = state.rawValue
-        self.animateShowView()
+        
+        self.animateShowView(alpha)
     }
     
-    private func animateShowView() {
+    private func animateShowView(_ alpha: CGFloat) {
         let originalTransform = self.transform
         let scaledAndTranslatedTransform = originalTransform.translatedBy(x: 0, y: self.frame.height)
         
         UIView.animate(withDuration: 0.9, animations: {[weak self] in
             guard let self = self else{return}
             self.transform = scaledAndTranslatedTransform
-            self.alpha = 0.95
+            self.alpha = alpha
             
         }, completion:  {[weak self] _ in
             guard let self = self else{return}

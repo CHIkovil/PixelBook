@@ -18,4 +18,7 @@ enum AppConstants {
     static let contentBorderWidth: CGFloat = 3
     static let contentShadowRadius: CGFloat = 10
     static let textFontName: String = "Monocraft"
+    static let topContentOffset: CGFloat = 50
+    static let notificationViewHeight: CGFloat = 100
+    static let notificationViewWidth: CGFloat = 200
 }

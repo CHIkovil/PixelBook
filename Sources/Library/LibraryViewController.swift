@@ -20,22 +20,20 @@ final class LibraryViewController: UIViewController {
         static let sortedKey: String = "title"
         static let cellDeleteText: String = "Удалить"
         static let cellHeight: CGFloat = 150
-        static let topContentOffset: CGFloat = 50
-        static let minTableTopOffset: CGFloat = Constants.topContentOffset
+        static let minTableTopOffset: CGFloat = AppConstants.topContentOffset
         static let maxTableTopOffset: CGFloat = Constants.currentViewHeight + Constants.contentOffset
-        static let maxTableHeight: CGFloat = UIScreen.main.bounds.height - Constants.topContentOffset
+        static let maxTableHeight: CGFloat = UIScreen.main.bounds.height - AppConstants.topContentOffset
         static let minTableHeight: CGFloat = UIScreen.main.bounds.height - Constants.currentViewHeight - Constants.contentOffset
         static let tableWidth: CGFloat =  UIScreen.main.bounds.width
         static let deleteIconName: String = "delete"
         static let deleteIconSide: CGFloat = 20
-        static let notificationViewHeight: CGFloat = 100
-        static let notificationViewWidth: CGFloat = 170
+        static let notificationAlpha: CGFloat = 0.95
     }
     
     private var fetchBooksController: NSFetchedResultsController<BlackBook.Book>?
     
-    private lazy var notificationView: LibraryNotificationView = {
-        let view = LibraryNotificationView()
+    private lazy var notificationView: NotificationView = {
+        let view = NotificationView()
         return view
     }()
     
@@ -84,10 +82,10 @@ final class LibraryViewController: UIViewController {
         }
         
         notificationView.snp.makeConstraints {
-            $0.top.equalTo(view.snp.top).offset(Constants.topContentOffset - Constants.notificationViewHeight)
+            $0.top.equalTo(view.snp.top).offset(AppConstants.topContentOffset - AppConstants.notificationViewHeight)
             $0.centerX.equalToSuperview()
-            $0.height.equalTo(Constants.notificationViewHeight)
-            $0.width.equalTo(Constants.notificationViewWidth)
+            $0.height.equalTo(AppConstants.notificationViewHeight)
+            $0.width.equalTo(AppConstants.notificationViewWidth)
         }
     }
     
@@ -134,6 +132,7 @@ final class LibraryViewController: UIViewController {
                                                selector: #selector(self.didNewCurrentBook(notification:)),
                                                name: .init(rawValue: AppConstants.newCurrentBookNotificationName),
                                                object: nil)
+        
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(self.didRepeatedBook(notification:)),
                                                name: .init(rawValue: AppConstants.repeatedBookNotificationName),
@@ -166,7 +165,7 @@ private extension LibraryViewController {
     
     func deleteBook(_ indexPath: IndexPath) {
         guard let item = self.fetchBooksController?.object(at: indexPath) as? BlackBook.Book else{return}
-        notificationView.setup(.deleted)
+        notificationView.setup(.deleted, alpha: Constants.notificationAlpha)
         let model = BookRequests.convertToModel(item)
         BookRequests.delete(model)
         PagesRequests.delete(model)
@@ -177,12 +176,12 @@ private extension LibraryViewController {
     }
     
     @objc func didNewBook(notification: Notification){
-        notificationView.setup(.added)
+        notificationView.setup(.added, alpha: Constants.notificationAlpha)
         booksTableView.reloadData()
     }
     
     @objc func didRepeatedBook(notification: Notification){
-        notificationView.setup(.repeated)
+        notificationView.setup(.repeated, alpha: Constants.notificationAlpha)
     }
     
     @objc func didNewCurrentBook(notification: Notification){

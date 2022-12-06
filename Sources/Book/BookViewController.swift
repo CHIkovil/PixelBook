@@ -75,6 +75,11 @@ final class BookViewController: UIViewController {
         return viewController
     }()
     
+    private lazy var notificationView: NotificationView = {
+        let view = NotificationView()
+        return view
+    }()
+    
     private lazy var closeButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: Constants.backImageName)?.inverseImage(cgResult: false)?.resizeImage(CGSize(width: 20, height: 20)).withRenderingMode(.alwaysTemplate), for: .normal)
@@ -93,6 +98,7 @@ final class BookViewController: UIViewController {
         setupPagesController()
         setupContentController()
         
+        view.insertSubview(notificationView, at: 1)
         view.insertSubview(closeButton, at: 1)
         
         closeButton.snp.makeConstraints {
@@ -100,6 +106,13 @@ final class BookViewController: UIViewController {
             $0.bottom.equalTo(view.snp.bottom).offset(-Constants.buttonOffset)
             $0.height.equalTo(Constants.buttonSide)
             $0.width.equalTo(Constants.buttonSide)
+        }
+        
+        notificationView.snp.makeConstraints {
+            $0.top.equalTo(view.snp.top).offset(AppConstants.topContentOffset - AppConstants.notificationViewHeight)
+            $0.centerX.equalToSuperview()
+            $0.height.equalTo(AppConstants.notificationViewHeight)
+            $0.width.equalTo(AppConstants.notificationViewWidth)
         }
     }
     
@@ -136,6 +149,11 @@ final class BookViewController: UIViewController {
                                                object: nil)
         
         NotificationCenter.default.addObserver(self,
+                                               selector: #selector(self.didRepeatedBook(notification:)),
+                                               name: .init(rawValue: AppConstants.repeatedBookNotificationName),
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
                                                selector: #selector(self.didAppClose(notification:)),
                                                name: UIApplication.willResignActiveNotification,
                                                object: nil)
@@ -146,6 +164,10 @@ private extension BookViewController {
     @objc func didNewBook(notification: Notification){
         guard let pageIndex = self.getCurrentPageIndex() else{return}
         self.viewModel?.closeBookRelay.accept(pageIndex)
+    }
+    
+    @objc func didRepeatedBook(notification: Notification){
+        notificationView.setup(.repeated, alpha: 1)
     }
     
     @objc func didAppClose(notification: Notification){

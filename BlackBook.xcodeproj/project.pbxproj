@@ -37,7 +37,7 @@
 		1782095A2922E97000EFA23C /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178209592922E97000EFA23C /* AppConstants.swift */; };
 		1782095D2922ECD900EFA23C /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1782095C2922ECD900EFA23C /* UserModel.swift */; };
 		17820966292D296400EFA23C /* PagesRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17820965292D296400EFA23C /* PagesRequests.swift */; };
-		1782096829358C0F00EFA23C /* LibraryNotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1782096729358C0F00EFA23C /* LibraryNotificationView.swift */; };
+		1782096829358C0F00EFA23C /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1782096729358C0F00EFA23C /* NotificationView.swift */; };
 		1782096C2935977100EFA23C /* success.png in Resources */ = {isa = PBXBuildFile; fileRef = 178209692935977100EFA23C /* success.png */; };
 		17820972293598EB00EFA23C /* attention.png in Resources */ = {isa = PBXBuildFile; fileRef = 17820971293598EB00EFA23C /* attention.png */; };
 		17820977293E371200EFA23C /* Monocraft.otf in Resources */ = {isa = PBXBuildFile; fileRef = 17820976293E371200EFA23C /* Monocraft.otf */; };
@@ -82,7 +82,7 @@
 		178209592922E97000EFA23C /* AppConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
 		1782095C2922ECD900EFA23C /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		17820965292D296400EFA23C /* PagesRequests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagesRequests.swift; sourceTree = "<group>"; };
-		1782096729358C0F00EFA23C /* LibraryNotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryNotificationView.swift; sourceTree = "<group>"; };
+		1782096729358C0F00EFA23C /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
 		178209692935977100EFA23C /* success.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = success.png; sourceTree = "<group>"; };
 		17820971293598EB00EFA23C /* attention.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = attention.png; sourceTree = "<group>"; };
 		17820976293E371200EFA23C /* Monocraft.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Monocraft.otf; sourceTree = "<group>"; };
@@ -148,6 +148,7 @@
 				1782095B2922ECC400EFA23C /* Models */,
 				178208E0291813AA00EFA23C /* CoreData */,
 				178208D92916A9CB00EFA23C /* Parsing */,
+				17820986293F9D1500EFA23C /* Notification */,
 				178208A129102EA000EFA23C /* Routing */,
 				17820890290D3F0800EFA23C /* Welcome */,
 				178208C329140AE300EFA23C /* Library */,
@@ -182,7 +183,6 @@
 				178208C429140B1300EFA23C /* LibraryViewController.swift */,
 				178208C629140B2700EFA23C /* LibraryViewModel.swift */,
 				178208C829140B3D00EFA23C /* LibraryRouter.swift */,
-				1782096729358C0F00EFA23C /* LibraryNotificationView.swift */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -264,6 +264,14 @@
 				17820976293E371200EFA23C /* Monocraft.otf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		17820986293F9D1500EFA23C /* Notification */ = {
+			isa = PBXGroup;
+			children = (
+				1782096729358C0F00EFA23C /* NotificationView.swift */,
+			);
+			path = Notification;
 			sourceTree = "<group>";
 		};
 		C7C6480D00BE8E47A36C02C0 /* Frameworks */ = {
@@ -422,7 +430,7 @@
 				17820983293E4B2100EFA23C /* UIImageExtension.swift in Sources */,
 				178208CE291410B900EFA23C /* BookModel.swift in Sources */,
 				17820966292D296400EFA23C /* PagesRequests.swift in Sources */,
-				1782096829358C0F00EFA23C /* LibraryNotificationView.swift in Sources */,
+				1782096829358C0F00EFA23C /* NotificationView.swift in Sources */,
 				178209582922E4A100EFA23C /* UserRequests.swift in Sources */,
 				17820981293E4AE400EFA23C /* CollectionExtension.swift in Sources */,
 				17820930291BABEB00EFA23C /* LibraryCurrentItemView.swift in Sources */,
