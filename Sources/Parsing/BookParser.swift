@@ -186,7 +186,13 @@ private extension BookParser {
         while rangeOffset <= attrString.length && rangeOffset != 0 {
             let pageAttrString = attrString.attributedSubstring(from: pageVisibleRange!)
             pages.append(AttributedString(nsAttributedString: pageAttrString))
-            pages.append(AttributedString(nsAttributedString: NSAttributedString(string: NSUUID().uuidString)))
+            
+            let uuidString = NSUUID().uuidString
+            
+            let emptyPageAttrString = NSMutableAttributedString(string: uuidString)
+            emptyPageAttrString.addAttributes([.foregroundColor: UIColor.clear], range: (uuidString as NSString).range(of: uuidString))
+
+            pages.append(AttributedString(nsAttributedString: emptyPageAttrString))
             
             frame = layouter?.layoutFrame(with: rect, range: NSRange(location: rangeOffset, length: attrString.length - rangeOffset))
             
