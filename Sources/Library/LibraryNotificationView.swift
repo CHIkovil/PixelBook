@@ -30,7 +30,7 @@ final class LibraryNotificationView: UIView {
         static let rotationAngle: CGFloat = CGFloat.pi / 6
         static let labelFontSize: CGFloat = 18
         static let contentOffset: CGFloat = 10
-        static let imageSide: CGFloat = 45
+        static let imageSide: CGFloat = 35
         static let labelHeight: CGFloat = 40
     }
     
