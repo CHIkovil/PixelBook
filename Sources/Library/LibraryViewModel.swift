@@ -7,15 +7,20 @@
 import RxCocoa
 import RxSwift
 
+struct LibraryState {
+    let currentBook: BookModel
+    let isRead: Bool
+}
+
 protocol LibraryViewModelProtocol: AnyObject {
     func viewWillAppear(_ isCheckRead: Bool)
     var selectedBookRelay: PublishRelay<BookModel> { get }
-    var сurrentBookDriver: Driver<BookModel?> { get }
+    var сurrentBookDriver: Driver<LibraryState?> { get }
 }
 
 final class LibraryViewModel: LibraryViewModelProtocol {
     let selectedBookRelay = PublishRelay<BookModel>()
-    private lazy var сurrentBookRelay = PublishRelay<BookModel?>()
+    private lazy var сurrentBookRelay = PublishRelay<LibraryState?>()
     private(set) lazy var сurrentBookDriver = сurrentBookRelay.asDriver(
         onErrorJustReturn: nil)
 
@@ -45,7 +50,8 @@ private extension LibraryViewModel {
                     self.selectedBook(bookModel)
                 }
             }
-            сurrentBookRelay.accept(bookModel)
+            
+            сurrentBookRelay.accept(LibraryState(currentBook: bookModel, isRead: userModel.isRead))
             
         }else{
             сurrentBookRelay.accept(nil)

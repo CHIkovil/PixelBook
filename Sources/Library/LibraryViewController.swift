@@ -39,6 +39,7 @@ final class LibraryViewController: UIViewController {
     
     private lazy var currentBookView: LibraryCurrentItemView = {
         let view = LibraryCurrentItemView()
+        view.alpha = 0
         return view
     }()
     
@@ -63,6 +64,7 @@ final class LibraryViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.panGestureRecognizer.addTarget(self, action: #selector(self.didTouchTableView(gestureRecognizer:)))
+        tableView.alpha = 0
         return tableView
     }()
     
@@ -117,9 +119,10 @@ final class LibraryViewController: UIViewController {
         self.setupFetchedBooks()
         
         viewModel.сurrentBookDriver
-            .drive(onNext: { [weak self] book in
-                guard let self = self, let book = book else{return}
-                self.updateCurrentBook(book)
+            .drive(onNext: { [weak self] state in
+                guard let self = self, let state = state else{return}
+                self.updateCurrentBook(state.currentBook)
+                self.animateShowUI(state.isRead)
                 self.animateMoveDownTableView()
             }).disposed(by: disposeBag)
         
@@ -223,6 +226,15 @@ private extension LibraryViewController {
             frame.origin.y = Constants.maxTableTopOffset
             frame.size.height = Constants.minTableHeight
             self.booksTableView.frame = frame
+        }
+    }
+    
+    func animateShowUI(_ isRead:Bool){
+        let duration = isRead ? 2.0 : 0.8
+        UIView.animate(withDuration: duration) {[weak self] in
+            guard let self = self else{return}
+            self.currentBookView.alpha = 1
+            self.booksTableView.alpha = 1
         }
     }
 }
