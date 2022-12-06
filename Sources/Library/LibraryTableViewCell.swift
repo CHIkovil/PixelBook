@@ -57,7 +57,6 @@ final class LibraryTableViewCell: UITableViewCell {
     private func commonInit() {
         backgroundColor = AppColor.contentBackground
         selectionStyle = .none
-        layer.cornerRadius = AppConstants.contentCornerRadius
         layer.borderColor = AppColor.contentBorder.cgColor
         layer.borderWidth = AppConstants.contentBorderWidth
         layer.masksToBounds = true

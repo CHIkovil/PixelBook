@@ -53,7 +53,6 @@ final class LibraryViewController: UIViewController {
         tableView.layer.shadowOpacity = 1
         tableView.layer.shadowOffset = CGSize(width: 4, height: 4)
         tableView.layer.shadowRadius = 10
-        tableView.layer.cornerRadius = AppConstants.contentCornerRadius
         tableView.layer.masksToBounds = false
         tableView.layer.borderColor = UIColor.clear.cgColor
         tableView.layer.borderWidth = AppConstants.contentBorderWidth
