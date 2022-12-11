@@ -63,6 +63,7 @@ final class LibraryViewController: UIViewController {
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.clipsToBounds = true
         tableView.panGestureRecognizer.addTarget(self, action: #selector(self.didTouchTableView(gestureRecognizer:)))
         tableView.alpha = 0
         return tableView
@@ -199,11 +200,11 @@ private extension LibraryViewController {
         if gestureRecognizer.state == .changed {
             let translation = gestureRecognizer.translation(in: self.view)
             
-            if translation.y < 0 && self.booksTableView.frame.height < Constants.maxTableHeight && CGFloat(self.booksTableView.numberOfRows(inSection: 0)) * Constants.cellHeight > Constants.maxTableHeight{
+            if translation.y < 0 && self.booksTableView.frame.height == Constants.minTableHeight{
                 self.animateMoveUpTableView()
             }
             
-            if translation.y > 0 && self.booksTableView.frame.height > Constants.minTableHeight && self.currentBookView.model != nil{
+            if translation.y > 0 && (self.booksTableView.frame.height == Constants.maxTableHeight || self.booksTableView.frame.height == CGFloat(self.booksTableView.numberOfRows(inSection: 0)) * Constants.cellHeight - 1) && self.currentBookView.model != nil && self.booksTableView.contentOffset.y == 0{
                 self.animateMoveDownTableView()
             }
         }
@@ -214,18 +215,24 @@ private extension LibraryViewController {
             guard let self = self else{return}
             var frame = self.booksTableView.frame
             frame.origin.y = Constants.minTableTopOffset
-            frame.size.height = Constants.maxTableHeight
+            
+            let cellsHeight = CGFloat(self.booksTableView.numberOfRows(inSection: 0)) * Constants.cellHeight
+            frame.size.height = cellsHeight < Constants.maxTableHeight ? cellsHeight - 1 : Constants.maxTableHeight
+    
             self.booksTableView.frame = frame
+            self.booksTableView.contentOffset.y =  0
         }
     }
     
     func animateMoveDownTableView() {
-        UIView.animate(withDuration: 0.2) {[weak self] in
+        UIView.animate(withDuration: 0.25) {[weak self] in
             guard let self = self else{return}
             var frame = self.booksTableView.frame
             frame.origin.y = Constants.maxTableTopOffset
             frame.size.height = Constants.minTableHeight
+            
             self.booksTableView.frame = frame
+            self.booksTableView.contentOffset.y = 0
         }
     }
     
