@@ -46,6 +46,7 @@
 		17820983293E4B2100EFA23C /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17820982293E4B2100EFA23C /* UIImageExtension.swift */; };
 		17820985293E628500EFA23C /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 17820984293E628500EFA23C /* back.png */; };
 		17820989293FAE7F00EFA23C /* BookConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17820988293FAE7F00EFA23C /* BookConfig.swift */; };
+		1782098B294651B600EFA23C /* UIDeviceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1782098A294651B600EFA23C /* UIDeviceExtension.swift */; };
 		8C2188609C7AA4960F960970 /* Pods_BlackBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A608E7487150B1ECB671798 /* Pods_BlackBook.framework */; };
 /* End PBXBuildFile section */
 
@@ -92,6 +93,7 @@
 		17820982293E4B2100EFA23C /* UIImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
 		17820984293E628500EFA23C /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
 		17820988293FAE7F00EFA23C /* BookConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookConfig.swift; sourceTree = "<group>"; };
+		1782098A294651B600EFA23C /* UIDeviceExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDeviceExtension.swift; sourceTree = "<group>"; };
 		2A608E7487150B1ECB671798 /* Pods_BlackBook.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlackBook.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8A0299BF765F76C4AE41D40 /* Pods-BlackBook.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlackBook.release.xcconfig"; path = "Target Support Files/Pods-BlackBook/Pods-BlackBook.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -247,6 +249,7 @@
 				178209532921808700EFA23C /* StringExtension.swift */,
 				17820980293E4AE400EFA23C /* CollectionExtension.swift */,
 				17820982293E4B2100EFA23C /* UIImageExtension.swift */,
+				1782098A294651B600EFA23C /* UIDeviceExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -453,6 +456,7 @@
 				17820876290D398700EFA23C /* SceneDelegate.swift in Sources */,
 				178208C729140B2700EFA23C /* LibraryViewModel.swift in Sources */,
 				17820894290D3F5400EFA23C /* WelcomeRouter.swift in Sources */,
+				1782098B294651B600EFA23C /* UIDeviceExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -158,7 +158,7 @@ private extension LibraryViewController {
     }
     
     func resetCurrentBook(_ book: BookModel) {
-        self.animateMoveUpTableView()
+        self.animateMoveUpTableView(isReset: true)
         self.currentBookView.reset()
     }
     
@@ -169,6 +169,7 @@ private extension LibraryViewController {
     
     func deleteBook(_ indexPath: IndexPath) {
         guard let item = self.fetchBooksController?.object(at: indexPath) as? BlackBook.Book else{return}
+        UIDevice.vibrate()
         notificationView.setup(.deleted, alpha: Constants.notificationAlpha)
         let model = BookRequests.convertToModel(item)
         BookRequests.delete(model)
@@ -180,11 +181,13 @@ private extension LibraryViewController {
     }
     
     @objc func didNewBook(notification: Notification){
+        UIDevice.vibrate()
         notificationView.setup(.added, alpha: Constants.notificationAlpha)
         booksTableView.reloadData()
     }
     
     @objc func didRepeatedBook(notification: Notification){
+        UIDevice.vibrate()
         notificationView.setup(.repeated, alpha: Constants.notificationAlpha)
     }
     
@@ -201,7 +204,7 @@ private extension LibraryViewController {
             let translation = gestureRecognizer.translation(in: self.view)
             
             if translation.y < 0 && self.booksTableView.frame.height == Constants.minTableHeight{
-                self.animateMoveUpTableView()
+                self.animateMoveUpTableView(isReset: false)
             }
             
             if translation.y > 0 && (self.booksTableView.frame.height == Constants.maxTableHeight || self.booksTableView.frame.height == CGFloat(self.booksTableView.numberOfRows(inSection: 0)) * Constants.cellHeight - 1) && self.currentBookView.model != nil && self.booksTableView.contentOffset.y == 0{
@@ -210,14 +213,14 @@ private extension LibraryViewController {
         }
     }
     
-    func animateMoveUpTableView() {
+    func animateMoveUpTableView(isReset: Bool) {
         UIView.animate(withDuration: 0.25) {[weak self] in
             guard let self = self else{return}
             var frame = self.booksTableView.frame
             frame.origin.y = Constants.minTableTopOffset
             
             let cellsHeight = CGFloat(self.booksTableView.numberOfRows(inSection: 0)) * Constants.cellHeight
-            frame.size.height = cellsHeight < Constants.maxTableHeight ? cellsHeight - 1 : Constants.maxTableHeight
+            frame.size.height = cellsHeight < Constants.maxTableHeight && !isReset ? cellsHeight - 1 : Constants.maxTableHeight
     
             self.booksTableView.frame = frame
             self.booksTableView.contentOffset.y =  0

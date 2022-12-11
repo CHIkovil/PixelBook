@@ -120,6 +120,7 @@ private extension BookViewController {
     }
     
     @objc func didRepeatedBook(notification: Notification){
+        UIDevice.vibrate()
         notificationView.setup(.repeated, alpha: 1)
     }
     

@@ -59,15 +59,12 @@ final class BookRequests {
     }
     
     static func fetchOne(title: String, author: String) -> BookModel? {
-         do {
-             if let item = check(title: title, author: author) {
-                 let model = convertToModel(item)
-                 return model
-             }else {
-                 return nil
-             }
-         } catch {
-         }
+        if let item = check(title: title, author: author) {
+            let model = convertToModel(item)
+            return model
+        }else {
+            return nil
+        }
      }
 
     static func delete(_ book: BookModel) {
