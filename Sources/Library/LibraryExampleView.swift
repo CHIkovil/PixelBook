@@ -12,9 +12,9 @@ import SnapKit
 
 final class LibraryExampleView: UIView {
     private enum Constants {
-        static let imageSide: CGFloat = 50
+        static let imageSide: CGFloat = 48 
         static let labelHeight: CGFloat = 40
-        static let labelFontSize: CGFloat = 14
+        static let labelFontSize: CGFloat = 13
         static let elements: [(String, String)] =  [
             ("book", "Находим"),
             ("downloading", "Загружаем"),
@@ -79,7 +79,7 @@ final class LibraryExampleView: UIView {
             label.font = UIFont(name: AppConstants.textFontName, size: Constants.labelFontSize)
             label.textAlignment = .center
             label.backgroundColor = backgroundColor
-            label.textColor = AppColor.active
+            label.textColor = AppColor.supportText
             label.text = element.1
             
             view.addSubview(imageView)
@@ -117,7 +117,7 @@ final class LibraryExampleView: UIView {
             arrowImageView.snp.makeConstraints {
                 $0.centerX.equalTo(view.snp.centerX)
                 $0.bottom.equalTo(view.snp.bottom)
-                $0.height.equalTo(Constants.arrowImageSide)
+                $0.height.equalTo(Constants.arrowImageSide - 5)
                 $0.width.equalTo(Constants.arrowImageSide)
             }
         }
