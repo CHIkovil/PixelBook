@@ -19,6 +19,7 @@ final class LibraryTableViewCell: UITableViewCell {
     
     lazy var coverImageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleToFill
         imageView.layer.borderColor = AppColor.contentBorder.cgColor
         imageView.layer.borderWidth = 1
@@ -29,6 +30,7 @@ final class LibraryTableViewCell: UITableViewCell {
     
     lazy var titleLabel: UILabel = {
         let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.backgroundColor = .clear
         label.font = UIFont(name: AppConstants.textFontName, size: Constants.labelFontSizeBase)
         label.textColor = AppColor.mainText
@@ -37,6 +39,7 @@ final class LibraryTableViewCell: UITableViewCell {
     
     lazy var authorLabel: UILabel = {
         let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.backgroundColor = .clear
         label.font = UIFont(name: AppConstants.textFontName, size: Constants.labelFontSizeInterlineation)
         label.textColor = AppColor.supportText
@@ -92,7 +95,7 @@ final class LibraryTableViewCell: UITableViewCell {
         
         guard let cover = model.cover else {return}
         let coverImage = UIImage(data: cover)
-        coverImageView.image = coverImage?.toPixelImage(12) ?? coverImage
+        coverImageView.image = coverImage?.toPixelImage(AppConstants.imagePixelScale) ?? coverImage
     }
 }
 

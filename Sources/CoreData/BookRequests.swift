@@ -32,8 +32,8 @@ final class BookRequests {
             let newItem = NSEntityDescription.insertNewObject(forEntityName: AppConstants.bookEntityName, into: context) as! BlackBook.Book
             
             let chaptersData = try? JSONEncoder().encode(book.chapters)
-           
-                
+            
+            
             newItem.cover = book.cover
             newItem.title = book.title
             newItem.author = book.author
@@ -43,8 +43,9 @@ final class BookRequests {
             try context.save()
             
             return true
-        } catch {
-            fatalError()
+        } catch let error as NSError {
+            print("Error: \(error) description: \(error.userInfo)")
+            return false
         }
     }
     
@@ -53,8 +54,8 @@ final class BookRequests {
             guard let item = check(title: book.title, author: book.author) else {return}
             item.setValue(currentPage, forKey: "currentPage")
             try context.save()
-        }catch {
-            fatalError()
+        }catch let error as NSError {
+            print("Error: \(error) description: \(error.userInfo)")
         }
     }
     
@@ -65,16 +66,15 @@ final class BookRequests {
         }else {
             return nil
         }
-     }
-
+    }
+    
     static func delete(_ book: BookModel) {
         do {
             guard let item = check(title: book.title, author: book.author) else{return}
             context.delete(item)
-            
             try context.save()
-        } catch {
-            fatalError()
+        }catch let error as NSError {
+            print("Error: \(error) description: \(error.userInfo)")
         }
     }
     
@@ -89,13 +89,13 @@ final class BookRequests {
             fetchRequest.predicate = predicate
             
             let results = try context.fetch(fetchRequest)
-            
-            try context.save()
-            
             return results.first
-        } catch {
-            fatalError()
+        } catch let error as NSError {
+            print("Error: \(error) description: \(error.userInfo)")
+            return nil
         }
     }
+    
+    
 }
 

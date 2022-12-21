@@ -21,4 +21,5 @@ enum AppConstants {
     static let topContentOffset: CGFloat = 50
     static let notificationViewHeight: CGFloat = 100
     static let notificationViewWidth: CGFloat = 200
+    static let imagePixelScale: Int = 12
 }

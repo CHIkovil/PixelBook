@@ -23,6 +23,7 @@ final class LibraryCurrentItemView: UIView {
     
     private lazy var coverImageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleToFill
         imageView.layer.borderColor = AppColor.contentBorder.cgColor
         imageView.layer.borderWidth = 1
@@ -33,6 +34,7 @@ final class LibraryCurrentItemView: UIView {
     
     lazy var titleLabel: UILabel = {
         let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.backgroundColor = .clear
         label.font = UIFont(name: AppConstants.textFontName, size: Constants.labelFontSizeBase)
         label.textColor = AppColor.mainText
@@ -42,6 +44,7 @@ final class LibraryCurrentItemView: UIView {
     
     lazy var recentLabel: UILabel = {
         let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.backgroundColor = .clear
         label.font = UIFont(name: AppConstants.textFontName, size: Constants.labelFontSizeInterlineation)
         label.textColor = AppColor.supportText
@@ -51,6 +54,7 @@ final class LibraryCurrentItemView: UIView {
     
     lazy var continueLabel: UILabel = {
         let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.backgroundColor = .clear
         label.font = UIFont(name: AppConstants.textFontName, size: Constants.labelFontSizeInterlineation)
         label.textColor = AppColor.active
@@ -122,7 +126,7 @@ final class LibraryCurrentItemView: UIView {
         
         guard let cover = model.cover else {return}
         let coverImage = UIImage(data: cover)
-        coverImageView.image = coverImage?.toPixelImage(12) ?? coverImage
+        coverImageView.image = coverImage?.toPixelImage(AppConstants.imagePixelScale) ?? coverImage
     }
     
     func reset() {

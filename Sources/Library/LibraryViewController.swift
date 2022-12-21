@@ -34,11 +34,19 @@ final class LibraryViewController: UIViewController {
     
     private lazy var notificationView: NotificationView = {
         let view = NotificationView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private lazy var exampleView: LibraryExampleView = {
+        let view = LibraryExampleView()
+        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
     private lazy var currentBookView: LibraryCurrentItemView = {
         let view = LibraryCurrentItemView()
+        view.translatesAutoresizingMaskIntoConstraints = false
         view.alpha = 0
         return view
     }()
@@ -75,6 +83,7 @@ final class LibraryViewController: UIViewController {
         view.backgroundColor = AppColor.background
         view.addSubview(currentBookView)
         view.addSubview(booksTableView)
+        view.addSubview(exampleView)
         view.addSubview(notificationView)
         
         currentBookView.snp.makeConstraints {
@@ -89,6 +98,13 @@ final class LibraryViewController: UIViewController {
             $0.centerX.equalToSuperview()
             $0.height.equalTo(AppConstants.notificationViewHeight)
             $0.width.equalTo(AppConstants.notificationViewWidth)
+        }
+        
+        exampleView.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(AppConstants.topContentOffset)
+            $0.centerX.equalToSuperview()
+            $0.bottom.equalToSuperview().offset(-AppConstants.topContentOffset)
+            $0.width.equalToSuperview()
         }
     }
     
@@ -121,10 +137,16 @@ final class LibraryViewController: UIViewController {
         
         viewModel.сurrentBookDriver
             .drive(onNext: { [weak self] state in
-                guard let self = self, let state = state else{return}
-                self.updateCurrentBook(state.currentBook)
-                self.animateShowUI(state.isRead)
-                self.animateMoveDownTableView()
+                guard let self = self else{return}
+                if let state = state {
+                    self.updateCurrentBook(state.currentBook)
+                    self.animateMoveDownTableView()
+                    self.animateShowUI(state.isRead)
+                }else{
+                    self.booksTableView.alpha = 1
+                    self.currentBookView.alpha = 1
+                }
+                
             }).disposed(by: disposeBag)
         
         NotificationCenter.default.addObserver(self,
@@ -169,11 +191,10 @@ private extension LibraryViewController {
     
     func deleteBook(_ indexPath: IndexPath) {
         guard let item = self.fetchBooksController?.object(at: indexPath) as? BlackBook.Book else{return}
-        UIDevice.vibrate()
         notificationView.setup(.deleted, alpha: Constants.notificationAlpha)
         let model = BookRequests.convertToModel(item)
-        BookRequests.delete(model)
         PagesRequests.delete(model)
+        BookRequests.delete(model)
         
         if self.currentBookView.model == model {
             self.resetCurrentBook(model)
@@ -181,13 +202,11 @@ private extension LibraryViewController {
     }
     
     @objc func didNewBook(notification: Notification){
-        UIDevice.vibrate()
         notificationView.setup(.added, alpha: Constants.notificationAlpha)
         booksTableView.reloadData()
     }
     
     @objc func didRepeatedBook(notification: Notification){
-        UIDevice.vibrate()
         notificationView.setup(.repeated, alpha: Constants.notificationAlpha)
     }
     
@@ -239,12 +258,20 @@ private extension LibraryViewController {
         }
     }
     
+    func animateExample(isShow: Bool){
+        if isShow {
+            self.exampleView.animateShow()
+        }else{
+            self.exampleView.animateHide()
+        }
+    }
+    
     func animateShowUI(_ isRead:Bool){
         let duration = isRead ? 2.0 : 0.8
         UIView.animate(withDuration: duration) {[weak self] in
             guard let self = self else{return}
-            self.currentBookView.alpha = 1
             self.booksTableView.alpha = 1
+            self.currentBookView.alpha = 1
         }
     }
 }
@@ -280,7 +307,17 @@ extension LibraryViewController: NSFetchedResultsControllerDelegate {
 
 extension LibraryViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        return fetchBooksController?.fetchedObjects?.count ?? 0
+        let rowsCount = fetchBooksController?.fetchedObjects?.count ?? 0
+        
+        switch rowsCount {
+        case 0:
+            self.animateExample(isShow: true)
+        case 1:
+            self.animateExample(isShow: false)
+        default:break
+        }
+        
+        return rowsCount
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

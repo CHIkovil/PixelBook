@@ -22,6 +22,7 @@ final class WelcomeViewController: UIViewController {
     lazy var appLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "Silkscreen-Expanded", size: Constants.labelFontSize)
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
         label.backgroundColor = .clear
         label.text = Constants.appString

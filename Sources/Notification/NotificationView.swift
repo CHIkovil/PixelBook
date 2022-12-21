@@ -36,6 +36,7 @@ final class NotificationView: UIView {
     
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.backgroundColor = AppColor.active
         imageView.contentMode = .scaleToFill
         imageView.layer.borderColor = AppColor.background.cgColor
@@ -48,6 +49,7 @@ final class NotificationView: UIView {
     
     private lazy var label: UILabel = {
         let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont(name: AppConstants.textFontName, size: Constants.labelFontSize)
         label.textAlignment = .center
         label.backgroundColor = .clear
@@ -95,6 +97,7 @@ final class NotificationView: UIView {
     }
     
     func setup(_ state: NotificationState, alpha: CGFloat) {
+        UIDevice.vibrate()
         imageView.image = UIImage(named: state.imageName)?.withRenderingMode(.alwaysTemplate)
         label.text = state.rawValue
         

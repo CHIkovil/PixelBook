@@ -59,7 +59,7 @@ final class BookParser  {
         let chaptersTitles = book.chapters.compactMap {$0.title}
         var chapterItems: [String: [AttributedString]] = [:]
         
-        book.chapters.forEach { chapter in
+        book.chapters.forEach {chapter in
             queue.async(group: group) {
                 do {
                     let parsedChapter = try SwiftSoup.parse(chapter.xhtml)

@@ -15,7 +15,7 @@ final class PagesRequests {
     
     
     static func insert(_ book: BookModel){
-        do {
+        do{
             let newItem = NSEntityDescription.insertNewObject(forEntityName: AppConstants.pagesEntityName, into: context) as! BlackBook.Pages
             
             let pages = BookParser.parseModelToPages(book)
@@ -27,8 +27,8 @@ final class PagesRequests {
             newItem.data = pagesData
             
             try context.save()
-        } catch {
-            fatalError()
+        }catch let error as NSError {
+            print("Error: \(error) description: \(error.userInfo)")
         }
     }
     
@@ -41,12 +41,12 @@ final class PagesRequests {
      }
     
     static func delete(_ book: BookModel) {
-        do {
+        do{
             guard let item = check(title: book.title, author: book.author) else{return}
             context.delete(item)
             try context.save()
-        } catch {
-            fatalError()
+        }catch let error as NSError {
+            print("Error: \(error) description: \(error.userInfo)")
         }
     }
     
@@ -61,11 +61,11 @@ final class PagesRequests {
             fetchRequest.predicate = predicate
             
             let results = try context.fetch(fetchRequest)
-            try context.save()
             
             return results.first
-        } catch {
-            fatalError()
+        } catch let error as NSError {
+            print("Error: \(error) description: \(error.userInfo)")
+            return nil
         }
     }
 }

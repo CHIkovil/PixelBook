@@ -28,11 +28,13 @@ final class BookViewController: UIViewController {
     
     private lazy var notificationView: NotificationView = {
         let view = NotificationView()
+        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
     private lazy var closeButton: UIButton = {
         let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(named: Constants.backImageName)?.inverseImage(cgResult: false)?.resizeImage(CGSize(width: 20, height: 20)).withRenderingMode(.alwaysTemplate), for: .normal)
    
         button.tintColor = AppColor.backgroundActive
@@ -120,7 +122,6 @@ private extension BookViewController {
     }
     
     @objc func didRepeatedBook(notification: Notification){
-        UIDevice.vibrate()
         notificationView.setup(.repeated, alpha: 1)
     }
     

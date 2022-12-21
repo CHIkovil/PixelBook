@@ -22,6 +22,7 @@ class BookPageViewController: UIViewController {
     
     private lazy var textView:UITextView = {
         let textView = UITextView()
+        textView.translatesAutoresizingMaskIntoConstraints = false
         textView.backgroundColor = AppColor.background
         textView.frame = self.view.bounds
         textView.textContainerInset = UIEdgeInsets(top: PageConstants.heightOffset, left: PageConstants.widthOffset, bottom: PageConstants.heightOffset, right: PageConstants.widthOffset)

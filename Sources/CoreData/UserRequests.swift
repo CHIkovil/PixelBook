@@ -19,12 +19,12 @@ final class UserRequests {
                 item.setValue(model.bookTitle, forKey: "bookTitle")
                 item.setValue(model.bookAuthor, forKey: "bookAuthor")
                 item.setValue(model.isRead, forKey: "isRead")
+                try context.save()
             }else{
                 insert(model)
             }
-            try context.save()
-        }catch {
-            fatalError()
+        }catch let error as NSError {
+            print("Error: \(error) description: \(error.userInfo)")
         }
     }
     
@@ -34,28 +34,21 @@ final class UserRequests {
             guard let results = try context.fetch(fetchRequest) as? [NSManagedObject], let item = results.first else{return}
             item.setValue(isRead, forKey: "isRead")
             try context.save()
-        }catch {
-            fatalError()
+        }catch let error as NSError {
+            print("Error: \(error) description: \(error.userInfo)")
         }
     }
     
     static func fetch() -> UserModel? {
-        var result: UserModel?
+        let fetchRequest = NSFetchRequest<BlackBook.User>(entityName: AppConstants.userEntityName)
+        let results = try? context.fetch(fetchRequest)
         
-        do {
-            let fetchRequest = NSFetchRequest<BlackBook.User>(entityName: AppConstants.userEntityName)
-            let results = try context.fetch(fetchRequest)
-            
-            if let item = results.first {
-                let model = UserModel(bookTitle: item.bookTitle!, bookAuthor: item.bookAuthor!, isRead: item.isRead)
-                result = model
-            }
-            
-            try context.save()
-        } catch {
+        if let item = results?.first {
+            let model = UserModel(bookTitle: item.bookTitle!, bookAuthor: item.bookAuthor!, isRead: item.isRead)
+            return model
+        }else{
+            return nil
         }
-        
-        return result
     }
     
     private static func insert(_ model: UserModel) {
@@ -67,8 +60,8 @@ final class UserRequests {
             newItem.isRead = model.isRead
             
             try context.save()
-        } catch {
-            fatalError()
+        } catch let error as NSError {
+            print("Error: \(error) description: \(error.userInfo)")
         }
     }
 }
