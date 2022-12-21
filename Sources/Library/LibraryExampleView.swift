@@ -72,14 +72,14 @@ final class LibraryExampleView: UIView {
             imageView.backgroundColor = .clear
             imageView.contentMode = .scaleToFill
             imageView.tintColor = backgroundColor
-            imageView.image = UIImage(named: element.0)?.toPixelImage(AppConstants.imagePixelScale )?.inverseImage(cgResult: false)?.mask(with: AppColor.backgroundActive)
+            imageView.image = UIImage(named: element.0)?.toPixelImage(AppConstants.imagePixelScale )?.inverseImage(cgResult: false)?.mask(with: AppColor.active)
             
             let label = UILabel()
             label.translatesAutoresizingMaskIntoConstraints = false
             label.font = UIFont(name: AppConstants.textFontName, size: Constants.labelFontSize)
             label.textAlignment = .center
             label.backgroundColor = backgroundColor
-            label.textColor = AppColor.readText
+            label.textColor = AppColor.active
             label.text = element.1
             
             view.addSubview(imageView)
@@ -110,7 +110,7 @@ final class LibraryExampleView: UIView {
             arrowImageView.backgroundColor = .clear
             arrowImageView.contentMode = .scaleToFill
             arrowImageView.tintColor = backgroundColor
-            arrowImageView.image = UIImage(named: "down-arrow")?.toPixelImage(AppConstants.imagePixelScale )?.inverseImage(cgResult: false)?.mask(with: AppColor.backgroundActive)
+            arrowImageView.image = UIImage(named: "down-arrow")?.toPixelImage(AppConstants.imagePixelScale )?.inverseImage(cgResult: false)?.mask(with: AppColor.arrow)
             
             view.addSubview(arrowImageView)
             

@@ -33,7 +33,7 @@ final class LibraryTableViewCell: UITableViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.backgroundColor = .clear
         label.font = UIFont(name: AppConstants.textFontName, size: Constants.labelFontSizeBase)
-        label.textColor = AppColor.mainText
+        label.textColor = AppColor.active
         return label
     }()
     

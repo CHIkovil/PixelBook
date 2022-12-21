@@ -38,12 +38,12 @@ enum BookConfig {
        
        let titleAttrs: [NSAttributedString.Key : Any] = [.font: titleFont as Any,
                                                         .foregroundColor:
-                                                           AppColor.readText,
+                                                           AppColor.active,
                                                         .paragraphStyle: titleStyle]
        
        let textAttrs: [NSAttributedString.Key : Any] = [.font: textFont as Any,
                                                         .foregroundColor:
-                                                           AppColor.readText,
+                                                           AppColor.active,
                                                         .paragraphStyle: textStyle]
        
 

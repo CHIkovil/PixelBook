@@ -26,7 +26,7 @@ final class WelcomeViewController: UIViewController {
         label.textAlignment = .center
         label.backgroundColor = .clear
         label.text = Constants.appString
-        label.textColor = AppColor.mainText
+        label.textColor = AppColor.active
         label.layer.shadowColor = UIColor.black.cgColor
         label.layer.shadowRadius = 3.0
         label.layer.shadowOpacity = 1.0

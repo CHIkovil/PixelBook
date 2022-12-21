@@ -53,7 +53,7 @@ final class NotificationView: UIView {
         label.font = UIFont(name: AppConstants.textFontName, size: Constants.labelFontSize)
         label.textAlignment = .center
         label.backgroundColor = .clear
-        label.textColor = AppColor.mainText
+        label.textColor = AppColor.active
         return label
     }()
     
